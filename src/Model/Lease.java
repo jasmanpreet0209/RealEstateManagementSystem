@@ -4,13 +4,13 @@ import java.time.LocalDate;
 public class Lease {
     private Tenant tenant;
     private LocalDate startDate;
-    private Property property;
+    private String propertyInfo;
     private LocalDate endDate;
     private double rentAmount;
 
-    public Lease(Tenant tenant, Property property, LocalDate startDate, LocalDate endDate, double rentAmount) {
+    public Lease(Tenant tenant, String propertyInfo, LocalDate startDate, LocalDate endDate, double rentAmount) {
         this.tenant = tenant;
-        this.property = property;
+        this.propertyInfo = propertyInfo;
         this.startDate = startDate;
         this.endDate = endDate;
         this.rentAmount = rentAmount;
@@ -18,7 +18,7 @@ public class Lease {
     public Lease(Lease l)
     {
         this.tenant = l.tenant;
-        this.property = l.property;
+        this.propertyInfo = l.propertyInfo;
         this.startDate = l.startDate;
         this.endDate = l.endDate;
         this.rentAmount = l.rentAmount;
@@ -30,14 +30,6 @@ public class Lease {
 
     public void setTenant(Tenant tenant) {
         this.tenant = tenant;
-    }
-
-    public Property getUnit() {
-        return property;
-    }
-
-    public void setUnit(Property unit) {
-        this.property = unit;
     }
 
     public LocalDate getStartDate() {

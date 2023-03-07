@@ -1,7 +1,6 @@
 
 package Model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Apartment {

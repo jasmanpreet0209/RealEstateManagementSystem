@@ -1,11 +1,10 @@
 
 package Model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Condo {
-    private String condo_num;
+    private int condo_num;
     private int numBedrooms;
     private int numBathrooms;
     private int squareFootage;
@@ -15,7 +14,7 @@ public class Condo {
     int Rent;
     int RentStatus;
     Lease lease;
-    public Condo(String condo_num, int numBedrooms, int numBathrooms, int squareFootage, int Rent) {
+    public Condo(int condo_num, int numBedrooms, int numBathrooms, int squareFootage, int Rent) {
         this.condo_num = condo_num;
         this.numBedrooms = numBedrooms;
         this.numBathrooms = numBathrooms;
@@ -27,7 +26,7 @@ public class Condo {
         lease=l;
     }
 
-    public String getCondo_num() {
+    public int getCondo_num() {
         return condo_num;
     }
 
@@ -49,7 +48,7 @@ public class Condo {
 
     @Override
     public String toString() {
-        return "Apartment {" +
+        return "Condo {" +
                 "unitNumber='" + condo_num + '\'' +
                 ", numBedrooms=" + numBedrooms +
                 ", numBathrooms=" + numBathrooms +

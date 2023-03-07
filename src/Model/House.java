@@ -1,11 +1,8 @@
 package Model;
 
-import Model.Address;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class House extends Address implements Property{
+public class House extends Property{
 
     private int StreetNum;
     Boolean isAvailable=true;
@@ -15,7 +12,7 @@ public class House extends Address implements Property{
     Lease lease;
     int rentStatus;
     String name;
-    House(String name, int StreetNum,String streetName, String city, String postalCode) {
+    public House(String name, int StreetNum, String streetName, String city, String postalCode) {
         super(streetName, city, postalCode);
         this.StreetNum=StreetNum;
         this.name=name;

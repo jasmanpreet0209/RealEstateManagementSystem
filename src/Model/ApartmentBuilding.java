@@ -1,11 +1,9 @@
 package Model;
 
-import Model.Address;
-import Model.Apartment;
 import java.util.ArrayList;
 
 
-public class ApartmentBuilding extends Address implements Property{
+public class ApartmentBuilding extends Property{
     public static int num_apartments=0;
     String building_name;
     private ArrayList<Apartment> apartments;
@@ -15,7 +13,7 @@ public class ApartmentBuilding extends Address implements Property{
         apartments = new ArrayList<>();
         this.building_name=building_name;
     }
-    public void add_apartment(String apartment_num, int numBedrooms, int numBathrooms, int squareFootage,int rent)
+    public void addApartment(String apartment_num, int numBedrooms, int numBathrooms, int squareFootage,int rent)
     {
         num_apartments++;
         Apartment a=new Apartment(apartment_num, numBedrooms, numBathrooms, squareFootage,rent);
@@ -39,10 +37,13 @@ public class ApartmentBuilding extends Address implements Property{
         return "Apartment Building";
     }
 
+    public ArrayList<Apartment> getApartments() {
+        return apartments;
+    }
+
     @Override
     public String getInfo() {
         return "Apartment building (" + num_apartments + " apartments) : " + building_name + " " + getStreetName()
                 +" " +getCity()+" "+getPostalCode();
     }
-
 }

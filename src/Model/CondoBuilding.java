@@ -2,7 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 
-public class CondoBuilding extends Address implements Property{
+public class CondoBuilding extends Property{
     public static int num_condos=0;
     int Street_num;
     String building_name;
@@ -15,7 +15,7 @@ public class CondoBuilding extends Address implements Property{
         this.building_name=building_name;
         num_condos++;
     }
-    public void add_condo(String UnitNum, int numBedrooms, int numBathrooms, int squareFootage,int rent)
+    public void add_condo(int UnitNum, int numBedrooms, int numBathrooms, int squareFootage,int rent)
     {
         num_condos++;
         Condo a=new Condo(UnitNum, numBedrooms, numBathrooms, squareFootage,rent);
@@ -43,4 +43,11 @@ public class CondoBuilding extends Address implements Property{
                 +" " +getCity()+" "+getPostalCode();
     }
 
+    public ArrayList<Condo> getCondos() {
+        return condos;
+    }
+
+    public String getBuilding_name() {
+        return building_name;
+    }
 }
