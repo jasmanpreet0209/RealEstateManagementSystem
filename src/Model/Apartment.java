@@ -9,10 +9,10 @@ public class Apartment {
     private int numBathrooms;
     private int squareFootage;
     boolean isAvailable=true;
-    ArrayList<Tenant> tenants;
+    Tenant tenant;
     ArrayList<Tenant> potentialTenant;
     int Rent;
-    int RentStatus;
+    Boolean RentStatus;
     Lease lease;
     public Apartment( String apartment_num, int numBedrooms, int numBathrooms, int squareFootage,int Rent) {
         this.apartment_num = apartment_num;
@@ -22,6 +22,29 @@ public class Apartment {
         this.Rent=Rent;
     }
 
+    public Boolean getRentStatus() {
+        return RentStatus;
+    }
+
+    public void setRentStatus(Boolean rentStatus) {
+        RentStatus = rentStatus;
+    }
+
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+    public void addTenants(Tenant tenant) {
+        this.tenant = tenant;
+    }
+
+    public ArrayList<Tenant> getPotentialTenant() {
+        return potentialTenant;
+    }
+
+    public void addPotentialTenants(Tenant tenant) {
+        this.potentialTenant.add(tenant);
+    }
 
     public String getApartment_num() {
         return apartment_num;

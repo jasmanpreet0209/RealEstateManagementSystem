@@ -9,10 +9,10 @@ public class Condo {
     private int numBathrooms;
     private int squareFootage;
     boolean isAvailable=true;
-    ArrayList<Tenant> tenants;
+    Tenant tenant;
     ArrayList<Tenant> potentialTenant;
     int Rent;
-    int RentStatus;
+    Boolean RentStatus;
     Lease lease;
     public Condo(int condo_num, int numBedrooms, int numBathrooms, int squareFootage, int Rent) {
         this.condo_num = condo_num;
@@ -24,6 +24,14 @@ public class Condo {
     public void add_lease(Lease l)
     {
         lease=l;
+    }
+
+    public Boolean getRentStatus() {
+        return RentStatus;
+    }
+
+    public void setRentStatus(Boolean rentStatus) {
+        RentStatus = rentStatus;
     }
 
     public int getCondo_num() {
@@ -45,7 +53,21 @@ public class Condo {
     {
         return Rent;
     }
+    public Tenant getTenant() {
+        return tenant;
+    }
 
+    public void addTenants(Tenant tenant) {
+        this.tenant = tenant;
+    }
+
+    public ArrayList<Tenant> getPotentialTenant() {
+        return potentialTenant;
+    }
+
+    public void addPotentialTenants(Tenant tenant) {
+        this.potentialTenant.add(tenant);
+    }
     @Override
     public String toString() {
         return "Condo {" +

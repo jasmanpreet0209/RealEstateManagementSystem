@@ -1,9 +1,6 @@
 package Controller;
 
-import Model.ApartmentBuilding;
-import Model.CondoBuilding;
-import Model.House;
-import Model.Property;
+import Model.*;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -57,5 +54,27 @@ public class PropertiesController {
     {
         House c = new House(houseNumber,streetNumber,street,city,postalCode);
         properties.add(c);
+    }
+    public void payRent(String info, int unit)
+    {
+        for(Property p : properties)
+        {
+            if(p.getInfo().equals(info)) {
+                if(p instanceof House h)
+                {
+                    h.setRentStatus(true);
+                } else if(p instanceof CondoBuilding c)
+                {
+                    Condo condo= c.getCondos().get(unit);
+                    condo.setRentStatus(true);
+                }
+                else if(p instanceof ApartmentBuilding a)
+                {
+                    Apartment apartment= a.getApartments().get(unit);
+                    apartment.setRentStatus(true);
+                }
+                break;
+            }
+        }
     }
 }

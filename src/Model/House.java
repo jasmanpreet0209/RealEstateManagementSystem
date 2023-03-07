@@ -10,7 +10,16 @@ public class House extends Property{
     ArrayList<Tenant> potentialTenant;
     int rent;
     Lease lease;
-    int rentStatus;
+    Boolean rentStatus;
+
+    public Boolean getRentStatus() {
+        return rentStatus;
+    }
+
+    public void setRentStatus(Boolean rentStatus) {
+        this.rentStatus = rentStatus;
+    }
+
     String name;
     public House(String name, int StreetNum, String streetName, String city, String postalCode) {
         super(streetName, city, postalCode);
@@ -25,6 +34,21 @@ public class House extends Property{
     public String getInfo() {
         return "House (Monthly rent" + rent +") : " +  StreetNum +" "+ getStreetName() +" "+ getCity()
                 +" "+ getPostalCode() ;
+    }
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+    public void addTenants(Tenant tenant) {
+        this.tenant = tenant;
+    }
+
+    public ArrayList<Tenant> getPotentialTenant() {
+        return potentialTenant;
+    }
+
+    public void addPotentialTenants(Tenant tenant) {
+        this.potentialTenant.add(tenant);
     }
     public void setPotentialTenant(Tenant t) {
         this.potentialTenant.add(t);
