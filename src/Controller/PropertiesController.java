@@ -31,6 +31,7 @@ public class PropertiesController {
             }
         }
     }
+
     public void addCondoBuilding(String building_name,int street_number,String street_name,String city, String postalCode)
     {
         CondoBuilding condoBuilding = new CondoBuilding(building_name,street_number,street_name,city,postalCode);
@@ -42,7 +43,7 @@ public class PropertiesController {
         {
             if(p instanceof CondoBuilding a)
             {
-                if(Objects.equals(a.getBuilding_name(), building_name))
+                if(Objects.equals(a.getBuildingName(), building_name))
                 {
                     a.add_condo(unit,rooms,baths,area,rent);
                     break;

@@ -36,5 +36,6 @@ public abstract class Property {
         this.postalCode = postal_code;
     }
     abstract String getType();
+    public abstract String getBuildingName();
     public abstract String getInfo();
 }

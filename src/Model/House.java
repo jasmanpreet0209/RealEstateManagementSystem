@@ -8,10 +8,15 @@ public class House extends Property{
     Boolean isAvailable=true;
     Tenant tenant;
     ArrayList<Tenant> potentialTenant;
+
+    public int getRent() {
+        return rent;
+    }
+
     int rent;
     Lease lease;
     Boolean rentStatus;
-
+    String name;
     public Boolean getRentStatus() {
         return rentStatus;
     }
@@ -20,7 +25,11 @@ public class House extends Property{
         this.rentStatus = rentStatus;
     }
 
-    String name;
+
+    @Override
+    public String getBuildingName() {
+        return name;
+    }
     public House(String name, int StreetNum, String streetName, String city, String postalCode) {
         super(streetName, city, postalCode);
         this.StreetNum=StreetNum;
@@ -46,6 +55,7 @@ public class House extends Property{
     public void setAvailable(Boolean available) {
         isAvailable = available;
     }
+
 
     public void addTenants(Tenant tenant) {
         this.tenant = tenant;

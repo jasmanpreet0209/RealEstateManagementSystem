@@ -40,8 +40,11 @@ public class ApartmentBuilding extends Property{
     public ArrayList<Apartment> getApartments() {
         return apartments;
     }
-
     @Override
+    public String getBuildingName() {
+        return building_name;
+    }
+
     public String getInfo() {
         return "Apartment building (" + num_apartments + " apartments) : " + building_name + " " + getStreetName()
                 +" " +getCity()+" "+getPostalCode();

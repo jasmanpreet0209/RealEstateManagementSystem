@@ -51,7 +51,11 @@ public class Lease {
     public double getRentAmount() {
         return rentAmount;
     }
-
+    public String getInfo()
+    {
+        return "Lease: \n Tenant info:\n"+ tenant.getInfo()+"\n Start Date:" +startDate+
+                "\nEndDate:"+endDate+"\nRent Amount"+rentAmount+"\nProperty info:"+ propertyInfo;
+    }
     public void setRentAmount(double rentAmount) {
         this.rentAmount = rentAmount;
     }

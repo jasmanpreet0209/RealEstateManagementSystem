@@ -75,8 +75,7 @@ public class Apartment {
         return Rent;
     }
 
-    @Override
-    public String toString() {
+    public String getInfo() {
         return "Apartment {" +
                 "unitNumber='" + apartment_num + '\'' +
                 ", numBedrooms=" + numBedrooms +

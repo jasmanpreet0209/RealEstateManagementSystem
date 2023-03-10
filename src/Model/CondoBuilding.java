@@ -47,7 +47,8 @@ public class CondoBuilding extends Property{
         return condos;
     }
 
-    public String getBuilding_name() {
+    @Override
+    public String getBuildingName() {
         return building_name;
     }
 }

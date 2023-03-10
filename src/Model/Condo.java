@@ -77,8 +77,7 @@ public class Condo {
     public void addPotentialTenants(Tenant tenant) {
         this.potentialTenant.add(tenant);
     }
-    @Override
-    public String toString() {
+    public String getInfo() {
         return "Condo {" +
                 "unitNumber='" + condo_num + '\'' +
                 ", numBedrooms=" + numBedrooms +

@@ -26,8 +26,8 @@ public class Tenant {
 
 
 
-    @Override
-    public String toString() {
+
+    public String getInfo() {
         return "Tenant{" +
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
