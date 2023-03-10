@@ -1,14 +1,14 @@
 package View;
 
 import Controller.LeaseController;
+import Controller.MockDatabaseController;
 import Controller.TenantController;
 import Model.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-import static Controller.PropertiesController.properties;
-import static Controller.TenantController.tenants;
 public class TenantView {
     TenantController tc;
     LeaseController lc;
@@ -21,6 +21,7 @@ public class TenantView {
     }
     public void DisplayAllTenants()
     {
+        ArrayList<Tenant> tenants = MockDatabaseController.getAllTenants();
         for(Tenant t:tenants)
         {
             System.out.println(t.getInfo());
@@ -56,11 +57,10 @@ public class TenantView {
             String street = sc.nextLine();
             buildingName = h+ " " + street;
         }
-        for(Property p : properties)
+        Property property = MockDatabaseController.getProperty(buildingName);
+        if(property!=null)
         {
-            if(p.getBuildingName().equals(buildingName))
-            {
-                if(p instanceof CondoBuilding building)
+                if(property instanceof CondoBuilding building)
                 {
                     Condo condo = null;
                     for(Condo c : building.getCondos())
@@ -74,10 +74,12 @@ public class TenantView {
                     boolean flag=true;
                     for(Condo c : building.getCondos())
                     {
-                        if (c.getCondo_num()==unit)
-                            flag=false;
+                        if (c.getCondo_num() == unit) {
+                            flag = false;
+                            break;
+                        }
                     }
-                    if (flag==true)
+                    if (flag)
                     {
                         System.out.println("This unit does not exist! Please express your interest in another unit!");
                         return;
@@ -98,7 +100,7 @@ public class TenantView {
                         tc.addTenant(condo.getInfo(),unit,t);
                     }
                 }
-                else if(p instanceof ApartmentBuilding a)
+                else if(property instanceof ApartmentBuilding a)
                 {
                     Apartment apartment= a.getApartments().get(unit-1);
                     if(apartment.isAvailable())
@@ -110,25 +112,20 @@ public class TenantView {
                         tc.addTenant(apartment.getInfo(), unit,t);
                     }
                 }
-                else
-                {
-                    House h = (House) p;
-                    if(h.getAvailable())
-                    {
-                        lc.addLease(LocalDate.now(),LocalDate.now().plusYears(1),t,h.getBuildingName(),h.getRent(),unit);
+                else {
+                    House h = (House) property;
+                    if (h.getAvailable()) {
+                        lc.addLease(LocalDate.now(), LocalDate.now().plusYears(1), t, h.getBuildingName(), h.getRent(), unit);
 
-                    }
-                    else
-                    {
+                    } else {
                         System.out.println("The house you are looking is not available!!\n Adding you to the interested tenant list");
-                        tc.addTenant(h.getInfo(),0,t);
+                        tc.addTenant(h.getInfo(), 0, t);
                     }
                 }
-            }
-            else
-            {
-                System.out.println("The property name you entered does not exist. Enter the building to the properties first");
-            }
+        }
+        else
+        {
+            System.out.println("Enter correct property details");
         }
     }
 
