@@ -4,11 +4,11 @@ package Model;
 import java.util.ArrayList;
 
 public class Apartment {
-    private String apartment_num;
+    private int apartment_num;
     private int numBedrooms;
     private int numBathrooms;
     private int squareFootage;
-    boolean isAvailable=true;
+    boolean isAvailable;
     Tenant tenant;
     ArrayList<Tenant> potentialTenant;
 
@@ -23,12 +23,13 @@ public class Apartment {
     int Rent;
     Boolean RentStatus;
     Lease lease;
-    public Apartment( String apartment_num, int numBedrooms, int numBathrooms, int squareFootage,int Rent) {
+    public Apartment( int apartment_num, int numBedrooms, int numBathrooms, int squareFootage,int Rent) {
         this.apartment_num = apartment_num;
         this.numBedrooms = numBedrooms;
         this.numBathrooms = numBathrooms;
         this.squareFootage = squareFootage;
         this.Rent=Rent;
+        this.isAvailable = true;
     }
 
     public Boolean getRentStatus() {
@@ -43,7 +44,7 @@ public class Apartment {
         return tenant;
     }
 
-    public void addTenants(Tenant tenant) {
+    public void addTenant(Tenant tenant) {
         this.tenant = tenant;
     }
 
@@ -55,7 +56,7 @@ public class Apartment {
         this.potentialTenant.add(tenant);
     }
 
-    public String getApartment_num() {
+    public int getApartment_num() {
         return apartment_num;
     }
 
@@ -81,6 +82,7 @@ public class Apartment {
                 ", numBedrooms=" + numBedrooms +
                 ", numBathrooms=" + numBathrooms +
                 ", squareFootage=" + squareFootage +
+                ", tenant" + tenant.getInfo() +
                 '}';
     }
     public void add_lease(Lease l)

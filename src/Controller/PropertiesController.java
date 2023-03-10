@@ -17,7 +17,7 @@ public class PropertiesController {
         ApartmentBuilding apartmentBuilding = new ApartmentBuilding(building_name,streetName,city,postalCode);
         properties.add(apartmentBuilding);
     }
-    public void addApartment(String building_name,String aptNumber,int rooms,int baths, int area,int rent)
+    public void addApartment(String building_name,int rooms,int baths, int area,int rent)
     {
         for(Property p : properties)
         {
@@ -25,7 +25,7 @@ public class PropertiesController {
             {
                 if(Objects.equals(a.getBuilding_name(), building_name))
                 {
-                    a.addApartment(aptNumber,rooms,baths,area,rent);
+                    a.addApartment(rooms,baths,area,rent);
                     break;
                 }
             }

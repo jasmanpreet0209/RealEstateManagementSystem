@@ -4,12 +4,9 @@ import Controller.PropertiesController;
 import Model.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Objects;
 import java.util.Scanner;
 
 import static Controller.PropertiesController.properties;
-import static Controller.LeaseController.leases;
 public class PropertyView {
     PropertiesController pc;
     public PropertyView() {
@@ -23,8 +20,14 @@ public class PropertyView {
         System.out.println("Enter details of the property:");
         int property_type;
         do {
-            System.out.println("Please select the property type:\n 1.Apartment building\n2. Apartment\n 3.condo building" +
-                    "\n 4.condo\n5.House\n6.Exit");
+            System.out.println("""
+                    Please select the property type:
+                    1.Apartment building
+                    2.Apartment
+                    3.condo building
+                    4.condo
+                    5.House
+                    6.Exit""");
             property_type = Integer.parseInt(sc.nextLine());
             switch (property_type) {
                 case 1: {
@@ -42,8 +45,6 @@ public class PropertyView {
                 case 2: {
                     System.out.println("Enter building name");
                     String building_name=sc.nextLine();
-                    System.out.println("Enter aptNum");
-                    String aptNumber=sc.nextLine();
                     System.out.println("Enter num of Rooms ");
                     int rooms=Integer.parseInt(sc.nextLine());
                     System.out.println("Enter num of bathrooms ");
@@ -52,7 +53,7 @@ public class PropertyView {
                     int area=Integer.parseInt(sc.nextLine());
                     System.out.println("Enter Rent ");
                     int rent=Integer.parseInt(sc.nextLine());
-                    pc.addApartment( building_name, aptNumber, rooms, baths,  area, rent);
+                    pc.addApartment( building_name, rooms, baths,  area, rent);
                     break;
                 }
                 case 3: {
@@ -114,49 +115,46 @@ public class PropertyView {
     {
         for(Property p : properties)
         {
-            System.out.println(p.getInfo();)
+            System.out.println(p.getInfo());
         }
     }
     void displayRentedUnits()
     {
         for(Property p : properties)
         {
-            if(p instanceof ApartmentBuilding)
+            if(p instanceof ApartmentBuilding building)
             {
-                ArrayList<Apartment> apartmentArrayList=((ApartmentBuilding) p).getApartments();
+                ArrayList<Apartment> apartmentArrayList=building.getApartments();
                 for (Apartment a: apartmentArrayList)
                 {
                     if (!a.isAvailable())
                     {
-                        System.out.println(p.getBuildingName());
+                        System.out.println(building.getBuildingName());
                         System.out.println(a.getInfo());
                     }
                 }
 
             }
-            else if(p instanceof CondoBuilding)
+            else if(p instanceof CondoBuilding building)
             {
-                ArrayList<Condo> condoArrayList=((CondoBuilding) p).getCondos();
+                ArrayList<Condo> condoArrayList=building.getCondos();
                 for (Condo a: condoArrayList)
                 {
                     if (!a.isAvailable())
                     {
-                        System.out.println(p.getBuildingName());
+                        System.out.println(building.getBuildingName());
                         System.out.println(a.getInfo());
                     }
                 }
-
             }
             else
             {
                 House h= (House) p;
-                if (h.getAvailable()==false)
+                if (!h.getAvailable())
                 {
-                    System.out.println(p.getBuildingName());
+                    System.out.println(h.getBuildingName());
                     System.out.println(h.getInfo());
                 }
-
-
             }
         }
     }
@@ -164,42 +162,39 @@ public class PropertyView {
     {
         for(Property p : properties)
         {
-            if(p instanceof ApartmentBuilding)
+            if(p instanceof ApartmentBuilding building)
             {
-                ArrayList<Apartment> apartmentArrayList=((ApartmentBuilding) p).getApartments();
+                ArrayList<Apartment> apartmentArrayList=building.getApartments();
                 for (Apartment a: apartmentArrayList)
                 {
                     if (a.isAvailable())
                     {
-                        System.out.println(p.getBuildingName());
+                        System.out.println(building.getBuildingName());
                         System.out.println(a.getInfo());
                     }
                 }
 
             }
-            else if(p instanceof CondoBuilding)
+            else if(p instanceof CondoBuilding building)
             {
-                ArrayList<Condo> condoArrayList=((CondoBuilding) p).getCondos();
+                ArrayList<Condo> condoArrayList=building.getCondos();
                 for (Condo a: condoArrayList)
                 {
-                    if (!a.isAvailable())
+                    if (a.isAvailable())
                     {
-                        System.out.println(p.getBuildingName());
+                        System.out.println(building.getBuildingName());
                         System.out.println(a.getInfo());
                     }
                 }
-
             }
             else
             {
                 House h= (House) p;
-                if (h.getAvailable()==true)
+                if (h.getAvailable())
                 {
-                    System.out.println(p.getBuildingName());
+                    System.out.println(h.getBuildingName());
                     System.out.println(h.getInfo());
                 }
-
-
             }
         }
     }

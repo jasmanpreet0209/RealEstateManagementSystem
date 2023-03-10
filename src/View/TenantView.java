@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 import static Controller.PropertiesController.properties;
-import static Controller.LeaseController.leases;
 import static Controller.TenantController.tenants;
 public class TenantView {
     TenantController tc;
@@ -40,9 +39,11 @@ public class TenantView {
         System.out.println("Enter phone number");
         String phone=sc.nextLine();
         Tenant t=new Tenant(name,email,phone);
-        System.out.println("Please select the property type that the tenant is interested in :\n " +
-                "1.Apartment building\n 2.condo building" +
-                "\n 3.House");
+        System.out.println("""
+                Please select the property type that the tenant is interested in :
+                 1.Apartment building
+                 2.condo building
+                 3.House""");
         int choice=Integer.parseInt(sc.nextLine());
         System.out.println("Enter building name");
         String BuildingName=sc.nextLine();
@@ -57,11 +58,10 @@ public class TenantView {
             {
                 if(p instanceof CondoBuilding c)
                 {
-                    Condo condo= c.getCondos().get(unit);
+                    Condo condo= c.getCondos().get(unit-1);
                     if(condo.isAvailable())
                     {
                         lc.addLease(LocalDate.now(),LocalDate.now().plusYears(1),t,condo.getInfo(),condo.getRent(),unit);
-
                     }
                     else
                     {
@@ -70,11 +70,10 @@ public class TenantView {
                 }
                 else if(p instanceof ApartmentBuilding a)
                 {
-                    Apartment apartment= a.getApartments().get(unit);
+                    Apartment apartment= a.getApartments().get(unit-1);
                     if(apartment.isAvailable())
                     {
-                        lc.addLease(LocalDate.now(),LocalDate.now().plusYears(1),t,apartment.getInfo(),apartment.getRent(),unit);
-
+                        lc.addLease(LocalDate.now(),LocalDate.now().plusYears(1),t,a.getBuilding_name(),apartment.getRent(),unit);
                     }
                     else {
                         tc.addTenant(apartment.getInfo(), unit,t);
@@ -83,7 +82,7 @@ public class TenantView {
                 else
                 {
                     House h = (House) p;
-                    if(h.getAvailable()==true)
+                    if(h.getAvailable())
                     {
                         lc.addLease(LocalDate.now(),LocalDate.now().plusYears(1),t,h.getInfo(),h.getRent(),unit);
 

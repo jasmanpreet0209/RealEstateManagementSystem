@@ -13,10 +13,10 @@ public class ApartmentBuilding extends Property{
         apartments = new ArrayList<>();
         this.building_name=building_name;
     }
-    public void addApartment(String apartment_num, int numBedrooms, int numBathrooms, int squareFootage,int rent)
+    public void addApartment(int numBedrooms, int numBathrooms, int squareFootage,int rent)
     {
         num_apartments++;
-        Apartment a=new Apartment(apartment_num, numBedrooms, numBathrooms, squareFootage,rent);
+        Apartment a=new Apartment(num_apartments, numBedrooms, numBathrooms, squareFootage,rent);
         apartments.add(a);
     }
 

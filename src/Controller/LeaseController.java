@@ -20,20 +20,20 @@ public class LeaseController {
         Lease l = new Lease(tenant,info,startDate,endDate,rent);
         for(Property p : properties)
         {
-            if(p.getInfo().equals(info))
+            if(p.getBuildingName().equals(info))
             {
                 if(p instanceof CondoBuilding c)
                 {
-                    Condo condo= c.getCondos().get(unit);
+                    Condo condo= c.getCondos().get(unit-1);
                     condo.add_lease(l);
                     condo.addTenants(tenant);
                     condo.setAvailable(false);
                 }
                 else if(p instanceof ApartmentBuilding a)
                 {
-                    Apartment apartment= a.getApartments().get(unit);
+                    Apartment apartment= a.getApartments().get(unit-1);
                     apartment.add_lease(l);
-                    apartment.addTenants(tenant);
+                    apartment.addTenant(tenant);
                     apartment.setAvailable(false);
                 }
                 else

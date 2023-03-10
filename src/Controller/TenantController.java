@@ -10,6 +10,10 @@ import static Controller.PropertiesController.properties;
 public class TenantController {
     public static ArrayList<Tenant> tenants;
 
+    public TenantController() {
+        tenants = new ArrayList<>();
+    }
+
     public void addTenant(String info, int unit, Tenant tenant)
     {
         tenants.add(tenant);
