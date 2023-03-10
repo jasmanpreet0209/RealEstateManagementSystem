@@ -28,6 +28,10 @@ public class PropertiesController {
                     a.addApartment(rooms,baths,area,rent);
                     break;
                 }
+                else
+                {
+                    System.out.println("The building name you entered does not exist. Enter the building to the properties first");
+                }
             }
         }
     }
@@ -48,34 +52,16 @@ public class PropertiesController {
                     a.add_condo(unit,rooms,baths,area,rent);
                     break;
                 }
+                else
+                {
+                    System.out.println("The building name you entered does not exist. Enter the building to the properties first");
+                }
             }
         }
     }
-    public void addHouse(String houseNumber,String street,String city,String postalCode,int streetNumber)
+    public void addHouse(String houseNumber,String street,String city,String postalCode,int streetNumber,int rent)
     {
-        House c = new House(houseNumber,streetNumber,street,city,postalCode);
+        House c = new House(houseNumber,streetNumber,street,city,postalCode,rent);
         properties.add(c);
-    }
-    public void payRent(String info, int unit)
-    {
-        for(Property p : properties)
-        {
-            if(p.getInfo().equals(info)) {
-                if(p instanceof House h)
-                {
-                    h.setRentStatus(true);
-                } else if(p instanceof CondoBuilding c)
-                {
-                    Condo condo= c.getCondos().get(unit);
-                    condo.setRentStatus(true);
-                }
-                else if(p instanceof ApartmentBuilding a)
-                {
-                    Apartment apartment= a.getApartments().get(unit);
-                    apartment.setRentStatus(true);
-                }
-                break;
-            }
-        }
     }
 }

@@ -9,6 +9,7 @@ import java.util.Scanner;
 import static Controller.PropertiesController.properties;
 public class PropertyView {
     PropertiesController pc;
+    Scanner sc = new Scanner(System.in);
     public PropertyView() {
         this.pc = new PropertiesController();
 
@@ -16,7 +17,6 @@ public class PropertyView {
 
     void addProperty()
     {
-        Scanner sc = new Scanner(System.in);
         System.out.println("Enter details of the property:");
         int property_type;
         do {
@@ -100,7 +100,9 @@ public class PropertyView {
                     String postalCode=sc.nextLine();
                     System.out.println("Enter house number");
                     String houseNumber=sc.nextLine();
-                    pc.addHouse( houseNumber, street, city, postalCode, street_number);
+                    System.out.println("Enter Rent ");
+                    int rent=Integer.parseInt(sc.nextLine());
+                    pc.addHouse( houseNumber, street, city, postalCode, street_number,rent);
                     break;
 
                 } case 6:
@@ -178,12 +180,12 @@ public class PropertyView {
             else if(p instanceof CondoBuilding building)
             {
                 ArrayList<Condo> condoArrayList=building.getCondos();
-                for (Condo a: condoArrayList)
+                for (Condo c: condoArrayList)
                 {
-                    if (a.isAvailable())
+                    if (c.isAvailable())
                     {
                         System.out.println(building.getBuildingName());
-                        System.out.println(a.getInfo());
+                        System.out.println(c.getInfo());
                     }
                 }
             }

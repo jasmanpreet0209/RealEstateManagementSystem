@@ -13,7 +13,6 @@ public class CondoBuilding extends Property{
         condos = new ArrayList<>();
         this.Street_num=Street_Num;
         this.building_name=building_name;
-        num_condos++;
     }
     public void add_condo(int UnitNum, int numBedrooms, int numBathrooms, int squareFootage,int rent)
     {

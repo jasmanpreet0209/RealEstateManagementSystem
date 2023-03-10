@@ -12,6 +12,8 @@ import static Controller.TenantController.tenants;
 public class TenantView {
     TenantController tc;
     LeaseController lc;
+
+    Scanner sc=new Scanner(System.in);
     TenantView()
     {
         this.tc=new TenantController();
@@ -24,14 +26,7 @@ public class TenantView {
             System.out.println(t.getInfo());
         }
     }
-    public void addTenantAfterInput() {
-
-        //tc.addTenant(BuildingName,unit,t);
-
-    }
-
     public void rentUnit() {
-        Scanner sc=new Scanner(System.in);
         System.out.println("Enter name");
         String name=sc.nextLine();
         System.out.println("Enter Email");
@@ -45,26 +40,51 @@ public class TenantView {
                  2.condo building
                  3.House""");
         int choice=Integer.parseInt(sc.nextLine());
-        System.out.println("Enter building name");
-        String BuildingName=sc.nextLine();
+        String buildingName;
         int unit=0;
         if(choice!=3) {
+
+            System.out.println("Enter building name");
+            buildingName=sc.nextLine();
             System.out.println("Enter unit number of the property you are interested in");
             unit=Integer.parseInt(sc.nextLine());
         }
+        else
+        {
+            System.out.println("Enter house number");
+            String h = sc.nextLine();
+            System.out.println("Enter Street name");
+            String street = sc.nextLine();
+            buildingName = h+ " " + street;
+        }
         for(Property p : properties)
         {
-            if(p.getBuildingName().equals(BuildingName))
+            if(p.getBuildingName().equals(buildingName))
             {
-                if(p instanceof CondoBuilding c)
+                if(p instanceof CondoBuilding building)
                 {
-                    Condo condo= c.getCondos().get(unit-1);
+                    Condo condo = null;
+                    for(Condo c : building.getCondos())
+                    {
+                        if(c.getCondo_num() == unit)
+                        {
+                            condo = c;
+                            break;
+                        }
+                    }
+                    if(condo==null)
+                    {
+                        System.out.println("There is no condo unit :" + unit + " available!! Enter valid condo unit\n");
+                        return;
+                    }
+
                     if(condo.isAvailable())
                     {
-                        lc.addLease(LocalDate.now(),LocalDate.now().plusYears(1),t,condo.getInfo(),condo.getRent(),unit);
+                        lc.addLease(LocalDate.now(),LocalDate.now().plusYears(1),t,building.getBuildingName(),condo.getRent(),unit);
                     }
                     else
                     {
+                        System.out.println("The condo you are looking is not available!!\n Adding you to the interested tenant list");
                         tc.addTenant(condo.getInfo(),unit,t);
                     }
                 }
@@ -76,6 +96,7 @@ public class TenantView {
                         lc.addLease(LocalDate.now(),LocalDate.now().plusYears(1),t,a.getBuilding_name(),apartment.getRent(),unit);
                     }
                     else {
+                        System.out.println("The apartment you are looking is not available!!\n Adding you to the interested tenant list");
                         tc.addTenant(apartment.getInfo(), unit,t);
                     }
                 }
@@ -84,15 +105,21 @@ public class TenantView {
                     House h = (House) p;
                     if(h.getAvailable())
                     {
-                        lc.addLease(LocalDate.now(),LocalDate.now().plusYears(1),t,h.getInfo(),h.getRent(),unit);
+                        lc.addLease(LocalDate.now(),LocalDate.now().plusYears(1),t,h.getBuildingName(),h.getRent(),unit);
 
                     }
                     else
                     {
+                        System.out.println("The house you are looking is not available!!\n Adding you to the interested tenant list");
                         tc.addTenant(h.getInfo(),0,t);
                     }
                 }
             }
+            else
+            {
+                System.out.println("The property name you entered does not exist. Enter the building to the properties first");
+            }
         }
     }
+
 }

@@ -22,9 +22,22 @@ public class LeaseController {
         {
             if(p.getBuildingName().equals(info))
             {
-                if(p instanceof CondoBuilding c)
+                if(p instanceof CondoBuilding building)
                 {
-                    Condo condo= c.getCondos().get(unit-1);
+                    Condo condo = null;
+                    for(Condo c : building.getCondos())
+                    {
+                        if(c.getCondo_num() == unit)
+                        {
+                            condo = c;
+                            break;
+                        }
+                    }
+                    if(condo==null)
+                    {
+                        System.out.println("There is no condo unit :" + unit + " available!! Enter valid condo unit\n");
+                        return;
+                    }
                     condo.add_lease(l);
                     condo.addTenants(tenant);
                     condo.setAvailable(false);

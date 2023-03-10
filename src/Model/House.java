@@ -4,44 +4,33 @@ import java.util.ArrayList;
 
 public class House extends Property{
 
-    private int StreetNum;
-    Boolean isAvailable=true;
+    private int streetNum;
+    Boolean isAvailable;
     Tenant tenant;
     ArrayList<Tenant> potentialTenant;
-
-    public int getRent() {
-        return rent;
-    }
-
     int rent;
     Lease lease;
-    Boolean rentStatus;
-    String name;
-    public Boolean getRentStatus() {
-        return rentStatus;
+    String houseNumber;
+    public House(String hNum, int streetNum, String streetName, String city, String postalCode,int rent) {
+        super(streetName, city, postalCode);
+        this.streetNum =streetNum;
+        this.houseNumber =hNum;
+        this.rent = rent;
+        potentialTenant = new ArrayList<>();
+        isAvailable = true;
     }
-
-    public void setRentStatus(Boolean rentStatus) {
-        this.rentStatus = rentStatus;
-    }
-
-
     @Override
     public String getBuildingName() {
-        return name;
+        return houseNumber +" " + getStreetName();
     }
-    public House(String name, int StreetNum, String streetName, String city, String postalCode) {
-        super(streetName, city, postalCode);
-        this.StreetNum=StreetNum;
-        this.name=name;
-    }
+
     @Override
     public String getType() {
         return "House";
     }
     @Override
     public String getInfo() {
-        return "House (Monthly rent" + rent +") : " +  StreetNum +" "+ getStreetName() +" "+ getCity()
+        return "House (Monthly rent " + rent +") : " + streetNum +" "+ getStreetName() +" "+ getCity()
                 +" "+ getPostalCode() ;
     }
     public Tenant getTenant() {
@@ -77,7 +66,11 @@ public class House extends Property{
         lease=l;
     }
     public int getStreetNum() {
-        return StreetNum;
+        return streetNum;
+    }
+
+    public int getRent() {
+        return rent;
     }
 
 }
