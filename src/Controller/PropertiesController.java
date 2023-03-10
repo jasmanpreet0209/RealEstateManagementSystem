@@ -19,6 +19,7 @@ public class PropertiesController {
     }
     public void addApartment(String building_name,int rooms,int baths, int area,int rent)
     {
+        boolean flag  = false;
         for(Property p : properties)
         {
             if(p instanceof ApartmentBuilding a)
@@ -26,6 +27,7 @@ public class PropertiesController {
                 if(Objects.equals(a.getBuilding_name(), building_name))
                 {
                     a.addApartment(rooms,baths,area,rent);
+                    flag=true;
                     break;
                 }
                 else
@@ -33,6 +35,10 @@ public class PropertiesController {
                     System.out.println("The building name you entered does not exist. Enter the building to the properties first");
                 }
             }
+        }
+        if(!flag)
+        {
+            System.out.println("The building name you entered does not exist. Enter the building to the properties first");
         }
     }
 
@@ -43,6 +49,7 @@ public class PropertiesController {
     }
     public void addCondo(String building_name, int unit,int rooms,int baths, int area,int rent)
     {
+        boolean flag = false;
         for(Property p : properties)
         {
             if(p instanceof CondoBuilding a)
@@ -50,13 +57,14 @@ public class PropertiesController {
                 if(Objects.equals(a.getBuildingName(), building_name))
                 {
                     a.add_condo(unit,rooms,baths,area,rent);
+                    flag=true;
                     break;
                 }
-                else
-                {
-                    System.out.println("The building name you entered does not exist. Enter the building to the properties first");
-                }
             }
+        }
+        if(!flag)
+        {
+            System.out.println("The building name you entered does not exist. Enter the building to the properties first");
         }
     }
     public void addHouse(String houseNumber,String street,String city,String postalCode,int streetNumber,int rent)
