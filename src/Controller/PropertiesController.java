@@ -6,37 +6,21 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class PropertiesController {
-    public static ArrayList<Property> properties;
 
-    public PropertiesController() {
-        properties = new ArrayList<>();
-    }
 
     public void addApartmentBuilding(String building_name, String streetName, String city, String postalCode)
     {
         ApartmentBuilding apartmentBuilding = new ApartmentBuilding(building_name,streetName,city,postalCode);
-        properties.add(apartmentBuilding);
+        MockDatabaseController.addProperty(apartmentBuilding);
     }
     public void addApartment(String building_name,int rooms,int baths, int area,int rent)
     {
-        boolean flag  = false;
-        for(Property p : properties)
+        ApartmentBuilding a = (ApartmentBuilding) MockDatabaseController.getProperty(building_name);
+        if(a!=null)
         {
-            if(p instanceof ApartmentBuilding a)
-            {
-                if(Objects.equals(a.getBuilding_name(), building_name))
-                {
-                    a.addApartment(rooms,baths,area,rent);
-                    flag=true;
-                    break;
-                }
-                else
-                {
-                    System.out.println("The building name you entered does not exist. Enter the building to the properties first");
-                }
-            }
+            a.addApartment(rooms,baths,area,rent);
         }
-        if(!flag)
+        else
         {
             System.out.println("The building name you entered does not exist. Enter the building to the properties first");
         }
@@ -45,31 +29,22 @@ public class PropertiesController {
     public void addCondoBuilding(String building_name,int street_number,String street_name,String city, String postalCode)
     {
         CondoBuilding condoBuilding = new CondoBuilding(building_name,street_number,street_name,city,postalCode);
-        properties.add(condoBuilding);
+        MockDatabaseController.addProperty(condoBuilding);
     }
     public void addCondo(String building_name, int unit,int rooms,int baths, int area,int rent)
-    {
-        boolean flag = false;
-        for(Property p : properties)
+    { CondoBuilding condoBuilding = (CondoBuilding) MockDatabaseController.getProperty(building_name);
+        if(condoBuilding!=null)
         {
-            if(p instanceof CondoBuilding a)
-            {
-                if(Objects.equals(a.getBuildingName(), building_name))
-                {
-                    a.add_condo(unit,rooms,baths,area,rent);
-                    flag=true;
-                    break;
-                }
-            }
+            condoBuilding.add_condo(unit,rooms,baths,area,rent);
         }
-        if(!flag)
+        else
         {
             System.out.println("The building name you entered does not exist. Enter the building to the properties first");
         }
     }
     public void addHouse(String houseNumber,String street,String city,String postalCode,int streetNumber,int rent)
     {
-        House c = new House(houseNumber,streetNumber,street,city,postalCode,rent);
-        properties.add(c);
+        House house = new House(houseNumber,streetNumber,street,city,postalCode,rent);
+        MockDatabaseController.addProperty(house);
     }
 }

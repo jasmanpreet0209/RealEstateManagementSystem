@@ -3,40 +3,41 @@ package Controller;
 import Model.*;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static Controller.PropertiesController.properties;
 
 public class TenantController {
-    public static ArrayList<Tenant> tenants;
-
-    public TenantController() {
-        tenants = new ArrayList<>();
-    }
 
     public void addTenant(String info, int unit, Tenant tenant)
     {
-        tenants.add(tenant);
-        for(Property p : properties)
+        Property p = MockDatabaseController.getProperty(info);
+        if(p instanceof CondoBuilding building)
         {
-            if(p.getInfo().equals(info))
+            Condo condo = null;
+            for(Condo c : building.getCondos())
             {
-                if(p instanceof CondoBuilding c)
+                if(c.getCondo_num() == unit)
                 {
-                    Condo condo= c.getCondos().get(unit);
-                    condo.addPotentialTenants(tenant);
-                }
-                else if(p instanceof ApartmentBuilding a)
-                {
-                    Apartment apartment= a.getApartments().get(unit);
-                    apartment.addPotentialTenants(tenant);
-                }
-                else
-                {
-                    House h = (House) p;
-                    h.addPotentialTenants(tenant);
+                    condo = c;
+                    break;
                 }
             }
+            if(condo==null)
+            {
+                System.out.println("There is no condo unit :" + unit + " available!! Enter valid condo unit\n");
+                return;
+            }
+            condo.addPotentialTenants(tenant);
         }
+        else if(p instanceof ApartmentBuilding a)
+        {
+            Apartment apartment= a.getApartments().get(unit);
+            apartment.addPotentialTenants(tenant);
+        }
+        else
+        {
+            House house = (House) p;
+            assert house != null;
+            house.addPotentialTenants(tenant);
+        }
+        MockDatabaseController.addTenant(tenant);
     }
 }
