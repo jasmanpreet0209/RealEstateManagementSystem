@@ -43,7 +43,6 @@ public class TenantView {
         String buildingName;
         int unit=0;
         if(choice!=3) {
-
             System.out.println("Enter building name");
             buildingName=sc.nextLine();
             System.out.println("Enter unit number of the property you are interested in");
@@ -71,6 +70,17 @@ public class TenantView {
                             condo = c;
                             break;
                         }
+                    }
+                    boolean flag=true;
+                    for(Condo c : building.getCondos())
+                    {
+                        if (c.getCondo_num()==unit)
+                            flag=false;
+                    }
+                    if (flag==true)
+                    {
+                        System.out.println("This unit does not exist! Please express your interest in another unit!");
+                        return;
                     }
                     if(condo==null)
                     {

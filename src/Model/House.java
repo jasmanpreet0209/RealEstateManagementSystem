@@ -42,7 +42,7 @@ public class House extends Property{
     }
 
     public void setAvailable(Boolean available) {
-        isAvailable = available;
+        isAvailable = true;
     }
 
 

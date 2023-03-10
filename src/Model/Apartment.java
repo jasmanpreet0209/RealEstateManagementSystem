@@ -77,13 +77,13 @@ public class Apartment {
     }
 
     public String getInfo() {
-        return "Apartment {" +
+        String s="Apartment {" +
                 "unitNumber='" + apartment_num + '\'' +
                 ", numBedrooms=" + numBedrooms +
                 ", numBathrooms=" + numBathrooms +
                 ", squareFootage=" + squareFootage +
-                ", tenant" + tenant.getInfo() +
                 '}';
+        return s;
     }
     public void add_lease(Lease l)
     {
