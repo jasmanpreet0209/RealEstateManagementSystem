@@ -11,6 +11,15 @@ public class Apartment {
     boolean isAvailable=true;
     Tenant tenant;
     ArrayList<Tenant> potentialTenant;
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
     int Rent;
     Boolean RentStatus;
     Lease lease;

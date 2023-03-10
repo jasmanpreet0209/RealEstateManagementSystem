@@ -12,6 +12,15 @@ public class Condo {
     Tenant tenant;
     ArrayList<Tenant> potentialTenant;
     int Rent;
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
     Boolean RentStatus;
     Lease lease;
     public Condo(int condo_num, int numBedrooms, int numBathrooms, int squareFootage, int Rent) {

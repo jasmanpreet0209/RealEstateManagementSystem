@@ -39,6 +39,14 @@ public class House extends Property{
         return tenant;
     }
 
+    public Boolean getAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(Boolean available) {
+        isAvailable = available;
+    }
+
     public void addTenants(Tenant tenant) {
         this.tenant = tenant;
     }
@@ -52,10 +60,6 @@ public class House extends Property{
     }
     public void setPotentialTenant(Tenant t) {
         this.potentialTenant.add(t);
-    }
-    public Boolean isAvailable()
-    {
-        return isAvailable;
     }
 
     public void add_lease(Lease l)

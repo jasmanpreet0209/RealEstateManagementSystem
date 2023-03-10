@@ -27,18 +27,21 @@ public class LeaseController {
                     Condo condo= c.getCondos().get(unit);
                     condo.add_lease(l);
                     condo.addTenants(tenant);
+                    condo.setAvailable(false);
                 }
                 else if(p instanceof ApartmentBuilding a)
                 {
                     Apartment apartment= a.getApartments().get(unit);
                     apartment.add_lease(l);
                     apartment.addTenants(tenant);
+                    apartment.setAvailable(false);
                 }
                 else
                 {
                     House h = (House) p;
                     h.add_lease(l);
                     h.addTenants(tenant);
+                    h.setAvailable(false);
                 }
             }
         }
