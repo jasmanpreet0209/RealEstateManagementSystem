@@ -12,7 +12,16 @@ public class MockDatabaseController {
     public static ArrayList<Property> properties;
     public static ArrayList<Lease> leases;
     public static ArrayList<Tenant> tenants;
-
+    private static MockDatabaseController instance;
+    private MockDatabaseController() {
+            tenants = new ArrayList<>();
+            leases = new ArrayList<>();
+            properties = new ArrayList<>();
+    }
+    public static MockDatabaseController getInstance(){ if (instance == null)
+        instance = new MockDatabaseController();
+        return instance;
+    }
     public static ArrayList<Property> getAllProperties()
     {
         return properties;
