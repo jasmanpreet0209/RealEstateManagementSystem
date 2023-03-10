@@ -44,10 +44,18 @@ public class TenantView {
         String buildingName;
         int unit=0;
         if(choice!=3) {
-            System.out.println("Enter building name");
-            buildingName=sc.nextLine();
-            System.out.println("Enter unit number of the property you are interested in");
-            unit=Integer.parseInt(sc.nextLine());
+            try
+            {
+                System.out.println("Enter building name");
+                buildingName = sc.nextLine();
+                System.out.println("Enter unit number of the property you are interested in");
+                unit = Integer.parseInt(sc.nextLine());
+            }
+            catch(Exception e)
+            {
+                System.out.println("You entered an invalid option! Returning to main menu!");
+                return;
+            }
         }
         else
         {
@@ -112,7 +120,7 @@ public class TenantView {
                         tc.addTenant(apartment.getInfo(), unit,t);
                     }
                 }
-                else {
+                else if(property instanceof House){
                     House h = (House) property;
                     if (h.getAvailable()) {
                         lc.addLease(LocalDate.now(), LocalDate.now().plusYears(1), t, h.getBuildingName(), h.getRent(), unit);

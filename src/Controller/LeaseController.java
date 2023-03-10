@@ -38,7 +38,7 @@ public class LeaseController {
             apartment.addTenant(tenant);
             apartment.setAvailable(false);
         }
-        else
+        else if(p instanceof House)
         {
             House h = (House) p;
             assert h != null;

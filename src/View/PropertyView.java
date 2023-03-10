@@ -17,7 +17,7 @@ public class PropertyView {
     void addProperty()
     {
         System.out.println("Enter details of the property:");
-        int property_type;
+        int property_type=0;
         do {
 
             System.out.println("""
@@ -149,8 +149,10 @@ public class PropertyView {
                     }
                     break;
 
-                } case 6:
+                } case 6: {
+                    property_type=6;
                     break;
+                }
                 default:
                     System.out.println("please select again");
             }

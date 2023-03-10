@@ -32,7 +32,7 @@ public class TenantController {
             Apartment apartment= a.getApartments().get(unit);
             apartment.addPotentialTenants(tenant);
         }
-        else
+        else if(p instanceof House)
         {
             House house = (House) p;
             assert house != null;
