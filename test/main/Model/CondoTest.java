@@ -1,8 +1,5 @@
-package test.main.Model;
+package main.Model;
 
-import main.Model.Condo;
-import main.Model.Lease;
-import main.Model.Tenant;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +13,7 @@ public class CondoTest {
 public void before()  {
     condo = new Condo(4,3,3,500,1000);
     tenant = new Tenant("test","test-email","102948783");
-    lease = new Lease(tenant,"test", LocalDateTime.now(),LocalDateTime.now().plusMonths(11),1000);
+    lease = new Lease(tenant, "test", LocalDateTime.now(),LocalDateTime.now().plusMonths(11),1000);
 }
 @Test
 public void testGetInfo()  { 

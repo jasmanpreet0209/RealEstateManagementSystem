@@ -1,7 +1,5 @@
-package test.main.Controller;
+package main.Controller;
 
-import main.Controller.MockDatabaseController;
-import main.Controller.TenantController;
 import main.Model.House;
 import main.Model.Property;
 import main.Model.Tenant;
@@ -17,7 +15,7 @@ public void before() throws Exception {
     MockDatabaseController.getInstance();
     controller = new TenantController();
     tenant = new Tenant("test","test-email","102948783");
-    property =  new House("11",11,"test","city","postalcode",600);
+    property =  new House("11",11, "test","city","postalcode",600);
     MockDatabaseController.addProperty(property);
 }
 

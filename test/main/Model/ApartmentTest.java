@@ -1,19 +1,8 @@
-package test.main.Model; 
+package main.Model;
 
-import main.Model.Apartment;
-import main.Model.Lease;
-import main.Model.Tenant;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.Before; 
-import org.junit.After; 
 
-/** 
-* Apartment Tester. 
-* 
-* @author <Authors name> 
-* @since <pre>Mar. 11, 2023</pre> 
-* @version 1.0 
-*/ 
 public class ApartmentTest { 
     Apartment apartment;
     Tenant tenant;

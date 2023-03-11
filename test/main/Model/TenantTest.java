@@ -1,6 +1,5 @@
-package test.main.Model;
+package main.Model;
 
-import main.Model.Tenant;
 import org.junit.Before;
 import org.junit.Test;
 

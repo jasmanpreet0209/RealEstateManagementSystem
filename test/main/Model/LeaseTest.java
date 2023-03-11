@@ -1,8 +1,6 @@
-package test.main.Model; 
+package main.Model;
 
-import main.Model.Lease;
-import main.Model.Tenant;
-import org.junit.Test; 
+import org.junit.Test;
 import org.junit.Before;
 
 import java.time.LocalDateTime;
@@ -14,7 +12,7 @@ public class LeaseTest {
 @Before
 public void before()  {
     tenant = new Tenant("test","test-email","102948783");
-    lease = new Lease(tenant,"test", LocalDateTime.now(),LocalDateTime.now().plusMonths(11),1000);
+    lease = new Lease(tenant, "test", LocalDateTime.now(),LocalDateTime.now().plusMonths(11),1000);
 } 
 
 @Test

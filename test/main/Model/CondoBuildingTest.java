@@ -1,16 +1,8 @@
-package test.main.Model; 
+package main.Model;
 
-import main.Model.CondoBuilding;
 import org.junit.Test;
 import org.junit.Before;
 
-/** 
-* Condo Tester. 
-* 
-* @author <Authors name> 
-* @since <pre>Mar. 11, 2023</pre> 
-* @version 1.0 
-*/ 
 public class CondoBuildingTest {
     CondoBuilding building;
 @Before

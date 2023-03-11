@@ -1,6 +1,5 @@
-package test.main.Model;
+package main.Model;
 
-import main.Model.ApartmentBuilding;
 import org.junit.Before;
 import org.junit.Test;
 
