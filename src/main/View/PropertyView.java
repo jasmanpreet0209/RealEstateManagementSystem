@@ -239,9 +239,8 @@ public class PropertyView {
                     }
                 }
             }
-            else if (p instanceof House)
+            else if (p instanceof House h)
             {
-                House h= (House) p;
                 if (h.getAvailable())
                 {
                     System.out.println(h.getBuildingName());

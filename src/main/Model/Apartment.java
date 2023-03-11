@@ -57,9 +57,6 @@ public class Apartment {
         this.tenant = tenant;
     }
     public void setAvailable(boolean available) {isAvailable = available;}
-    public ArrayList<Tenant> getPotentialTenant() {
-        return potentialTenant;
-    }
     public void addPotentialTenants(Tenant tenant) {
         this.potentialTenant.add(tenant);
     }
