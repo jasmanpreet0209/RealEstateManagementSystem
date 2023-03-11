@@ -7,6 +7,11 @@ public class TenantController {
     public void addTenant(String info, int unit, Tenant tenant)
     {
         Property p = MockDatabaseController.getProperty(info);
+        if(p==null)
+        {
+            System.out.println("The building name you entered does not exist. Enter the building to the properties first");
+            return;
+        }
         if(p instanceof CondoBuilding building)
         {
             Condo condo = null;
