@@ -12,7 +12,7 @@ public class Condo {
     Tenant tenant;
     ArrayList<Tenant> potentialTenant;
     int Rent;
-
+    Lease lease;
     public boolean isAvailable() {
         return isAvailable;
     }
@@ -22,7 +22,16 @@ public class Condo {
     }
 
     Boolean RentStatus;
-    Lease lease;
+
+    public void setLease(Lease lease) {
+        this.lease = lease;
+    }
+
+    public Lease getLease() {
+        return lease;
+    }
+
+
     public Condo(int condo_num, int numBedrooms, int numBathrooms, int squareFootage, int Rent) {
         this.condo_num = condo_num;
         this.numBedrooms = numBedrooms;
@@ -84,6 +93,14 @@ public class Condo {
                 ", numBathrooms=" + numBathrooms +
                 ", squareFootage=" + squareFootage +
                 '}';
+    }
+    public void notify_tenant()
+    {
+        isAvailable=true;
+        for(Tenant t:potentialTenant)
+        {
+            System.out.println("Tenant: "+t.getName()+"is notified");
+        }
     }
 }
 

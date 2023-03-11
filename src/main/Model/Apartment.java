@@ -22,6 +22,15 @@ public class Apartment {
 
     int Rent;
     Boolean RentStatus;
+
+    public void setLease(Lease lease) {
+        this.lease = lease;
+    }
+
+    public Lease getLease() {
+        return lease;
+    }
+
     Lease lease;
     public Apartment( int apartment_num, int numBedrooms, int numBathrooms, int squareFootage,int Rent) {
         this.apartment_num = apartment_num;
@@ -30,6 +39,7 @@ public class Apartment {
         this.squareFootage = squareFootage;
         this.Rent=Rent;
         this.isAvailable = true;
+        potentialTenant = new ArrayList<>();
     }
 
     public Boolean getRentStatus() {
@@ -85,10 +95,17 @@ public class Apartment {
                 '}';
         return s;
     }
-    public void add_lease(Lease l)
-    {
-        lease=l;
-    }
+    public void add_lease(Lease l) {
+        lease = l;
 
+    }
+    public void notify_tenant()
+    {
+        isAvailable=true;
+        for(Tenant t:potentialTenant)
+        {
+            System.out.println("Tenant: "+t.getName()+"is notified");
+        }
+    }
 }
 

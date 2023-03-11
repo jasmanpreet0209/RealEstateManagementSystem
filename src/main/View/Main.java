@@ -3,6 +3,7 @@ package main.View;
 import main.Controller.MockDatabaseController;
 
 import java.util.Scanner;
+import main.Observer.ConcreteSubject;
 public class Main {
     public static void main(String[] args) {
         MockDatabaseController.getInstance();
@@ -11,6 +12,7 @@ public class Main {
         LeaseView leaseView=new LeaseView();
         TenantView tenantView=new TenantView();
         int choice;
+        ConcreteSubject subject=new ConcreteSubject();
         do {
             System.out.println("""
                     Hello! Please choose the option:
@@ -39,6 +41,7 @@ public class Main {
                 }
                 default -> System.out.println("Wrong input!try again");
             }
+            subject.checkLease();
         }while (choice != 11);
     }
 }

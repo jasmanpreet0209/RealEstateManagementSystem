@@ -239,7 +239,7 @@ public class PropertyView {
                     }
                 }
             }
-            else
+            else if (p instanceof House)
             {
                 House h= (House) p;
                 if (h.getAvailable())

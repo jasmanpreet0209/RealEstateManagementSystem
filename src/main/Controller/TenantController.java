@@ -32,8 +32,8 @@ public class TenantController {
         }
         else if(p instanceof ApartmentBuilding a)
         {
-            Apartment apartment= a.getApartments().get(unit);
-            apartment.addPotentialTenants(tenant);
+                Apartment apartment = a.getApartments().get(unit-1);
+                apartment.addPotentialTenants(tenant);
         }
         else if(p instanceof House)
         {

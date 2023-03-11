@@ -10,6 +10,15 @@ public class House extends Property{
     Tenant tenant;
     ArrayList<Tenant> potentialTenant;
     int rent;
+
+    public void setLease(Lease lease) {
+        this.lease = lease;
+    }
+
+    public Lease getLease() {
+        return lease;
+    }
+
     Lease lease;
     String houseNumber;
     public House(String hNum, int streetNum, String streetName, String city, String postalCode,int rent) {
@@ -72,6 +81,16 @@ public class House extends Property{
 
     public int getRent() {
         return rent;
+    }
+    public void notify_tenant()
+    {
+
+            isAvailable=true;
+            for(Tenant t:potentialTenant)
+            {
+                System.out.println("Tenant: "+t.getName()+"is notified");
+            }
+
     }
 
 }
