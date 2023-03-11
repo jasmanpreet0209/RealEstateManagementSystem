@@ -73,7 +73,7 @@ public class TenantView {
                     Condo condo = null;
                     for(Condo c : building.getCondos())
                     {
-                        if(c.getCondo_num() == unit)
+                        if(c.getCondoNum() == unit)
                         {
                             condo = c;
                             break;
@@ -82,7 +82,7 @@ public class TenantView {
                     boolean flag=true;
                     for(Condo c : building.getCondos())
                     {
-                        if (c.getCondo_num() == unit) {
+                        if (c.getCondoNum() == unit) {
                             flag = false;
                             break;
                         }
@@ -101,8 +101,6 @@ public class TenantView {
                     if(condo.isAvailable())
                     {
                         lc.addLease(LocalDate.now(),LocalDate.now().plusYears(1),t,building.getBuildingName(),condo.getRent(),unit);
-                       // Tenant tenant, String propertyInfo, LocalDate startDate, LocalDate endDate, double rentAmount
-                        condo.setLease(new Lease(t,condo.getInfo(),LocalDate.now(),LocalDate.now().plusYears(1),condo.getRent()));
                     }
                     else
                     {
@@ -115,8 +113,7 @@ public class TenantView {
                     Apartment apartment= a.getApartments().get(unit-1);
                     if(apartment.isAvailable())
                     {
-                        lc.addLease(LocalDate.now(),LocalDate.now(),t,a.getBuilding_name(),apartment.getRent(),unit);
-                        apartment.setLease(new Lease(t,apartment.getInfo(),LocalDate.now(),LocalDate.now(),apartment.getRent()));
+                        lc.addLease(LocalDate.now(),LocalDate.now(),t,a.getBuildingName(),apartment.getRent(),unit);
                     }
                     else {
                         System.out.println("The apartment you are looking is not available!!\n Adding you to the interested tenant list");
@@ -127,10 +124,8 @@ public class TenantView {
                     House h = (House) property;
                     if (h.getAvailable()) {
                         lc.addLease(LocalDate.now(), LocalDate.now().plusYears(1), t, h.getBuildingName(), h.getRent(), unit);
-                        h.setLease(new Lease(t,h.getInfo(),LocalDate.now(),LocalDate.now().plusYears(1),h.getRent()));
-
-
-                    } else {
+                    }
+                    else {
                         System.out.println("The house you are looking is not available!!\n Adding you to the interested tenant list");
                         tc.addTenant(h.getBuildingName(), 0, t);
                     }

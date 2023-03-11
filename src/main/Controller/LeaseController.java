@@ -7,20 +7,19 @@ import java.time.LocalDate;
 public class LeaseController {
     public void addLease(LocalDate startDate, LocalDate endDate, Tenant tenant,String info, int rent,int unit)
     {
-        MockDatabaseController.addTenant(tenant);
-        Lease l = new Lease(tenant,info,startDate,endDate,rent);
         Property p = MockDatabaseController.getProperty(info);
         if(p==null)
         {
             System.out.println("The building name you entered does not exist. Enter the building to the properties first");
             return;
         }
+        Lease l = new Lease(tenant,p.getInfo(),startDate,endDate,rent);
         if(p instanceof CondoBuilding building)
         {
             Condo condo = null;
             for(Condo c : building.getCondos())
             {
-                if(c.getCondo_num() == unit)
+                if(c.getCondoNum() == unit)
                 {
                     condo = c;
                     break;
@@ -31,25 +30,31 @@ public class LeaseController {
                 System.out.println("There is no condo unit :" + unit + " available!! Enter valid condo unit\n");
                 return;
             }
-            condo.add_lease(l);
+            l.setInfo(condo.getInfo() + "\n" + building.getInfo()+ "\n");
+            condo.setLease(l);
             condo.addTenants(tenant);
             condo.setAvailable(false);
         }
-        else if(p instanceof ApartmentBuilding a)
+        else if(p instanceof ApartmentBuilding building)
         {
-            Apartment apartment= a.getApartments().get(unit-1);
-            apartment.add_lease(l);
+            if(unit > building.getNumApartments())
+            {
+                System.out.println("Enter valid unit number");
+                return;
+            }
+            Apartment apartment= building.getApartments().get(unit-1);
+            l.setInfo(apartment.getInfo() + "\n" + building.getInfo()+ "\n");
+            apartment.setLease(l);
             apartment.addTenant(tenant);
             apartment.setAvailable(false);
         }
-        else if(p instanceof House)
+        else if(p instanceof House h)
         {
-            House h = (House) p;
-            assert h != null;
-            h.add_lease(l);
+            h.setLease(l);
             h.addTenants(tenant);
             h.setAvailable(false);
         }
         MockDatabaseController.addLease(l);
+        MockDatabaseController.addTenant(tenant);
     }
 }

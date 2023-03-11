@@ -16,48 +16,24 @@ public class Lease {
         this.endDate = endDate;
         this.rentAmount = rentAmount;
     }
-    public Lease(Lease l)
-    {
-        this.tenant = l.tenant;
-        this.propertyInfo = l.propertyInfo;
-        this.startDate = l.startDate;
-        this.endDate = l.endDate;
-        this.rentAmount = l.rentAmount;
-    }
-
-    public Tenant getTenant() {
-        return tenant;
-    }
-
-    public void setTenant(Tenant tenant) {
-        this.tenant = tenant;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public double getRentAmount() {
-        return rentAmount;
-    }
     public String getInfo()
     {
         return "Lease: \n Tenant info:\n"+ tenant.getInfo()+"\n Start Date:" +startDate+
                 "\nEndDate:"+endDate+"\nRent Amount"+rentAmount+"\nProperty info:"+ propertyInfo;
     }
-    public void setRentAmount(double rentAmount) {
-        this.rentAmount = rentAmount;
+    public Tenant getTenant() {
+        return tenant;
     }
+
+    public void setInfo(String propertyInfo) {
+        this.propertyInfo = propertyInfo;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
+    }
+
 }

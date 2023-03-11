@@ -3,49 +3,45 @@ package main.Model;
 import java.util.ArrayList;
 
 public class ApartmentBuilding extends Property{
-    public static int num_apartments=0;
-    String building_name;
+    String buildingName;
+    public static int numApartments =0;
     private ArrayList<Apartment> apartments;
 
-    public ApartmentBuilding( String building_name,String streetName, String city, String postalCode){
+    public ApartmentBuilding( String buildingName,String streetName, String city, String postalCode){
         super(streetName,city,postalCode);
         apartments = new ArrayList<>();
-        this.building_name=building_name;
+        this.buildingName =buildingName;
+    }
+    public void displayApartments()
+    {
+        for(Apartment apartment : apartments)
+        {
+            System.out.println(apartment.getInfo());
+        }
+    }
+    // Getters and Setters
+    public String getInfo() {
+        return "Apartment building (" + numApartments + " apartments) : "
+                + buildingName + " "
+                + getStreetName()   + " "
+                + getCity()         + " "
+                + getPostalCode();
     }
     public void addApartment(int numBedrooms, int numBathrooms, int squareFootage,int rent)
     {
-        num_apartments++;
-        Apartment a=new Apartment(num_apartments, numBedrooms, numBathrooms, squareFootage,rent);
+        numApartments++;
+        Apartment a=new Apartment(numApartments, numBedrooms, numBathrooms, squareFootage,rent);
         apartments.add(a);
     }
-
-    public void DisplayApartments()
-    {
-        for (int i=0;i<apartments.size();i++)
-        {
-            System.out.println(apartments.get(i));
-        }
-    }
-
-    public String getBuilding_name() {
-        return building_name;
-    }
-
     @Override
     public String getType() {
         return "Apartment Building";
     }
-
-    public ArrayList<Apartment> getApartments() {
-        return apartments;
-    }
     @Override
     public String getBuildingName() {
-        return building_name;
+        return buildingName;
     }
+    public int getNumApartments() {return numApartments;}
+    public ArrayList<Apartment> getApartments() {return apartments;}
 
-    public String getInfo() {
-        return "Apartment building (" + num_apartments + " apartments) : " + building_name + " " + getStreetName()
-                +" " +getCity()+" "+getPostalCode();
-    }
 }

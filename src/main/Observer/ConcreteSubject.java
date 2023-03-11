@@ -20,7 +20,7 @@ public class ConcreteSubject {
                     Lease l=a.getLease();
                     if (l!=null) {
                         if (l.getEndDate().equals(LocalDate.now())) {
-                            a.notify_tenant();
+                            a.notifyTenant();
                         }
                     }
                 }
@@ -34,7 +34,7 @@ public class ConcreteSubject {
                     Lease l=c.getLease();
                     if (l!=null) {
                         if (l.getEndDate() == LocalDate.now()) {
-                            c.notify_tenant();
+                            c.notifyTenant();
                         }
                     }
                 }
@@ -45,7 +45,7 @@ public class ConcreteSubject {
                 Lease l=h.getLease();
                 if (l!=null) {
                     if (l.getEndDate() == LocalDate.now()) {
-                        h.notify_tenant();
+                        h.notifyTenant();
                     }
                 }
             }

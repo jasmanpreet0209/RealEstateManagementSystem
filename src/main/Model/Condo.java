@@ -4,97 +4,33 @@ package main.Model;
 import java.util.ArrayList;
 
 public class Condo {
-    private int condo_num;
+    private int condoNum;
     private int numBedrooms;
     private int numBathrooms;
     private int squareFootage;
-    boolean isAvailable=true;
-    Tenant tenant;
-    ArrayList<Tenant> potentialTenant;
     int Rent;
     Lease lease;
-    public boolean isAvailable() {
-        return isAvailable;
-    }
+    Tenant tenant;
+    boolean isAvailable;
+    ArrayList<Tenant> potentialTenant;
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
-    }
-
-    Boolean RentStatus;
-
-    public void setLease(Lease lease) {
-        this.lease = lease;
-    }
-
-    public Lease getLease() {
-        return lease;
-    }
-
-
-    public Condo(int condo_num, int numBedrooms, int numBathrooms, int squareFootage, int Rent) {
-        this.condo_num = condo_num;
+    public Condo(int condoNum, int numBedrooms, int numBathrooms, int squareFootage, int Rent) {
+        this.Rent=Rent;
+        this.condoNum = condoNum;
+        this.isAvailable = true;
         this.numBedrooms = numBedrooms;
         this.numBathrooms = numBathrooms;
         this.squareFootage = squareFootage;
-        this.Rent=Rent;
-    }
-    public void add_lease(Lease l)
-    {
-        lease=l;
-    }
-
-    public Boolean getRentStatus() {
-        return RentStatus;
-    }
-
-    public void setRentStatus(Boolean rentStatus) {
-        RentStatus = rentStatus;
-    }
-
-    public int getCondo_num() {
-        return condo_num;
-    }
-
-    public int getNumBedrooms() {
-        return numBedrooms;
-    }
-
-    public int getNumBathrooms() {
-        return numBathrooms;
-    }
-
-    public int getSquareFootage() {
-        return squareFootage;
-    }
-    public int getRent()
-    {
-        return Rent;
-    }
-    public Tenant getTenant() {
-        return tenant;
-    }
-
-    public void addTenants(Tenant tenant) {
-        this.tenant = tenant;
-    }
-
-    public ArrayList<Tenant> getPotentialTenant() {
-        return potentialTenant;
-    }
-
-    public void addPotentialTenants(Tenant tenant) {
-        this.potentialTenant.add(tenant);
     }
     public String getInfo() {
         return "Condo {" +
-                "unitNumber='" + condo_num + '\'' +
-                ", numBedrooms=" + numBedrooms +
-                ", numBathrooms=" + numBathrooms +
-                ", squareFootage=" + squareFootage +
+                "  unitNumber='" + condoNum + '\''  +
+                ", numBedrooms=" + numBedrooms      +
+                ", numBathrooms=" + numBathrooms    +
+                ", squareFootage=" + squareFootage  +
                 '}';
     }
-    public void notify_tenant()
+    public void notifyTenant()
     {
         isAvailable=true;
         for(Tenant t:potentialTenant)
@@ -102,5 +38,32 @@ public class Condo {
             System.out.println("Tenant: "+t.getName()+"is notified");
         }
     }
+    // Getters and Setters
+    public int getRent()
+    {
+        return Rent;
+    }
+    public Lease getLease() {
+        return lease;
+    }
+    public void setLease(Lease l)
+    {
+        lease=l;
+    }
+    public Tenant getTenant() {
+        return tenant;
+    }
+    public int getCondoNum() {
+        return condoNum;
+    }
+    public boolean isAvailable() { return isAvailable;}
+    public void addTenants(Tenant tenant) {
+        this.tenant = tenant;
+    }
+    public void setAvailable(boolean available) {isAvailable = available;}
+    public void addPotentialTenants(Tenant tenant) {
+        this.potentialTenant.add(tenant);
+    }
+
 }
 

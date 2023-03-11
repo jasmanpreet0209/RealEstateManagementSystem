@@ -1,26 +1,15 @@
 package main.Model;
 
 import java.util.ArrayList;
-import main.Model.*;
 
 public class House extends Property{
-
-    private int streetNum;
-    Boolean isAvailable;
-    Tenant tenant;
-    ArrayList<Tenant> potentialTenant;
     int rent;
-
-    public void setLease(Lease lease) {
-        this.lease = lease;
-    }
-
-    public Lease getLease() {
-        return lease;
-    }
-
     Lease lease;
+    Tenant tenant;
     String houseNumber;
+    Boolean isAvailable;
+    private int streetNum;
+    ArrayList<Tenant> potentialTenant;
     public House(String hNum, int streetNum, String streetName, String city, String postalCode,int rent) {
         super(streetName, city, postalCode);
         this.streetNum =streetNum;
@@ -29,68 +18,33 @@ public class House extends Property{
         potentialTenant = new ArrayList<>();
         isAvailable = true;
     }
-    @Override
-    public String getBuildingName() {
-        return houseNumber +" " + getStreetName();
-    }
-
-    @Override
-    public String getType() {
-        return "House";
+    public void notifyTenant()
+    {
+        isAvailable=true;
+        for(Tenant t:potentialTenant)
+        {
+            System.out.println("Tenant: "+t.getName() + ": The House you were interested in is Available now");
+            System.out.println(this.getInfo());
+        }
     }
     @Override
     public String getInfo() {
         return "House (Monthly rent " + rent +") : " + streetNum +" "+ getStreetName() +" "+ getCity()
                 +" "+ getPostalCode() ;
     }
-    public Tenant getTenant() {
-        return tenant;
-    }
-
-    public Boolean getAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(Boolean available) {
-        isAvailable = true;
-    }
-
-
-    public void addTenants(Tenant tenant) {
-        this.tenant = tenant;
-    }
-
-    public ArrayList<Tenant> getPotentialTenant() {
-        return potentialTenant;
-    }
-
-    public void addPotentialTenants(Tenant tenant) {
-        this.potentialTenant.add(tenant);
-    }
-    public void setPotentialTenant(Tenant t) {
-        this.potentialTenant.add(t);
-    }
-
-    public void add_lease(Lease l)
-    {
-        lease=l;
-    }
-    public int getStreetNum() {
-        return streetNum;
-    }
-
+    // Getters and setters
     public int getRent() {
         return rent;
     }
-    public void notify_tenant()
-    {
-
-            isAvailable=true;
-            for(Tenant t:potentialTenant)
-            {
-                System.out.println("Tenant: "+t.getName()+"is notified");
-            }
-
-    }
-
+    public Lease getLease() {return lease; }
+    public void setLease(Lease l) { lease=l;}
+    @Override
+    public String getType() { return "House";}
+    public Tenant getTenant() { return tenant; }
+    public Boolean getAvailable() {return isAvailable; }
+    public void addTenants(Tenant tenant) { this.tenant = tenant; }
+    public void setAvailable(Boolean available) { isAvailable = available; }
+    @Override
+    public String getBuildingName() { return houseNumber +" " + getStreetName(); }
+    public void addPotentialTenants(Tenant tenant) { this.potentialTenant.add(tenant);}
 }

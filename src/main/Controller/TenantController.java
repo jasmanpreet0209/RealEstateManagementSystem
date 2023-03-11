@@ -17,7 +17,7 @@ public class TenantController {
             Condo condo = null;
             for(Condo c : building.getCondos())
             {
-                if(c.getCondo_num() == unit)
+                if(c.getCondoNum() == unit)
                 {
                     condo = c;
                     break;

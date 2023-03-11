@@ -32,7 +32,7 @@ public class PropertiesController {
     { CondoBuilding condoBuilding = (CondoBuilding) MockDatabaseController.getProperty(building_name);
         if(condoBuilding!=null)
         {
-            condoBuilding.add_condo(unit,rooms,baths,area,rent);
+            condoBuilding.addCondo(unit,rooms,baths,area,rent);
         }
         else
         {
