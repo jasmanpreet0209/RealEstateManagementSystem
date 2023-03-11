@@ -1,11 +1,11 @@
-package View;
+package main.View;
 
-import Controller.MockDatabaseController;
+import main.Controller.MockDatabaseController;
 
 import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
-        MockDatabaseController dbinstance = MockDatabaseController.getInstance();
+        MockDatabaseController.getInstance();
         Scanner sc = new Scanner(System.in);
         PropertyView PropView=new PropertyView();
         LeaseView leaseView=new LeaseView();

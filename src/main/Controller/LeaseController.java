@@ -1,9 +1,8 @@
-package Controller;
+package main.Controller;
 
-import Model.*;
+import main.Model.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class LeaseController {
     public void addLease(LocalDate startDate, LocalDate endDate, Tenant tenant,String info, int rent,int unit)
@@ -11,6 +10,11 @@ public class LeaseController {
         MockDatabaseController.addTenant(tenant);
         Lease l = new Lease(tenant,info,startDate,endDate,rent);
         Property p = MockDatabaseController.getProperty(info);
+        if(p==null)
+        {
+            System.out.println("The building name you entered does not exist. Enter the building to the properties first");
+            return;
+        }
         if(p instanceof CondoBuilding building)
         {
             Condo condo = null;

@@ -1,8 +1,6 @@
-package Controller;
+package main.Controller;
 
-import Model.*;
-
-import java.util.ArrayList;
+import main.Model.*;
 
 public class TenantController {
 

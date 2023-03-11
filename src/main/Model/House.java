@@ -1,6 +1,7 @@
-package Model;
+package main.Model;
 
 import java.util.ArrayList;
+import main.Model.*;
 
 public class House extends Property{
 

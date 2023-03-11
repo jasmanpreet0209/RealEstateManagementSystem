@@ -1,4 +1,5 @@
-package Model;
+package main.Model;
+
 import java.time.LocalDate;
 
 public class Lease {

@@ -1,7 +1,6 @@
-package Model;
+package main.Model;
 
 import java.util.ArrayList;
-
 
 public class ApartmentBuilding extends Property{
     public static int num_apartments=0;

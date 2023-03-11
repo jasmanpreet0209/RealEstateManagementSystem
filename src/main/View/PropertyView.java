@@ -1,8 +1,8 @@
-package View;
+package main.View;
 
-import Controller.MockDatabaseController;
-import Controller.PropertiesController;
-import Model.*;
+import main.Controller.MockDatabaseController;
+import main.Controller.PropertiesController;
+import main.Model.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;

@@ -1,9 +1,7 @@
-package Controller;
-
-import Model.ApartmentBuilding;
-import Model.Lease;
-import Model.Property;
-import Model.Tenant;
+package main.Controller;
+import main.Model.Lease;
+import main.Model.Property;
+import main.Model.Tenant;
 
 import java.util.ArrayList;
 import java.util.Objects;

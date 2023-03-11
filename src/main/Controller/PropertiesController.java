@@ -1,9 +1,6 @@
-package Controller;
+package main.Controller;
 
-import Model.*;
-
-import java.util.ArrayList;
-import java.util.Objects;
+import main.Model.*;
 
 public class PropertiesController {
 
