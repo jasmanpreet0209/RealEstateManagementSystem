@@ -31,8 +31,9 @@ public void testAddTenant() {
 @Test
 public void testAddTenant1() {
     // Test if building info is wrong
+    int sizeBefore = MockDatabaseController.getAllTenants().size();
     controller.addTenant(property.getBuildingName(),0,tenant);
-    assert(MockDatabaseController.getAllTenants().size()==1);
+    assert(MockDatabaseController.getAllTenants().size()==sizeBefore+1);
 }
 
 } 
