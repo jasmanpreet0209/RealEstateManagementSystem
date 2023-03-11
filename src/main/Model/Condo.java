@@ -8,19 +8,20 @@ public class Condo {
     private int numBedrooms;
     private int numBathrooms;
     private int squareFootage;
-    int Rent;
+    int rent;
     Lease lease;
     Tenant tenant;
     boolean isAvailable;
     ArrayList<Tenant> potentialTenant;
 
     public Condo(int condoNum, int numBedrooms, int numBathrooms, int squareFootage, int Rent) {
-        this.Rent=Rent;
+        this.rent =Rent;
         this.condoNum = condoNum;
         this.isAvailable = true;
         this.numBedrooms = numBedrooms;
         this.numBathrooms = numBathrooms;
         this.squareFootage = squareFootage;
+        this.potentialTenant = new ArrayList<>();
     }
     public String getInfo() {
         return "Condo {" +
@@ -28,6 +29,7 @@ public class Condo {
                 ", numBedrooms=" + numBedrooms      +
                 ", numBathrooms=" + numBathrooms    +
                 ", squareFootage=" + squareFootage  +
+                ", rent=" + rent +
                 '}';
     }
     public void notifyTenant()
@@ -41,7 +43,7 @@ public class Condo {
     // Getters and Setters
     public int getRent()
     {
-        return Rent;
+        return rent;
     }
     public Lease getLease() {
         return lease;
@@ -61,9 +63,9 @@ public class Condo {
         this.tenant = tenant;
     }
     public void setAvailable(boolean available) {isAvailable = available;}
+    public ArrayList<Tenant> getPotentialTenant() {return potentialTenant;}
     public void addPotentialTenants(Tenant tenant) {
         this.potentialTenant.add(tenant);
     }
-
 }
 

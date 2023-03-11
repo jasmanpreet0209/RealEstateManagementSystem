@@ -31,10 +31,10 @@ public class Main {
                 case 1 -> PropView.addProperty();
                 case 2, 3 -> tenantView.rentUnit();
                 case 4 -> PropView.displayProperties();
-                case 5 -> tenantView.DisplayAllTenants();
+                case 5 -> tenantView.displayAllTenants();
                 case 6 -> PropView.displayRentedUnits();
                 case 7 -> PropView.displayVacantUnits();
-                case 8 -> leaseView.DisplayAllLeases();
+                case 8 -> leaseView.displayAllLeases();
                 case 9 -> {
                     System.out.println("Exiting the program! See you later");
                     System.exit(0);

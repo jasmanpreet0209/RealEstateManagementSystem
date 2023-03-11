@@ -44,6 +44,7 @@ public class House extends Property{
     public Boolean getAvailable() {return isAvailable; }
     public void addTenants(Tenant tenant) { this.tenant = tenant; }
     public void setAvailable(Boolean available) { isAvailable = available; }
+    public ArrayList<Tenant> getPotentialTenants() { return potentialTenant;}
     @Override
     public String getBuildingName() { return houseNumber +" " + getStreetName(); }
     public void addPotentialTenants(Tenant tenant) { this.potentialTenant.add(tenant);}

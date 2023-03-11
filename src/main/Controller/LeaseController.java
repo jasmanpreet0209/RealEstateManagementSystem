@@ -2,10 +2,10 @@ package main.Controller;
 
 import main.Model.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class LeaseController {
-    public void addLease(LocalDate startDate, LocalDate endDate, Tenant tenant,String info, int rent,int unit)
+    public void addLease(LocalDateTime startDate, LocalDateTime endDate, Tenant tenant,String info, int rent,int unit)
     {
         Property p = MockDatabaseController.getProperty(info);
         if(p==null)
@@ -30,7 +30,7 @@ public class LeaseController {
                 System.out.println("There is no condo unit :" + unit + " available!! Enter valid condo unit\n");
                 return;
             }
-            l.setInfo(condo.getInfo() + "\n" + building.getInfo()+ "\n");
+            l.setPropertyInfo(condo.getInfo() + "\n" + building.getInfo()+ "\n");
             condo.setLease(l);
             condo.addTenants(tenant);
             condo.setAvailable(false);
@@ -43,7 +43,7 @@ public class LeaseController {
                 return;
             }
             Apartment apartment= building.getApartments().get(unit-1);
-            l.setInfo(apartment.getInfo() + "\n" + building.getInfo()+ "\n");
+            l.setPropertyInfo(apartment.getInfo() + "\n" + building.getInfo()+ "\n");
             apartment.setLease(l);
             apartment.addTenant(tenant);
             apartment.setAvailable(false);

@@ -14,13 +14,13 @@ public class Apartment {
     boolean isAvailable;
     ArrayList<Tenant> potentialTenant;
     public Apartment( int apartmentNum, int numBedrooms, int numBathrooms, int squareFootage,int rent) {
+        this.rent =rent;
+        this.isAvailable = true;
         this.apartmentNum = apartmentNum;
         this.numBedrooms = numBedrooms;
         this.numBathrooms = numBathrooms;
         this.squareFootage = squareFootage;
-        this.rent =rent;
-        this.isAvailable = true;
-        potentialTenant = new ArrayList<>();
+        this.potentialTenant = new ArrayList<>();
     }
     public String getInfo() {
         return "Apartment {" +
@@ -60,6 +60,8 @@ public class Apartment {
     public void addPotentialTenants(Tenant tenant) {
         this.potentialTenant.add(tenant);
     }
-
+    public ArrayList<Tenant> getPotentialTenant() {
+        return potentialTenant;
+    }
 }
 

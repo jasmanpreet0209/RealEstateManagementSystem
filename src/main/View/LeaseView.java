@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class LeaseView {
 
-    public void DisplayAllLeases() {
+    public void displayAllLeases() {
         ArrayList<Lease> leases=MockDatabaseController.getAllLeases();
         for(Lease l:leases)
         {

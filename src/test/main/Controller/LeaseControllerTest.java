@@ -1,4 +1,4 @@
-package test.Controller;
+package test.main.Controller;
 
 import main.Controller.LeaseController;
 import main.Controller.MockDatabaseController;
@@ -8,7 +8,7 @@ import main.Model.Tenant;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class LeaseControllerTest { 
     LeaseController controller;
@@ -27,14 +27,15 @@ public void before() {
 public void testAddLease_fail() {
     // Testing if wrong building info is passed
     int countBefore = MockDatabaseController.getAllLeases().size();
-    controller.addLease(LocalDate.now(),LocalDate.now().plusMonths(11),tenant,"test",500,0);
+    controller.addLease(LocalDateTime.now(),LocalDateTime.now().plusMonths(11),tenant,"test",500,0);
     assert(MockDatabaseController.getAllLeases().size()==countBefore);
 }
 @Test
 public void testAddLease() {
     // Test add lease for house
-    controller.addLease(LocalDate.now(),LocalDate.now().plusMonths(11),tenant, property.getBuildingName(), 500,0);
-    assert(MockDatabaseController.getAllLeases().size()==1);
+    int countBefore = MockDatabaseController.getAllLeases().size();
+    controller.addLease(LocalDateTime.now(),LocalDateTime.now().plusMonths(11),tenant, property.getBuildingName(), 500,0);
+    assert(MockDatabaseController.getAllLeases().size()==countBefore+1);
 }
 
 } 

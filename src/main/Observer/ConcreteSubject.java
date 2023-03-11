@@ -3,7 +3,7 @@ package main.Observer;
 import main.Controller.MockDatabaseController;
 import main.Model.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ConcreteSubject {
@@ -19,7 +19,7 @@ public class ConcreteSubject {
                 {
                     Lease l=a.getLease();
                     if (l!=null) {
-                        if (l.getEndDate().equals(LocalDate.now())) {
+                        if (l.getEndDate().equals(LocalDateTime.now())) {
                             a.notifyTenant();
                         }
                     }
@@ -33,7 +33,7 @@ public class ConcreteSubject {
                 {
                     Lease l=c.getLease();
                     if (l!=null) {
-                        if (l.getEndDate().equals(LocalDate.now())) {
+                        if (l.getEndDate().equals(LocalDateTime.now())) {
                             c.notifyTenant();
                         }
                     }
@@ -44,7 +44,7 @@ public class ConcreteSubject {
                 House h= (House) p;
                 Lease l=h.getLease();
                 if (l!=null) {
-                    if (l.getEndDate().equals(LocalDate.now())) {
+                    if (l.getEndDate().equals(LocalDateTime.now())) {
                         h.notifyTenant();
                     }
                 }

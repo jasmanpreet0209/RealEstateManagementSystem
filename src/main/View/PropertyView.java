@@ -11,7 +11,6 @@ public class PropertyView {
     Scanner sc = new Scanner(System.in);
     public PropertyView() {
         this.pc = new PropertiesController();
-
     }
 
     void addProperty()

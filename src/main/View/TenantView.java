@@ -5,7 +5,7 @@ import main.Controller.MockDatabaseController;
 import main.Controller.TenantController;
 import main.Model.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,12 +14,12 @@ public class TenantView {
     LeaseController lc;
 
     Scanner sc=new Scanner(System.in);
-    TenantView()
+    public TenantView()
     {
         this.tc=new TenantController();
         this.lc=new LeaseController();
     }
-    public void DisplayAllTenants()
+    public void displayAllTenants()
     {
         ArrayList<Tenant> tenants = MockDatabaseController.getAllTenants();
         for(Tenant t:tenants)
@@ -100,7 +100,7 @@ public class TenantView {
                     }
                     if(condo.isAvailable())
                     {
-                        lc.addLease(LocalDate.now(),LocalDate.now().plusYears(1),t,building.getBuildingName(),condo.getRent(),unit);
+                        lc.addLease(LocalDateTime.now(),LocalDateTime.now().plusYears(1),t,building.getBuildingName(),condo.getRent(),unit);
                     }
                     else
                     {
@@ -116,7 +116,7 @@ public class TenantView {
                     Apartment apartment= building.getApartments().get(unit-1);
                     if(apartment.isAvailable())
                     {
-                        lc.addLease(LocalDate.now(),LocalDate.now(),t,building.getBuildingName(),apartment.getRent(),unit);
+                        lc.addLease(LocalDateTime.now(),LocalDateTime.now().plusMinutes(2),t,building.getBuildingName(),apartment.getRent(),unit);
                     }
                     else {
                         System.out.println("The apartment you are looking is not available!!\n Adding you to the interested tenant list");
@@ -125,7 +125,7 @@ public class TenantView {
                 }
                 else if(property instanceof House h){
                     if (h.getAvailable()) {
-                        lc.addLease(LocalDate.now(), LocalDate.now().plusYears(1), t, h.getBuildingName(), h.getRent(), unit);
+                        lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, h.getBuildingName(), h.getRent(), unit);
                     }
                     else {
                         System.out.println("The house you are looking is not available!!\n Adding you to the interested tenant list");

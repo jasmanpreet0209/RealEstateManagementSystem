@@ -1,4 +1,4 @@
-package test.Controller;
+package test.main.Controller;
 
 import main.Controller.MockDatabaseController;
 import main.Controller.TenantController;
