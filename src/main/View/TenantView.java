@@ -101,11 +101,13 @@ public class TenantView {
                     if(condo.isAvailable())
                     {
                         lc.addLease(LocalDate.now(),LocalDate.now().plusYears(1),t,building.getBuildingName(),condo.getRent(),unit);
+                       // Tenant tenant, String propertyInfo, LocalDate startDate, LocalDate endDate, double rentAmount
+                        condo.setLease(new Lease(t,condo.getInfo(),LocalDate.now(),LocalDate.now().plusYears(1),condo.getRent()));
                     }
                     else
                     {
                         System.out.println("The condo you are looking is not available!!\n Adding you to the interested tenant list");
-                        tc.addTenant(condo.getInfo(),unit,t);
+                        tc.addTenant(building.getBuildingName(),unit,t);
                     }
                 }
                 else if(property instanceof ApartmentBuilding a)
@@ -113,21 +115,24 @@ public class TenantView {
                     Apartment apartment= a.getApartments().get(unit-1);
                     if(apartment.isAvailable())
                     {
-                        lc.addLease(LocalDate.now(),LocalDate.now().plusYears(1),t,a.getBuilding_name(),apartment.getRent(),unit);
+                        lc.addLease(LocalDate.now(),LocalDate.now(),t,a.getBuilding_name(),apartment.getRent(),unit);
+                        apartment.setLease(new Lease(t,apartment.getInfo(),LocalDate.now(),LocalDate.now(),apartment.getRent()));
                     }
                     else {
                         System.out.println("The apartment you are looking is not available!!\n Adding you to the interested tenant list");
-                        tc.addTenant(apartment.getInfo(), unit,t);
+                        tc.addTenant(a.getBuildingName(),unit,t);
                     }
                 }
                 else if(property instanceof House){
                     House h = (House) property;
                     if (h.getAvailable()) {
                         lc.addLease(LocalDate.now(), LocalDate.now().plusYears(1), t, h.getBuildingName(), h.getRent(), unit);
+                        h.setLease(new Lease(t,h.getInfo(),LocalDate.now(),LocalDate.now().plusYears(1),h.getRent()));
+
 
                     } else {
                         System.out.println("The house you are looking is not available!!\n Adding you to the interested tenant list");
-                        tc.addTenant(h.getInfo(), 0, t);
+                        tc.addTenant(h.getBuildingName(), 0, t);
                     }
                 }
         }
