@@ -3,7 +3,7 @@ package main.View;
 import main.Controller.MockDatabaseController;
 
 import java.util.Scanner;
-import main.Observer.ConcreteSubject;
+import main.ObserverPattern.ConcreteSubject;
 public class Main {
     public static void main(String[] args) {
         MockDatabaseController.getInstance();

@@ -1,4 +1,4 @@
-package main.Observer;
+package main.ObserverPattern;
 
 import main.Controller.MockDatabaseController;
 import main.Model.*;
