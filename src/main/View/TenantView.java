@@ -35,12 +35,20 @@ public class TenantView {
         System.out.println("Enter phone number");
         String phone=sc.nextLine();
         Tenant t=new Tenant(name,email,phone);
-        System.out.println("""
-                Please select the property type that the tenant is interested in :
-                 1.Apartment building
-                 2.condo building
-                 3.House""");
-        int choice=Integer.parseInt(sc.nextLine());
+        int choice=0;
+        try {
+            System.out.println("""
+                    Please select the property type that the tenant is interested in :
+                     1.Apartment building
+                     2.condo building
+                     3.House""");
+           choice = Integer.parseInt(sc.nextLine());
+        }
+        catch (Exception e)
+        {
+            System.out.println("You entered an invalid option, please try again!");
+            return;
+        }
         String buildingName;
         int unit=0;
         if(choice!=3) {
@@ -111,12 +119,22 @@ public class TenantView {
                 else if(property instanceof ApartmentBuilding building)
                 {
                     building.displayApartments();
-                    System.out.println("Enter unit number of the property you are interested in");
-                    unit = Integer.parseInt(sc.nextLine());
-                    Apartment apartment= building.getApartments().get(unit-1);
+                    Apartment apartment;
+                    try
+                    {
+                        System.out.println("Enter unit number of the property you are interested in");
+                        unit = Integer.parseInt(sc.nextLine());
+                         apartment= building.getApartments().get(unit-1);
+                    }
+                    catch (Exception e)
+                    {
+                        System.out.println("Please enter a valid Unit number");
+                        return;
+                    }
+
                     if(apartment.isAvailable())
                     {
-                        lc.addLease(LocalDateTime.now(),LocalDateTime.now().plusMinutes(2),t,building.getBuildingName(),apartment.getRent(),unit);
+                        lc.addLease(LocalDateTime.now(),LocalDateTime.now().plusMinutes(1),t,building.getBuildingName(),apartment.getRent(),unit);
                     }
                     else {
                         System.out.println("The apartment you are looking is not available!!\n Adding you to the interested tenant list");

@@ -32,6 +32,7 @@ public class Apartment {
     }
     public void notifyTenant()
     {
+//        System.out.println("\n\n\n\n I am notifying \n\n\n\n");
         isAvailable=true;
         for(Tenant t:potentialTenant)
         {
