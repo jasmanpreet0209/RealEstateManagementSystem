@@ -37,7 +37,8 @@ public class Condo {
         isAvailable=true;
         for(Tenant t:potentialTenant)
         {
-            System.out.println("Tenant: "+t.getName()+"is notified");
+            System.out.println("Tenant: "+t.getName() + ": The Condo you were interested in is Available now");
+            System.out.println(this.getInfo());
         }
     }
     // Getters and Setters

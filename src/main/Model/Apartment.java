@@ -35,7 +35,8 @@ public class Apartment {
         isAvailable=true;
         for(Tenant t:potentialTenant)
         {
-            System.out.println("Tenant: "+t.getName()+"is notified");
+            System.out.println("Tenant: "+t.getName() + ": The Apartment you were interested in is Available now");
+            System.out.println(this.getInfo());
         }
     }
     // Getter and Setters
