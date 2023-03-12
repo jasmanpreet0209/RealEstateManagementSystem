@@ -14,7 +14,6 @@ public class Main {
         int choice;
         ConcreteSubject subject=new ConcreteSubject();
         do {
-            try {
                 System.out.println("""
                         Hello! Please choose the option:
                         Select
@@ -41,7 +40,7 @@ public class Main {
                         System.exit(0);
                     }
                     default -> System.out.println("Wrong input!try again");
-                }
+
             }
 
             subject.checkLease();
