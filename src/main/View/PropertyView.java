@@ -36,30 +36,26 @@ public class PropertyView {
                 property_type=6;
             }
             switch (property_type) {
-                case 1: {
-                    try
-                    {
+                case 1 -> {
+                    try {
                         System.out.println("Enter building name");
-                        String building_name=sc.nextLine();
+                        String building_name = sc.nextLine();
                         System.out.println("Enter street name");
-                        String streetName=sc.nextLine();
+                        String streetName = sc.nextLine();
                         System.out.println("Enter city ");
-                        String city=sc.nextLine();
+                        String city = sc.nextLine();
                         System.out.println("Enter pstl cd");
-                        String postalCode=sc.nextLine();
-                        pc.addApartmentBuilding( building_name,  streetName,  city,  postalCode);
-                    }
-                    catch (Exception e)
-                    {
+                        String postalCode = sc.nextLine();
+                        pc.addApartmentBuilding(building_name, streetName, city, postalCode);
+                    } catch (Exception e) {
                         System.out.println("You entered an invalid option, Please try again!");
                         addProperty();
                     }
 
                     break;
                 }
-                case 2: {
-                    try
-                    {
+                case 2 -> {
+                    try {
                         System.out.println("Enter building name");
                         String building_name = sc.nextLine();
                         System.out.println("Enter num of Rooms ");
@@ -71,15 +67,13 @@ public class PropertyView {
                         System.out.println("Enter Rent ");
                         int rent = Integer.parseInt(sc.nextLine());
                         pc.addApartment(building_name, rooms, baths, area, rent);
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         System.out.println("You entered an invalid option, Please try again!");
                         addProperty();
                     }
                     break;
                 }
-                case 3: {
+                case 3 -> {
                     try {
                         System.out.println("Enter building name");
                         String building_name = sc.nextLine();
@@ -92,17 +86,14 @@ public class PropertyView {
                         System.out.println("Enter pstl cd");
                         String postalCode = sc.nextLine();
                         pc.addCondoBuilding(building_name, street_number, streetName, city, postalCode);
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         System.out.println("You entered an invalid option, Please try again!");
                         addProperty();
                     }
                     break;
                 }
-                case 4: {
-                    try
-                    {
+                case 4 -> {
+                    try {
                         System.out.println("Enter building name");
                         String building_name = sc.nextLine();
                         System.out.println("Enter unit number");
@@ -116,17 +107,14 @@ public class PropertyView {
                         System.out.println("Enter Rent ");
                         int rent = Integer.parseInt(sc.nextLine());
                         pc.addCondo(building_name, unit, rooms, baths, area, rent);
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         System.out.println("You entered an invalid option, Please try again!");
                         addProperty();
                     }
                     break;
                 }
-                case 5: {
-                    try
-                    {
+                case 5 -> {
+                    try {
                         System.out.println("Enter street num ");
                         int street_number = Integer.parseInt(sc.nextLine());
                         System.out.println("Enter street name");
@@ -140,20 +128,18 @@ public class PropertyView {
                         System.out.println("Enter Rent ");
                         int rent = Integer.parseInt(sc.nextLine());
                         pc.addHouse(houseNumber, street, city, postalCode, street_number, rent);
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         System.out.println("You entered an invalid option, Please try again!");
                         addProperty();
                     }
                     break;
 
-                } case 6: {
-                    property_type=6;
+                }
+                case 6 -> {
+                    property_type = 6;
                     break;
                 }
-                default:
-                    System.out.println("please select again");
+                default -> System.out.println("please select again");
             }
         } while (property_type!=6);
 

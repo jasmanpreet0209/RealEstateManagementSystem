@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class ConcreteSubject {
     public void checkLease() {
-
         ArrayList<Property> properties = MockDatabaseController.getAllProperties();
         for(Property p:properties)
         {
@@ -19,7 +18,7 @@ public class ConcreteSubject {
                 {
                     Lease l=a.getLease();
                     if (l!=null) {
-                        if (l.getEndDate().equals(LocalDateTime.now())) {
+                        if (l.getEndDate().isBefore(LocalDateTime.now())) {
                             a.notifyTenant();
                         }
                     }
