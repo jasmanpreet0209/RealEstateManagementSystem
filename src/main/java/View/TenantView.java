@@ -1,9 +1,9 @@
-package main.View;
+package View;
 
-import main.Controller.LeaseController;
-import main.Controller.MockDatabaseController;
-import main.Controller.TenantController;
-import main.Model.*;
+import Controller.LeaseController;
+import Controller.MockDatabaseController;
+import Controller.TenantController;
+import Model.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

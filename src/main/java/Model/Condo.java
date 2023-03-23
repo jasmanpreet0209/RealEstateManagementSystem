@@ -1,10 +1,10 @@
 
-package main.Model;
+package Model;
 
 import java.util.ArrayList;
 
-public class Apartment {
-    private int apartmentNum;
+public class Condo {
+    private int condoNum;
     private int numBedrooms;
     private int numBathrooms;
     private int squareFootage;
@@ -13,34 +13,35 @@ public class Apartment {
     Tenant tenant;
     boolean isAvailable;
     ArrayList<Tenant> potentialTenant;
-    public Apartment( int apartmentNum, int numBedrooms, int numBathrooms, int squareFootage,int rent) {
-        this.rent =rent;
+
+    public Condo(int condoNum, int numBedrooms, int numBathrooms, int squareFootage, int Rent) {
+        this.rent =Rent;
+        this.condoNum = condoNum;
         this.isAvailable = true;
-        this.apartmentNum = apartmentNum;
         this.numBedrooms = numBedrooms;
         this.numBathrooms = numBathrooms;
         this.squareFootage = squareFootage;
         this.potentialTenant = new ArrayList<>();
     }
     public String getInfo() {
-        return "Apartment {" +
-                "  unitNumber='" + apartmentNum + '\'' +
-                ", numBedrooms=" + numBedrooms       +
-                ", numBathrooms=" + numBathrooms     +
-                ", squareFootage=" + squareFootage   +
+        return "Condo {" +
+                "  unitNumber='" + condoNum + '\''  +
+                ", numBedrooms=" + numBedrooms      +
+                ", numBathrooms=" + numBathrooms    +
+                ", squareFootage=" + squareFootage  +
+                ", rent=" + rent +
                 '}';
     }
     public void notifyTenant()
     {
-//        System.out.println("\n\n\n\n I am notifying \n\n\n\n");
         isAvailable=true;
         for(Tenant t:potentialTenant)
         {
-            System.out.println("Tenant: "+t.getName() + ": The Apartment you were interested in is Available now");
+            System.out.println("Tenant: "+t.getName() + ": The Condo you were interested in is Available now");
             System.out.println(this.getInfo());
         }
     }
-    // Getter and Setters
+    // Getters and Setters
     public int getRent()
     {
         return rent;
@@ -48,22 +49,24 @@ public class Apartment {
     public Lease getLease() {
         return lease;
     }
+    public void setLease(Lease l)
+    {
+        lease=l;
+    }
     public Tenant getTenant() {
         return tenant;
     }
-    public void setLease(Lease l) { this.lease = l;}
-    public boolean isAvailable() {
-        return isAvailable;
+    public int getCondoNum() {
+        return condoNum;
     }
-    public void addTenant(Tenant tenant) {
+    public boolean isAvailable() { return isAvailable;}
+    public void addTenants(Tenant tenant) {
         this.tenant = tenant;
     }
     public void setAvailable(boolean available) {isAvailable = available;}
+    public ArrayList<Tenant> getPotentialTenant() {return potentialTenant;}
     public void addPotentialTenants(Tenant tenant) {
         this.potentialTenant.add(tenant);
-    }
-    public ArrayList<Tenant> getPotentialTenant() {
-        return potentialTenant;
     }
 }
 

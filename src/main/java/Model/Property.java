@@ -1,4 +1,4 @@
-package main.Model;
+package Model;
 
 public abstract class Property {
     private String city;

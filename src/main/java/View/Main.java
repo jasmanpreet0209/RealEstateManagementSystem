@@ -1,9 +1,9 @@
-package main.View;
+package View;
 
-import main.Controller.MockDatabaseController;
+import Controller.MockDatabaseController;
 
 import java.util.Scanner;
-import main.ObserverPattern.ConcreteSubject;
+import ObserverPattern.ConcreteSubject;
 public class Main {
     public static void main(String[] args) {
         MockDatabaseController.getInstance();

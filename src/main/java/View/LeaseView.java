@@ -1,7 +1,7 @@
-package main.View;
+package View;
 
-import main.Controller.MockDatabaseController;
-import main.Model.Lease;
+import Controller.MockDatabaseController;
+import Model.Lease;
 
 import java.util.ArrayList;
 

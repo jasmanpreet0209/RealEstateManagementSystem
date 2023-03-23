@@ -1,7 +1,7 @@
-package main.ObserverPattern;
+package ObserverPattern;
 
-import main.Controller.MockDatabaseController;
-import main.Model.*;
+import Controller.MockDatabaseController;
+import Model.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -1,5 +1,8 @@
 package main.Model;
 
+import Model.House;
+import Model.Lease;
+import Model.Tenant;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,5 +1,6 @@
 package main.Model;
 
+import Model.CondoBuilding;
 import org.junit.Test;
 import org.junit.Before;
 

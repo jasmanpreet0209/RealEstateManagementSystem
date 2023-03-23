@@ -1,6 +1,6 @@
-package main.Controller;
+package Controller;
 
-import main.Model.*;
+import Model.*;
 
 public class TenantController {
 

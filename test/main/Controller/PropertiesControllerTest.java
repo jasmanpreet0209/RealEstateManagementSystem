@@ -1,7 +1,9 @@
 package main.Controller;
 
-import main.Model.ApartmentBuilding;
-import main.Model.CondoBuilding;
+import Controller.MockDatabaseController;
+import Controller.PropertiesController;
+import Model.ApartmentBuilding;
+import Model.CondoBuilding;
 import org.junit.Before;
 import org.junit.Test;
 

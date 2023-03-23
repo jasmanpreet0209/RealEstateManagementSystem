@@ -1,8 +1,10 @@
 package main.Controller;
 
-import main.Model.House;
-import main.Model.Property;
-import main.Model.Tenant;
+import Controller.LeaseController;
+import Controller.MockDatabaseController;
+import Model.House;
+import Model.Property;
+import Model.Tenant;
 import org.junit.Before;
 import org.junit.Test;
 
