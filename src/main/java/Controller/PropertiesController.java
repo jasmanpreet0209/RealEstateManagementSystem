@@ -10,8 +10,7 @@ public class PropertiesController {
         ApartmentBuilding apartmentBuilding = new ApartmentBuilding(building_name,streetName,city,postalCode);
         MockDatabaseController.addProperty(apartmentBuilding);
     }
-    public void addApartment(String building_name,int rooms,int baths, int area,int rent)
-    {
+    public void addApartment(String building_name,int rooms,int baths, int area,int rent) throws Exception {
         ApartmentBuilding a = (ApartmentBuilding) MockDatabaseController.getProperty(building_name);
         if(a!=null)
         {
@@ -20,6 +19,7 @@ public class PropertiesController {
         else
         {
             System.out.println("The building name you entered does not exist. Enter the building to the properties first");
+            throw new Exception("The building name you entered does not exist. Enter the building to the properties first");
         }
     }
 

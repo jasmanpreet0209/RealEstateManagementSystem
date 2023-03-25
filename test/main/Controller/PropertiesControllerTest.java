@@ -24,7 +24,7 @@ public void testAddApartmentBuilding() {
 } 
 
 @Test
-public void testAddApartment() {
+public void testAddApartment() throws Exception {
     controller.addApartmentBuilding("abc","streetName","city","postal code");
     controller.addApartment("abc",3,4,500,1400);
     ApartmentBuilding building = (ApartmentBuilding) MockDatabaseController.getProperty("abc");
