@@ -25,7 +25,7 @@ public class TenantController {
             if(condo==null)
             {
                 System.out.println("There is no condo unit :" + unit + " available!! Enter valid condo unit\n");
-                return;
+                throw new Exception("There is no condo unit :" + unit + " available!! Enter valid condo unit\n");
             }
             condo.addPotentialTenants(tenant);
         }

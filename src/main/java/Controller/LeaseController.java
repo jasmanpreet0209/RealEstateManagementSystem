@@ -5,13 +5,12 @@ import Model.*;
 import java.time.LocalDateTime;
 
 public class LeaseController {
-    public void addLease(LocalDateTime startDate, LocalDateTime endDate, Tenant tenant,String info, int rent,int unit)
-    {
+    public void addLease(LocalDateTime startDate, LocalDateTime endDate, Tenant tenant,String info, int rent,int unit) throws Exception {
         Property p = DatabaseController.getProperty(info);
         if(p==null)
         {
             System.out.println("The building name you entered does not exist. Enter the building to the properties first");
-            return;
+            throw new Exception("The building name you entered does not exist. Enter the building to the properties first");
         }
         Lease l = new Lease(tenant,p.getInfo(),startDate,endDate,rent);
         if(p instanceof CondoBuilding building)
@@ -28,7 +27,7 @@ public class LeaseController {
             if(condo==null)
             {
                 System.out.println("There is no condo unit :" + unit + " available!! Enter valid condo unit\n");
-                return;
+                throw new Exception("There is no condo unit :" + unit + " available!! Enter valid condo unit\n");
             }
             l.setPropertyInfo(condo.getInfo() + "\n" + building.getInfo()+ "\n");
             condo.setLease(l);
@@ -40,7 +39,7 @@ public class LeaseController {
             if(unit > building.getNumApartments())
             {
                 System.out.println("Enter valid unit number");
-                return;
+                throw new Exception("Enter valid unit number");
             }
             Apartment apartment= building.getApartments().get(unit-1);
             l.setPropertyInfo(apartment.getInfo() + "\n" + building.getInfo()+ "\n");

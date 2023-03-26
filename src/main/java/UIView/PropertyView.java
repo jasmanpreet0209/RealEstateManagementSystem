@@ -546,12 +546,26 @@ public class PropertyView extends Application {
                         }
                         if (condo1.isAvailable())
                         {
-                            lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, buildingName, condo1.getRent(), unitNum);
+                            try {
+                                lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, buildingName, condo1.getRent(), unitNum);
+                            } catch (Exception ex) {
+                                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                                alert2.setHeaderText("Error in adding Tenant");
+                                alert2.setContentText(ex.getMessage());
+                                alert2.show();
+                                success.set(false);
+                                Stage stage = (Stage) alert2.getDialogPane().getScene().getWindow();
+                                stage.setAlwaysOnTop(true);
+                                stage.toFront();
+                            }
                         }
                         else {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setHeaderText(null);
                             alert.setContentText("The condo you are looking is not available!!\n Adding you to the interested tenant list");
+                            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                            stage.setAlwaysOnTop(true);
+                            stage.toFront();
                             alert.show();
                             try {
                                 tc.addTenant(buildingName, unitNum, t);
@@ -560,11 +574,11 @@ public class PropertyView extends Application {
                                 Alert alert2 = new Alert(Alert.AlertType.ERROR);
                                 alert2.setHeaderText("Error in adding Tenant");
                                 alert2.setContentText(exception.getMessage());
-                                alert2.show();
                                 success.set(false);
-                                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                                stage.setAlwaysOnTop(true);
-                                stage.toFront();
+                                Stage stage2 = (Stage) alert2.getDialogPane().getScene().getWindow();
+                                stage2.setAlwaysOnTop(true);
+                                stage2.toFront();
+                                alert2.show();
                             }
                         }
                     }
@@ -575,7 +589,18 @@ public class PropertyView extends Application {
 
                         if (apartment1.isAvailable())
                         {
-                            lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, buildingName, apartment1.getRent(), unitNum);
+                            try {
+                                lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, buildingName, apartment1.getRent(), unitNum);
+                            } catch (Exception ex) {
+                                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                                alert2.setHeaderText("Error in adding Tenant");
+                                alert2.setContentText(ex.getMessage());
+                                alert2.show();
+                                success.set(false);
+                                Stage stage = (Stage) alert2.getDialogPane().getScene().getWindow();
+                                stage.setAlwaysOnTop(true);
+                                stage.toFront();
+                            }
                         }
                         else {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -595,7 +620,7 @@ public class PropertyView extends Application {
                                 Stage stage1 = (Stage) alert.getDialogPane().getScene().getWindow();
                                 stage1.setAlwaysOnTop(true);
                                 stage1.toFront();
-                                alert.show();
+                                alert2.show();
                                 success.set(false);
                             }
                         }
@@ -649,7 +674,18 @@ public class PropertyView extends Application {
                     }
                     else if(property instanceof House h) {
                         if (h.getAvailable()) {
-                            lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, h.getBuildingName(), h.getRent(), 0);
+                            try {
+                                lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, h.getBuildingName(), h.getRent(), 0);
+                            } catch (Exception ex) {
+                                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                                alert2.setHeaderText("Error in adding Tenant");
+                                alert2.setContentText(ex.getMessage());
+                                alert2.show();
+                                success.set(false);
+                                Stage stage = (Stage) alert2.getDialogPane().getScene().getWindow();
+                                stage.setAlwaysOnTop(true);
+                                stage.toFront();
+                            }
                         } else {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setHeaderText(null);

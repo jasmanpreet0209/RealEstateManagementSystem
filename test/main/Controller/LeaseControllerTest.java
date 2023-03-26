@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 
 import java.time.LocalDateTime;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
 public class LeaseControllerTest { 
@@ -32,6 +33,9 @@ public void testAddLease_fail() {
         controller.addLease(LocalDateTime.now(), LocalDateTime.now().plusMonths(11), tenant, "test", 500, 0);
         db.verify(() -> DatabaseController.getProperty("test"));
     }
+    catch (Exception e) {
+        assertEquals(e.getMessage(),"The building name you entered does not exist. Enter the building to the properties first");
+    }
 }
 @Test
 public void testAddLease() {
@@ -41,6 +45,8 @@ public void testAddLease() {
         controller.addLease(LocalDateTime.now(), LocalDateTime.now().plusMonths(11), tenant, property.getBuildingName(), 500, 0);
         db.verify(() -> DatabaseController.getProperty( property.getBuildingName()));
         db.verify(()-> DatabaseController.addLease(any()));
+    } catch (Exception e) {
+        throw new RuntimeException(e);
     }
 }
 
