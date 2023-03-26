@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ApartmentBuilding extends Property{
     String buildingName;
-    public static int numApartments =0;
+    public static int numApartments=0;
     private ArrayList<Apartment> apartments;
 
     public ApartmentBuilding( String buildingName,String streetName, String city, String postalCode){

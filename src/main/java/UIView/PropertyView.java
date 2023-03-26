@@ -14,17 +14,17 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import Controller.MockDatabaseController;
+import Controller.DatabaseController;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static Controller.MockDatabaseController.*;
+import static Controller.DatabaseController.*;
 
 public class PropertyView extends Application {
-    MockDatabaseController mc=MockDatabaseController.getInstance();
+    DatabaseController mc= DatabaseController.getInstance();
     PropertiesController pc=new PropertiesController();
     TenantController tc=new TenantController();
     LeaseController lc=new LeaseController();
@@ -464,7 +464,7 @@ public class PropertyView extends Application {
                     int unitNum;
                     unitNum=Integer.parseInt(unitText.getText());
                     buildingName=buildingText.getText();
-                    Property property = MockDatabaseController.getProperty(buildingName);
+                    Property property = DatabaseController.getProperty(buildingName);
                     Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
 
                     if(property instanceof CondoBuilding c)
@@ -543,7 +543,7 @@ public class PropertyView extends Application {
                     int unitNum;
                     unitNum=Integer.parseInt(unitText.getText());
                     buildingName=houseNum.getText()+" "+streetNameText.getText();
-                    Property property = MockDatabaseController.getProperty(buildingName);
+                    Property property = DatabaseController.getProperty(buildingName);
                     Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
                     if(property instanceof House h) {
                         if (h.getAvailable()) {

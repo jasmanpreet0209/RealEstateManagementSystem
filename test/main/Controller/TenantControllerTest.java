@@ -1,12 +1,14 @@
 package main.Controller;
 
-import Controller.MockDatabaseController;
+import Controller.DatabaseController;
 import Controller.TenantController;
 import Model.House;
 import Model.Property;
 import Model.Tenant;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 public class TenantControllerTest {
     TenantController controller;
@@ -14,26 +16,28 @@ public class TenantControllerTest {
     Property property;
 @Before
 public void before() throws Exception {
-    MockDatabaseController.getInstance();
     controller = new TenantController();
     tenant = new Tenant("test","test-email","102948783");
     property =  new House("11",11, "test","city","postalcode",600);
-    MockDatabaseController.addProperty(property);
 }
 
 @Test
 public void testAddTenant() {
     // Test if building info is wrong
-    int sizeBefore = MockDatabaseController.getAllTenants().size();
-    controller.addTenant("test",0,tenant);
-    assert(MockDatabaseController.getAllTenants().size()==sizeBefore);
+    try (MockedStatic<DatabaseController> db = Mockito.mockStatic(DatabaseController.class)) {
+        controller.addTenant("test", 0, tenant);
+        db.verify(() -> DatabaseController.getProperty("test"));
+    }
 }
 @Test
 public void testAddTenant1() {
     // Test if building info is wrong
-    int sizeBefore = MockDatabaseController.getAllTenants().size();
-    controller.addTenant(property.getBuildingName(),0,tenant);
-    assert(MockDatabaseController.getAllTenants().size()==sizeBefore+1);
+    try (MockedStatic<DatabaseController> db = Mockito.mockStatic(DatabaseController.class)) {
+        db.when(() -> DatabaseController.getProperty(property.getBuildingName())).thenReturn(property);
+        controller.addTenant(property.getBuildingName(),0,tenant);
+        db.verify(() -> DatabaseController.getProperty(property.getBuildingName()));
+        db.verify(() -> DatabaseController.addTenant(tenant));
+    }
 }
 
 } 

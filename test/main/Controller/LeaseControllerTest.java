@@ -1,14 +1,18 @@
 package main.Controller;
 
 import Controller.LeaseController;
-import Controller.MockDatabaseController;
+import Controller.DatabaseController;
 import Model.House;
 import Model.Property;
 import Model.Tenant;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 import java.time.LocalDateTime;
+
+import static org.mockito.ArgumentMatchers.any;
 
 public class LeaseControllerTest { 
     LeaseController controller;
@@ -16,26 +20,28 @@ public class LeaseControllerTest {
     Property property;
 @Before
 public void before() {
-    MockDatabaseController.getInstance();
     controller = new LeaseController();
     tenant = new Tenant("test","test-email","102948783");
     property =  new House("11",11, "test","city","postalcode",600);
-    MockDatabaseController.addProperty(property);
 }
 
 @Test
 public void testAddLease_fail() {
     // Testing if wrong building info is passed
-    int countBefore = MockDatabaseController.getAllLeases().size();
-    controller.addLease(LocalDateTime.now(),LocalDateTime.now().plusMonths(11),tenant, "test",500,0);
-    assert(MockDatabaseController.getAllLeases().size()==countBefore);
+    try (MockedStatic<DatabaseController> db = Mockito.mockStatic(DatabaseController.class)) {
+        controller.addLease(LocalDateTime.now(), LocalDateTime.now().plusMonths(11), tenant, "test", 500, 0);
+        db.verify(() -> DatabaseController.getProperty("test"));
+    }
 }
 @Test
 public void testAddLease() {
     // Test add lease for house
-    int countBefore = MockDatabaseController.getAllLeases().size();
-    controller.addLease(LocalDateTime.now(),LocalDateTime.now().plusMonths(11),tenant, property.getBuildingName(), 500,0);
-    assert(MockDatabaseController.getAllLeases().size()==countBefore+1);
+    try (MockedStatic<DatabaseController> db = Mockito.mockStatic(DatabaseController.class)) {
+        db.when(() -> DatabaseController.getProperty(property.getBuildingName())).thenReturn(property);
+        controller.addLease(LocalDateTime.now(), LocalDateTime.now().plusMonths(11), tenant, property.getBuildingName(), 500, 0);
+        db.verify(() -> DatabaseController.getProperty( property.getBuildingName()));
+        db.verify(()-> DatabaseController.addLease(any()));
+    }
 }
 
 } 

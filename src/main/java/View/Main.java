@@ -1,12 +1,12 @@
 package View;
 
-import Controller.MockDatabaseController;
+import Controller.DatabaseController;
 
 import java.util.Scanner;
 import ObserverPattern.ConcreteSubject;
 public class Main {
     public static void main(String[] args) {
-        MockDatabaseController.getInstance();
+        DatabaseController.getInstance();
         Scanner sc = new Scanner(System.in);
         PropertyView PropView=new PropertyView();
         LeaseView leaseView=new LeaseView();

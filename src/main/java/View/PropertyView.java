@@ -1,6 +1,6 @@
 package View;
 
-import Controller.MockDatabaseController;
+import Controller.DatabaseController;
 import Controller.PropertiesController;
 import Model.*;
 
@@ -146,7 +146,7 @@ public class PropertyView {
     }
     void displayProperties()
     {
-        ArrayList<Property> properties = MockDatabaseController.getAllProperties();
+        ArrayList<Property> properties = DatabaseController.getAllProperties();
         for(Property p : properties)
         {
             System.out.println("Building: "+ p.getBuildingName());
@@ -155,7 +155,7 @@ public class PropertyView {
     }
     void displayRentedUnits()
     {
-        ArrayList<Property> properties = MockDatabaseController.getAllProperties();
+        ArrayList<Property> properties = DatabaseController.getAllProperties();
         for(Property p : properties)
         {
             if(p instanceof ApartmentBuilding building)
@@ -196,7 +196,7 @@ public class PropertyView {
     }
     void displayVacantUnits()
     {
-        ArrayList<Property> properties = MockDatabaseController.getAllProperties();
+        ArrayList<Property> properties = DatabaseController.getAllProperties();
         for(Property p : properties)
         {
             if(p instanceof ApartmentBuilding building)

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public class LeaseController {
     public void addLease(LocalDateTime startDate, LocalDateTime endDate, Tenant tenant,String info, int rent,int unit)
     {
-        Property p = MockDatabaseController.getProperty(info);
+        Property p = DatabaseController.getProperty(info);
         if(p==null)
         {
             System.out.println("The building name you entered does not exist. Enter the building to the properties first");
@@ -54,7 +54,7 @@ public class LeaseController {
             h.addTenants(tenant);
             h.setAvailable(false);
         }
-        MockDatabaseController.addLease(l);
-        MockDatabaseController.addTenant(tenant);
+        DatabaseController.addLease(l);
+        DatabaseController.addTenant(tenant);
     }
 }

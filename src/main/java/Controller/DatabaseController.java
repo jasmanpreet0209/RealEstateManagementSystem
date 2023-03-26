@@ -6,18 +6,18 @@ import Model.Tenant;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class MockDatabaseController {
+public class DatabaseController {
     public static ArrayList<Property> properties;
     public static ArrayList<Lease> leases;
     public static ArrayList<Tenant> tenants;
-    private static MockDatabaseController instance;
-    private MockDatabaseController() {
+    private static DatabaseController instance;
+    private DatabaseController() {
             tenants = new ArrayList<>();
             leases = new ArrayList<>();
             properties = new ArrayList<>();
     }
-    public static MockDatabaseController getInstance(){ if (instance == null)
-        instance = new MockDatabaseController();
+    public static DatabaseController getInstance(){ if (instance == null)
+        instance = new DatabaseController();
         return instance;
     }
     public static ArrayList<Property> getAllProperties()

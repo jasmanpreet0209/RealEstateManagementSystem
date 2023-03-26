@@ -6,7 +6,7 @@ public class TenantController {
 
     public void addTenant(String info, int unit, Tenant tenant)
     {
-        Property p = MockDatabaseController.getProperty(info);
+        Property p = DatabaseController.getProperty(info);
         if(p==null)
         {
             System.out.println("The building name you entered does not exist. Enter the building to the properties first");
@@ -41,6 +41,6 @@ public class TenantController {
             assert house != null;
             house.addPotentialTenants(tenant);
         }
-        MockDatabaseController.addTenant(tenant);
+        DatabaseController.addTenant(tenant);
     }
 }

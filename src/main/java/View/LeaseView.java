@@ -1,6 +1,6 @@
 package View;
 
-import Controller.MockDatabaseController;
+import Controller.DatabaseController;
 import Model.Lease;
 
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class LeaseView {
 
     public void displayAllLeases() {
-        ArrayList<Lease> leases=MockDatabaseController.getAllLeases();
+        ArrayList<Lease> leases= DatabaseController.getAllLeases();
         for(Lease l:leases)
         {
             System.out.println(l.getInfo());

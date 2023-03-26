@@ -1,7 +1,7 @@
 package View;
 
 import Controller.LeaseController;
-import Controller.MockDatabaseController;
+import Controller.DatabaseController;
 import Controller.TenantController;
 import Model.*;
 
@@ -21,7 +21,7 @@ public class TenantView {
     }
     public void displayAllTenants()
     {
-        ArrayList<Tenant> tenants = MockDatabaseController.getAllTenants();
+        ArrayList<Tenant> tenants = DatabaseController.getAllTenants();
         for(Tenant t:tenants)
         {
             System.out.println(t.getInfo());
@@ -71,7 +71,7 @@ public class TenantView {
             String street = sc.nextLine();
             buildingName = h+ " " + street;
         }
-        Property property = MockDatabaseController.getProperty(buildingName);
+        Property property = DatabaseController.getProperty(buildingName);
         if(property!=null)
         {
                 if(property instanceof CondoBuilding building)

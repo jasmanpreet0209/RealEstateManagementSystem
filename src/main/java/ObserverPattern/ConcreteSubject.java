@@ -1,6 +1,6 @@
 package ObserverPattern;
 
-import Controller.MockDatabaseController;
+import Controller.DatabaseController;
 import Model.*;
 
 import java.time.LocalDateTime;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class ConcreteSubject {
     public void checkLease() {
-        ArrayList<Property> properties = MockDatabaseController.getAllProperties();
+        ArrayList<Property> properties = DatabaseController.getAllProperties();
         for(Property p:properties)
         {
             if(p instanceof ApartmentBuilding building)
