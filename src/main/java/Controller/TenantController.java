@@ -4,13 +4,12 @@ import Model.*;
 
 public class TenantController {
 
-    public void addTenant(String info, int unit, Tenant tenant)
-    {
+    public void addTenant(String info, int unit, Tenant tenant) throws Exception {
         Property p = DatabaseController.getProperty(info);
         if(p==null)
         {
             System.out.println("The building name you entered does not exist. Enter the building to the properties first");
-            return;
+            throw new Exception("The building name you entered does not exist. Enter the building to the properties first");
         }
         if(p instanceof CondoBuilding building)
         {

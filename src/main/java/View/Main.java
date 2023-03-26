@@ -5,7 +5,7 @@ import Controller.DatabaseController;
 import java.util.Scanner;
 import ObserverPattern.ConcreteSubject;
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         DatabaseController.getInstance();
         Scanner sc = new Scanner(System.in);
         PropertyView PropView=new PropertyView();

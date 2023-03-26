@@ -28,8 +28,7 @@ public class PropertiesController {
         CondoBuilding condoBuilding = new CondoBuilding(building_name,street_number,street_name,city,postalCode);
         DatabaseController.addProperty(condoBuilding);
     }
-    public void addCondo(String building_name, int unit,int rooms,int baths, int area,int rent)
-    { CondoBuilding condoBuilding = (CondoBuilding) DatabaseController.getProperty(building_name);
+    public void addCondo(String building_name, int unit,int rooms,int baths, int area,int rent) throws Exception { CondoBuilding condoBuilding = (CondoBuilding) DatabaseController.getProperty(building_name);
         if(condoBuilding!=null)
         {
             condoBuilding.addCondo(unit,rooms,baths,area,rent);
@@ -37,6 +36,7 @@ public class PropertiesController {
         else
         {
             System.out.println("The building name you entered does not exist. Enter the building to the properties first");
+            throw new Exception("The building name you entered does not exist. Enter the building to the properties first");
         }
     }
     public void addHouse(String houseNumber,String street,String city,String postalCode,int streetNumber,int rent)

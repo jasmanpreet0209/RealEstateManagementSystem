@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
+import static org.junit.Assert.assertEquals;
+
 public class TenantControllerTest {
     TenantController controller;
     Tenant tenant;
@@ -22,11 +24,13 @@ public void before() throws Exception {
 }
 
 @Test
-public void testAddTenant() {
+public void testAddTenant()  {
     // Test if building info is wrong
     try (MockedStatic<DatabaseController> db = Mockito.mockStatic(DatabaseController.class)) {
         controller.addTenant("test", 0, tenant);
         db.verify(() -> DatabaseController.getProperty("test"));
+    }catch (Exception e) {
+        assertEquals(e.getMessage(),"The building name you entered does not exist. Enter the building to the properties first");
     }
 }
 @Test
@@ -37,6 +41,8 @@ public void testAddTenant1() {
         controller.addTenant(property.getBuildingName(),0,tenant);
         db.verify(() -> DatabaseController.getProperty(property.getBuildingName()));
         db.verify(() -> DatabaseController.addTenant(tenant));
+    } catch (Exception e) {
+        throw new RuntimeException(e);
     }
 }
 

@@ -27,7 +27,7 @@ public class TenantView {
             System.out.println(t.getInfo());
         }
     }
-    public void rentUnit() {
+    public void rentUnit() throws Exception {
         System.out.println("Enter name");
         String name=sc.nextLine();
         System.out.println("Enter Email");

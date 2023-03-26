@@ -68,6 +68,8 @@ public void testAddCondo() {
         controller.addCondo("condo", 3, 4, 2, 500, 1400);
         db.verify(() -> DatabaseController.addProperty(any()));
         db.verify(() -> DatabaseController.getProperty("condo"));
+    } catch (Exception e) {
+        throw new RuntimeException(e);
     }
 }
 

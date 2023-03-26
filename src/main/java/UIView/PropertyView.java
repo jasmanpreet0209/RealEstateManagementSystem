@@ -100,8 +100,12 @@ public class PropertyView extends Application {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(null);
             alert.setContentText("Apartment building added successfully");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.setAlwaysOnTop(true);
+            stage.toFront();
             alert.show();
             stage2.setScene(createScene());
+            window.setScene(scene0);
         });
         pane.add(submit,1,6);
 
@@ -155,8 +159,12 @@ public class PropertyView extends Application {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(null);
             alert.setContentText("Condo building added successfully");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.setAlwaysOnTop(true);
+            stage.toFront();
             alert.show();
             stage2.setScene(createScene());
+            window.setScene(scene0);
         });
         pane.add(submit,1,6);
         Button back=new Button("Return to Add Property Menu");
@@ -212,6 +220,9 @@ public class PropertyView extends Application {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText("Error in adding apartment");
                 alert.setContentText(exception.getMessage());
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.setAlwaysOnTop(true);
+                stage.toFront();
                 alert.show();
                 success.set(false);
             }
@@ -219,9 +230,13 @@ public class PropertyView extends Application {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setHeaderText(null);
                 alert.setContentText("Apartment  added successfully");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.setAlwaysOnTop(true);
+                stage.toFront();
                 alert.show();
-                stage2.setScene(createScene());
             }
+            stage2.setScene(createScene());
+            window.setScene(scene0);
         });
         pane.add(submit,1,6);
 
@@ -274,13 +289,32 @@ public class PropertyView extends Application {
         pane.add(rentText,1,5);
 
         Button submit =new Button("Add Condo");
+        AtomicBoolean success = new AtomicBoolean(true);
         submit.setOnAction(e->{
-            pc.addCondo(buildingText.getText(),Integer.parseInt(unitText.getText()),Integer.parseInt(roomsText.getText()),Integer.parseInt(bathroomsText.getText()),Integer.parseInt(areaText.getText()), Integer.parseInt(rentText.getText()));
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("Condo  added successfully");
-            alert.show();
-            stage2.setScene(createScene());
+            try {
+                pc.addCondo(buildingText.getText(),Integer.parseInt(unitText.getText()),Integer.parseInt(roomsText.getText()),Integer.parseInt(bathroomsText.getText()),Integer.parseInt(areaText.getText()), Integer.parseInt(rentText.getText()));
+            } catch (Exception exception)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Error in adding Condo");
+                alert.setContentText(exception.getMessage());
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.setAlwaysOnTop(true);
+                stage.toFront();
+                alert.show();
+                success.set(false);
+            }
+            if(success.get()) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setHeaderText(null);
+                alert.setContentText("Condo  added successfully");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.setAlwaysOnTop(true);
+                stage.toFront();
+                alert.show();
+                stage2.setScene(createScene());
+            }
+            window.setScene(scene0);
         });
         pane.add(submit,1,6);
 
@@ -339,15 +373,21 @@ public class PropertyView extends Application {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(null);
             alert.setContentText("House added successfully");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.setAlwaysOnTop(true);
+            stage.toFront();
             alert.show();
             stage2.setScene(createScene());
+            window.setScene(scene0);
         });
         pane.add(submit,1,6);
 
         Button back=new Button("Return to Add Property Menu");
         back.setOnAction(e->window.setScene(sceneAddProperty));
+        Button returnHome=new Button("Return to Home screen");
+        returnHome.setOnAction(e->window.setScene(scene0));
         pane.add(back,1,8);
-
+        pane.add(returnHome,1,10);
         sceneAddHouse=new Scene(pane,800,500);
     }
     private void createSceneAddProperty()
@@ -384,19 +424,37 @@ public class PropertyView extends Application {
         returnHome.setOnAction(e->window.setScene(scene0));
         pane.setMargin(returnHome, new Insets(300, 140, 80, 100));
 
-        apartmentBuilding.setOnAction(e-> window.setScene(sceneAddApartmentBuilding));
+        apartmentBuilding.setOnAction(e->
+        {
+            apartmentBuilding.setSelected(false);
+            window.setScene(sceneAddApartmentBuilding);
+        });
         addApartmentBuilding();
 
-        apartment.setOnAction(e-> window.setScene(sceneAddApartment));
+        apartment.setOnAction(e->
+        {
+            apartment.setSelected(false);
+            window.setScene(sceneAddApartment);
+        });
         addApartment();
 
-        condoBuilding.setOnAction(e-> window.setScene(sceneAddCondoBuilding));
+        condoBuilding.setOnAction(e-> {
+            condoBuilding.setSelected(false);
+            window.setScene(sceneAddCondoBuilding);
+        });
         addCondoBuilding();
 
-        condo.setOnAction(e->window.setScene(sceneAddCondo));
+        condo.setOnAction(e->{
+            condo.setSelected(false);
+            window.setScene(sceneAddCondo);
+        });
         addCondo();
 
-        house.setOnAction(e->window.setScene(sceneAddHouse));
+        house.setOnAction(e->
+        {
+            house.setSelected(false);
+            window.setScene(sceneAddHouse);
+        });
         addHouse();
 
         pane.getChildren().add(returnHome);
@@ -466,8 +524,16 @@ public class PropertyView extends Application {
                     buildingName=buildingText.getText();
                     Property property = DatabaseController.getProperty(buildingName);
                     Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
-
-                    if(property instanceof CondoBuilding c)
+                    AtomicBoolean success = new AtomicBoolean(true);
+                    if(property == null)
+                    {
+                        Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                        alert2.setHeaderText("Error in adding Tenant");
+                        alert2.setContentText("Please enter valid building name");
+                        alert2.show();
+                        success.set(false);
+                    }
+                    else if(property instanceof CondoBuilding c)
                     {
                         Condo condo1=null;
                         for(Condo c2 : c.getCondos())
@@ -487,10 +553,22 @@ public class PropertyView extends Application {
                             alert.setHeaderText(null);
                             alert.setContentText("The condo you are looking is not available!!\n Adding you to the interested tenant list");
                             alert.show();
-                            tc.addTenant(buildingName, unitNum, t);
+                            try {
+                                tc.addTenant(buildingName, unitNum, t);
+                            }  catch (Exception exception)
+                            {
+                                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                                alert2.setHeaderText("Error in adding Tenant");
+                                alert2.setContentText(exception.getMessage());
+                                alert2.show();
+                                success.set(false);
+                                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                                stage.setAlwaysOnTop(true);
+                                stage.toFront();
+                            }
                         }
                     }
-                    if(property instanceof ApartmentBuilding a)
+                    else if(property instanceof ApartmentBuilding a)
                     {
                         Apartment apartment1;
                         apartment1= a.getApartments().get(unitNum-1);
@@ -503,14 +581,35 @@ public class PropertyView extends Application {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setHeaderText(null);
                             alert.setContentText("The apartment you are looking is not available!!\n Adding you to the interested tenant list");
+                            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                            stage.setAlwaysOnTop(true);
+                            stage.toFront();
                             alert.show();
-                            tc.addTenant(buildingName, unitNum, t);
+                            try {
+                                tc.addTenant(buildingName, unitNum, t);
+                            }  catch (Exception exception)
+                            {
+                                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                                alert2.setHeaderText("Error in adding Tenant");
+                                alert2.setContentText(exception.getMessage());
+                                Stage stage1 = (Stage) alert.getDialogPane().getScene().getWindow();
+                                stage1.setAlwaysOnTop(true);
+                                stage1.toFront();
+                                alert.show();
+                                success.set(false);
+                            }
                         }
                     }
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setHeaderText(null);
-                    alert.setContentText("Tenant added successfully");
-                    alert.show();
+                    if(success.get()) {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setHeaderText(null);
+                        alert.setContentText("Tenant added successfully");
+                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                        stage.setAlwaysOnTop(true);
+                        stage.toFront();
+                        alert.show();
+                    }
+                    window.setScene(scene0);
                 });
                 pane.add(submit,1,13);
 
@@ -530,41 +629,59 @@ public class PropertyView extends Application {
                 pane.add(streetName, 0,9);
                 pane.add(streetNameText,1,9);
 
-                Label unit = new Label("Unit number: ");
-                TextField unitText = new TextField ();
-                unitText.setPrefHeight(40);
-                pane.add(unit, 0,10);
-                pane.add(unitText,1,10);
-
                 Button submit =new Button("Add Tenant");
-
+                AtomicBoolean success = new AtomicBoolean(true);
                 submit.setOnAction(f->{
                     String buildingName;
-                    int unitNum;
-                    unitNum=Integer.parseInt(unitText.getText());
                     buildingName=houseNum.getText()+" "+streetNameText.getText();
                     Property property = DatabaseController.getProperty(buildingName);
                     Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
-                    if(property instanceof House h) {
+                    if(property == null)
+                    {
+                        Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                        alert2.setHeaderText("Error in adding Tenant");
+                        alert2.setContentText("Please enter valid building name");
+                        Stage stage = (Stage) alert2.getDialogPane().getScene().getWindow();
+                        stage.setAlwaysOnTop(true);
+                        stage.toFront();
+                        alert2.show();
+                        success.set(false);
+                    }
+                    else if(property instanceof House h) {
                         if (h.getAvailable()) {
-                            lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, h.getBuildingName(), h.getRent(), unitNum);
+                            lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, h.getBuildingName(), h.getRent(), 0);
                         } else {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setHeaderText(null);
                             alert.setContentText("The house you are looking is not available!!\n Adding you to the interested tenant list");
-                            tc.addTenant(h.getBuildingName(), 0, t);
+                            try {
+                                tc.addTenant(h.getBuildingName(), 0, t);
+                            }  catch (Exception exception)
+                            {
+                                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                                alert2.setHeaderText("Error in adding Tenant");
+                                alert2.setContentText(exception.getMessage());
+                                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                                stage.setAlwaysOnTop(true);
+                                stage.toFront();
+                                alert2.show();
+                                success.set(false);
+                            }
                         }
                     }
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setHeaderText(null);
-                    alert.setContentText("Tenant added successfully");
-                    alert.show();
+                    if(success.get()) {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setHeaderText(null);
+                        alert.setContentText("Tenant added successfully");
+                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                        stage.setAlwaysOnTop(true);
+                        stage.toFront();
+                        alert.show();
+                    }
+                    window.setScene(scene0);
                 });
                 pane.add(submit,1,13);
-
-
             }
-
         });
         pane.add(choice,1,7);
 
@@ -716,14 +833,18 @@ public class PropertyView extends Application {
     }
     private void createScene0(StackPane stackPane )
     {
-        createSceneAddProperty();
-        createSceneAddTenant();
-
         Button addProperty=new Button("Add a property");
-        addProperty.setOnAction(e->window.setScene(sceneAddProperty));
+        addProperty.setOnAction(e->{
+            createSceneAddProperty();
+            window.setScene(sceneAddProperty);
+        });
 
         Button addTenant=new Button("Add a Tenant/Rent a Unit");
-        addTenant.setOnAction(e->window.setScene(sceneAddTenant));
+        addTenant.setOnAction(e->
+        {
+            createSceneAddTenant();
+            window.setScene(sceneAddTenant);
+        });
 
         Button displayTenant=new Button("Display tenants");
         displayTenant.setOnAction(e->{
