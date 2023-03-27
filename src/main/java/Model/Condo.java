@@ -32,14 +32,16 @@ public class Condo {
                 ", rent=" + rent +
                 '}';
     }
-    public void notifyTenant()
+    public String notifyTenant()
     {
         isAvailable=true;
+        String message="";
         for(Tenant t:potentialTenant)
         {
-            System.out.println("Tenant: "+t.getName() + ": The Condo you were interested in is Available now");
-            System.out.println(this.getInfo());
+            message += "Tenant: "+t.getName() + ": The Condo you were interested in is Available now" + " " + this.getInfo();
+            System.out.println(message);
         }
+        return message;
     }
     // Getters and Setters
     public int getRent()

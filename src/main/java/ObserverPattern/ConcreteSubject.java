@@ -19,7 +19,9 @@ public class ConcreteSubject {
                     Lease l=a.getLease();
                     if (l!=null) {
                         if (l.getEndDate().isBefore(LocalDateTime.now())) {
-                            a.notifyTenant();
+                            String message = a.notifyTenant();
+                            System.out.println(message);
+                            //Todo call createScene with msg
                         }
                     }
                 }
@@ -33,7 +35,8 @@ public class ConcreteSubject {
                     Lease l=c.getLease();
                     if (l!=null) {
                         if (l.getEndDate().equals(LocalDateTime.now())) {
-                            c.notifyTenant();
+                            String message = c.notifyTenant();
+                            System.out.println(message);
                         }
                     }
                 }
@@ -44,7 +47,8 @@ public class ConcreteSubject {
                 Lease l=h.getLease();
                 if (l!=null) {
                     if (l.getEndDate().equals(LocalDateTime.now())) {
-                        h.notifyTenant();
+                        String message = h.notifyTenant();
+                        System.out.println(message);
                     }
                 }
             }

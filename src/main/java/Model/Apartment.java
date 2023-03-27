@@ -30,15 +30,16 @@ public class Apartment {
                 ", squareFootage=" + squareFootage   +
                 '}';
     }
-    public void notifyTenant()
+    public String notifyTenant()
     {
-        System.out.println("\n\n\n\n I am notifying \n\n\n\n");
         isAvailable=true;
+        String message="";
         for(Tenant t:potentialTenant)
         {
-            System.out.println("Tenant: "+t.getName() + ": The Apartment you were interested in is Available now");
-            System.out.println(this.getInfo());
+            message += "Tenant: "+t.getName() + ": The Apartment you were interested in is Available now" + " " + this.getInfo();
+            System.out.println(message);
         }
+        return message;
     }
     // Getter and Setters
     public int getRent()
