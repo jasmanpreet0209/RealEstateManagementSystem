@@ -6,12 +6,11 @@ import ObserverPattern.ConcreteSubject;
 import static javafx.application.Application.launch;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         DatabaseController.getInstance();
-        ConcreteSubject leaseMonitor = new ConcreteSubject();
-        launch(ManageProperty.class);
-        launch(PropertyView.class);
-        leaseMonitor.checkLease();
-        //Todo call above three statements using multithreading
+        ManageProperty task2 = new ManageProperty();
+        ConcreteSubject task3 =  new ConcreteSubject();
+        task2.run();
+        task3.run();
     }
 }

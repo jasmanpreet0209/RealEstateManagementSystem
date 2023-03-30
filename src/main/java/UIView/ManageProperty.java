@@ -22,10 +22,8 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static Controller.DatabaseController.*;
-import static UIView.PropertyView.createScene;
-import static UIView.PropertyView.stage2;
 
-public class ManageProperty extends Application {
+public class ManageProperty extends Application implements Runnable{
     PropertiesController pc=new PropertiesController();
     TenantController tc=new TenantController();
     LeaseController lc=new LeaseController();
@@ -33,6 +31,63 @@ public class ManageProperty extends Application {
             sceneDisplayVacant,sceneDisplayLease,sceneAddApartment,sceneAddApartmentBuilding,sceneAddCondoBuilding,sceneAddCondo
             ,sceneAddHouse;
     Stage window;
+    public static Stage stage2;
+    public static Scene createScene()
+    {
+        Scene scene;
+        GridPane pane = new GridPane();
+        Label label=new Label("All Properties");
+
+        pane.getChildren().add(label);
+        int i=2;
+        for(Property property:properties)
+        {
+            Text text=new Text();
+            text.setText(property.getInfo());
+            text.setFont(new Font(18));
+            pane.add(text,1,i);
+            i++;
+        }
+
+        Button exit=new Button("Exit");
+        exit.setOnAction(e->stage2.close());
+        pane.add(exit,1,i+2);
+
+        scene=new Scene(pane,800,500);
+        return scene;
+    }
+    public static Scene createScene(String msg)
+    {
+        Scene scene;
+        GridPane pane = new GridPane();
+        Label label=new Label("All Properties");
+
+        pane.getChildren().add(label);
+        int i=2;
+        for(Property property:properties)
+        {
+            Text text=new Text();
+            text.setText(property.getInfo());
+            text.setFont(new Font(18));
+            pane.add(text,1,i);
+            i++;
+        }
+
+        Button exit=new Button("Exit");
+        exit.setOnAction(e->stage2.close());
+        pane.add(exit,1,i+2);
+
+        scene=new Scene(pane,800,500);
+        return scene;
+    }
+    public void getDisplayStage() {
+        stage2 = new Stage();
+        stage2.setTitle("Real Estate Management System");
+        StackPane stackPane = new StackPane();
+        stackPane.setAlignment(Pos.CENTER);
+        stage2.setTitle("Property Manager");
+        stage2.setScene(createScene());
+    }
     void addApartmentBuilding(){
         GridPane pane = new GridPane();
         pane.setPadding(new Insets(10, 10, 10, 10));
@@ -907,6 +962,14 @@ public class ManageProperty extends Application {
 
         primaryStage.setScene(scene0);
 
+        getDisplayStage();
+        stage2.show();
+
         primaryStage.show();
+    }
+
+    @Override
+    public void run() {
+        launch();
     }
 }
