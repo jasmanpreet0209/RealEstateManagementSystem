@@ -6,7 +6,6 @@ import Model.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static UIView.ManageProperty.createScene;
 
 public class ConcreteSubject implements Runnable{
     public void checkLease() {
@@ -23,7 +22,6 @@ public class ConcreteSubject implements Runnable{
                         if (l.getEndDate().isBefore(LocalDateTime.now())) {
                             String message = a.notifyTenant();
                             System.out.println(message);
-                            createScene(message);
                         }
                     }
                 }
@@ -39,7 +37,6 @@ public class ConcreteSubject implements Runnable{
                         if (l.getEndDate().equals(LocalDateTime.now())) {
                             String message = c.notifyTenant();
                             System.out.println(message);
-                            createScene(message);
                         }
                     }
                 }
@@ -52,7 +49,6 @@ public class ConcreteSubject implements Runnable{
                     if (l.getEndDate().equals(LocalDateTime.now())) {
                         String message = h.notifyTenant();
                         System.out.println(message);
-                        createScene(message);
                     }
                 }
             }

@@ -22,8 +22,9 @@ public class CondoBuilding extends Property{
     }
     @Override
     public String getInfo() {
-        return "Condo building (" + numCondos + " condos) : "+ buildingName + " " + streetNum + " " + getStreetName()
-                +" " +getCity()+" "+getPostalCode();
+        return "\nCondo building (" + numCondos + " condos) : \nBuilding name: "+ buildingName + " \nStreet Number: "
+                + streetNum + " \nStreet Name: \"" + getStreetName()
+                +" \n City name: " +getCity()+"\nPostal Code:  "+getPostalCode();
     }
     public void displayCondos()
     {

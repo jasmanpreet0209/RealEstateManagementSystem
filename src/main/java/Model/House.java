@@ -29,10 +29,11 @@ public class House extends Property{
         }
         return message;
     }
+
     @Override
     public String getInfo() {
-        return "House (Monthly rent " + rent +") : " + streetNum +" "+ getStreetName() +" "+ getCity()
-                +" "+ getPostalCode() ;
+        return "\nHouse (Monthly rent " + rent +") : \nStreet Number: " + streetNum +" \nStreet Name: "+ getStreetName() +"\nCity Name:  "+ getCity()
+                +" \nPostal Code: "+ getPostalCode() ;
     }
     // Getters and setters
     public int getRent() {

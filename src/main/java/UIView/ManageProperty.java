@@ -10,8 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -28,324 +27,103 @@ public class ManageProperty extends Application implements Runnable{
     TenantController tc=new TenantController();
     LeaseController lc=new LeaseController();
     Scene scene0,sceneAddProperty,sceneAddTenant,sceneDisplayTenant,sceneDisplayRented,
-            sceneDisplayVacant,sceneDisplayLease,sceneAddApartment,sceneAddApartmentBuilding,sceneAddCondoBuilding,sceneAddCondo
+            sceneDisplayVacant, sceneDisplayLease,sceneAddApartment,
+            sceneAddApartmentBuilding,sceneAddCondoBuilding,sceneAddCondo
             ,sceneAddHouse;
     Stage window;
+
+     public static Scene createSceneDisplayProperties()
+    {
+        Scene scene;
+        GridPane pane = new GridPane();
+        Label label=new Label("All Properties");
+        ColumnConstraints columnConstraints = new ColumnConstraints();
+        columnConstraints.setHgrow(Priority.NEVER);
+        columnConstraints.setPercentWidth(100.00);
+
+        RowConstraints rowConstraints = new RowConstraints();
+        rowConstraints.setVgrow(Priority.NEVER);
+
+        columnConstraints.setPercentWidth(100.0);
+        pane.getRowConstraints().add(rowConstraints);
+        pane.getColumnConstraints().add(columnConstraints);
+        ScrollPane scrollPane=new ScrollPane();
+        pane.add(label,1,1);
+        int i=2;
+
+        for(Property p: properties)
+        {
+
+            if(p instanceof ApartmentBuilding building)
+            {
+                Text text=new Text();
+                text.setText(p.getInfo());
+                text.setFont(new Font(16));
+                pane.add(text,1,i);
+                i++;
+                ArrayList<Apartment> apartmentArrayList=building.getApartments();
+                for (Apartment a: apartmentArrayList)
+                {
+                    Text text2=new Text();
+                    text2.setText(a.getInfo());
+                    text2.setFont(new Font(16));
+                    pane.add(text2,1,i);
+                    i++;
+                }
+
+            }
+            else if(p instanceof CondoBuilding building)
+            {
+                Text text=new Text();
+                text.setText(p.getInfo());
+                text.setFont(new Font(16));
+                pane.add(text,1,i);
+                i++;
+                ArrayList<Condo> condoArrayList=building.getCondos();
+                for (Condo c: condoArrayList)
+                {
+                    Text text2=new Text();
+                    text2.setText(c.getInfo());
+                    text2.setFont(new Font(16));
+                    pane.add(text2,1,i);
+                    i++;
+                }
+            }
+            else if (p instanceof House)
+            {
+                House h= (House) p;
+                Text text=new Text();
+                text.setText(h.getInfo());
+                text.setFont(new Font(16));
+                pane.add(text,1,i);
+                i++;
+            }
+        }
+        Button exit=new Button("Exit");
+        exit.setOnAction(e->stage2.close());
+        pane.add(exit,1,i+2);
+        scrollPane.setContent(pane);
+
+        scene=new Scene(scrollPane,800,500);
+        return scene;
+
+    }
+
+
     public static Stage stage2;
-    public static Scene createScene()
-    {
-        Scene scene;
-        GridPane pane = new GridPane();
-        Label label=new Label("All Properties");
 
-        pane.getChildren().add(label);
-        int i=2;
-        for(Property property:properties)
-        {
-            Text text=new Text();
-            text.setText(property.getInfo());
-            text.setFont(new Font(18));
-            pane.add(text,1,i);
-            i++;
-        }
 
-        Button exit=new Button("Exit");
-        exit.setOnAction(e->stage2.close());
-        pane.add(exit,1,i+2);
 
-        scene=new Scene(pane,800,500);
-        return scene;
-    }
-    public static Scene createScene(String msg)
-    {
-        Scene scene;
-        GridPane pane = new GridPane();
-        Label label=new Label("All Properties");
 
-        pane.getChildren().add(label);
-        int i=2;
-        for(Property property:properties)
-        {
-            Text text=new Text();
-            text.setText(property.getInfo());
-            text.setFont(new Font(18));
-            pane.add(text,1,i);
-            i++;
-        }
-
-        Button exit=new Button("Exit");
-        exit.setOnAction(e->stage2.close());
-        pane.add(exit,1,i+2);
-
-        scene=new Scene(pane,800,500);
-        return scene;
-    }
     public void getDisplayStage() {
         stage2 = new Stage();
         stage2.setTitle("Real Estate Management System");
         StackPane stackPane = new StackPane();
         stackPane.setAlignment(Pos.CENTER);
         stage2.setTitle("Property Manager");
-        stage2.setScene(createScene());
+        stage2.setScene(createSceneDisplayProperties());
     }
-    void addApartmentBuilding(){
-        GridPane pane = new GridPane();
-        pane.setPadding(new Insets(10, 10, 10, 10));
-        pane.setVgap(0.2);
-        pane.setHgap(0.2);
-        Label building = new Label("Building name: ");
-        TextField buildingText = new TextField ();
-        buildingText.setPrefHeight(40);
-        pane.add(building, 0,0);
-        pane.add(buildingText,1,0);
 
-        Label street = new Label("Street name: ");
-        TextField streetText = new TextField ();
-        streetText.setPrefHeight(40);
-        pane.add(street, 0,1);
-        pane.add(streetText,1,1);
-
-        Label city = new Label("city: ");
-        TextField cityText = new TextField ();
-        cityText.setPrefHeight(40);
-        pane.add(city, 0,2);
-        pane.add(cityText,1,2);
-
-        Label pstlcd = new Label("postal code: ");
-        TextField pstlcdText = new TextField ();
-        pstlcdText.setPrefHeight(40);
-        pane.add(pstlcd, 0,3);
-        pane.add(pstlcdText,1,3);
-
-        Button submit =new Button("Add building");
-        submit.setOnAction(e->{
-            pc.addApartmentBuilding(buildingText.getText(),streetText.getText(),cityText.getText(), pstlcdText.getText());
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("Apartment building added successfully");
-            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-            stage.setAlwaysOnTop(true);
-            stage.toFront();
-            alert.show();
-            stage2.setScene(createScene());
-            window.setScene(scene0);
-        });
-        pane.add(submit,1,6);
-
-        Button back=new Button("Return to Add Property Menu");
-        back.setOnAction(e->window.setScene(sceneAddProperty));
-        pane.add(back,1,8);
-        sceneAddApartmentBuilding=new Scene(pane,800,500);
-
-
-    }
-    void addCondoBuilding()
-    {
-        GridPane pane = new GridPane();
-        pane.setPadding(new Insets(10, 10, 10, 10));
-        pane.setVgap(0.2);
-        pane.setHgap(0.2);
-        Label building = new Label("Building name: ");
-        TextField buildingText = new TextField ();
-        buildingText.setPrefHeight(40);
-        pane.add(building, 0,0);
-        pane.add(buildingText,1,0);
-
-
-        Label streetNum = new Label("Street number: ");
-        TextField streetNumText = new TextField ();
-        streetNumText.setPrefHeight(40);
-        pane.add(streetNum, 0,1);
-        pane.add(streetNumText,1,1);
-
-        Label street = new Label("Street name: ");
-        TextField streetText = new TextField ();
-        streetText.setPrefHeight(40);
-        pane.add(street, 0,2);
-        pane.add(streetText,1,2);
-
-        Label city = new Label("city: ");
-        TextField cityText = new TextField ();
-        cityText.setPrefHeight(40);
-        pane.add(city, 0,3);
-        pane.add(cityText,1,3);
-
-        Label pstlcd = new Label("postal code: ");
-        TextField pstlcdText = new TextField ();
-        pstlcdText.setPrefHeight(40);
-        pane.add(pstlcd, 0,4);
-        pane.add(pstlcdText,1,4);
-
-        Button submit =new Button("Add Condo Building");
-        submit.setOnAction(e->{
-            pc.addCondoBuilding(buildingText.getText(),Integer.parseInt(streetNumText.getText()),streetText.getText(),cityText.getText(), pstlcdText.getText());
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("Condo building added successfully");
-            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-            stage.setAlwaysOnTop(true);
-            stage.toFront();
-            alert.show();
-            stage2.setScene(createScene());
-            window.setScene(scene0);
-        });
-        pane.add(submit,1,6);
-        Button back=new Button("Return to Add Property Menu");
-        back.setOnAction(e->window.setScene(sceneAddProperty));
-        pane.add(back,1,8);
-        sceneAddCondoBuilding=new Scene(pane,800,500);
-
-    }
-    void addApartment()
-    {
-        GridPane pane = new GridPane();
-        pane.setPadding(new Insets(10, 10, 10, 10));
-        pane.setVgap(0.2);
-        pane.setHgap(0.2);
-        Label building = new Label("Building name: ");
-        TextField buildingText = new TextField ();
-        buildingText.setPrefHeight(40);
-        pane.add(building, 0,0);
-        pane.add(buildingText,1,0);
-
-
-        Label rooms = new Label("Number of  Rooms: ");
-        TextField roomsText = new TextField ();
-        roomsText.setPrefHeight(40);
-        pane.add(rooms, 0,1);
-        pane.add(roomsText,1,1);
-
-        Label bathrooms = new Label("Number of  bathrooms: ");
-        TextField bathroomsText = new TextField ();
-        bathroomsText.setPrefHeight(40);
-        pane.add(bathrooms, 0,2);
-        pane.add(bathroomsText,1,2);
-
-        Label area = new Label("area: ");
-        TextField areaText = new TextField ();
-        areaText.setPrefHeight(40);
-        pane.add(area, 0,3);
-        pane.add(areaText,1,3);
-
-        Label rent = new Label("Rent: ");
-        TextField rentText = new TextField ();
-        rentText.setPrefHeight(40);
-        pane.add(rent, 0,4);
-        pane.add(rentText,1,4);
-
-        Button submit =new Button("Add Apartment");
-        AtomicBoolean success = new AtomicBoolean(true);
-        submit.setOnAction(e->{
-            try {
-                pc.addApartment(buildingText.getText(), Integer.parseInt(roomsText.getText()), Integer.parseInt(bathroomsText.getText()), Integer.parseInt(areaText.getText()), Integer.parseInt(rentText.getText()));
-            }catch (Exception exception)
-            {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("Error in adding apartment");
-                alert.setContentText(exception.getMessage());
-                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.setAlwaysOnTop(true);
-                stage.toFront();
-                alert.show();
-                success.set(false);
-            }
-            if(success.get()) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setHeaderText(null);
-                alert.setContentText("Apartment  added successfully");
-                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.setAlwaysOnTop(true);
-                stage.toFront();
-                alert.show();
-            }
-            stage2.setScene(createScene());
-            window.setScene(scene0);
-        });
-        pane.add(submit,1,6);
-
-        Button back=new Button("Return to Add Property Menu");
-        back.setOnAction(e->window.setScene(sceneAddProperty));
-        pane.add(back,1,8);
-        sceneAddApartment=new Scene(pane,800,500);
-
-    }
-    void addCondo()
-    {
-        GridPane pane = new GridPane();
-        pane.setPadding(new Insets(10, 10, 10, 10));
-        pane.setVgap(0.2);
-        pane.setHgap(0.2);
-        Label building = new Label("Building name: ");
-        TextField buildingText = new TextField ();
-        buildingText.setPrefHeight(40);
-        pane.add(building, 0,0);
-        pane.add(buildingText,1,0);
-
-        Label unit = new Label("Unit Number: ");
-        TextField unitText = new TextField ();
-        unitText.setPrefHeight(40);
-        pane.add(unit, 0,1);
-        pane.add(unitText,1,1);
-
-        Label rooms = new Label("Number of  Rooms: ");
-        TextField roomsText = new TextField ();
-        roomsText.setPrefHeight(40);
-        pane.add(rooms, 0,2);
-        pane.add(roomsText,1,2);
-
-        Label bathrooms = new Label("Number of  bathrooms: ");
-        TextField bathroomsText = new TextField ();
-        bathroomsText.setPrefHeight(40);
-        pane.add(bathrooms, 0,3);
-        pane.add(bathroomsText,1,3);
-
-        Label area = new Label("area: ");
-        TextField areaText = new TextField ();
-        areaText.setPrefHeight(40);
-        pane.add(area, 0,4);
-        pane.add(areaText,1,4);
-
-        Label rent = new Label("Rent: ");
-        TextField rentText = new TextField ();
-        rentText.setPrefHeight(40);
-        pane.add(rent, 0,5);
-        pane.add(rentText,1,5);
-
-        Button submit =new Button("Add Condo");
-        AtomicBoolean success = new AtomicBoolean(true);
-        submit.setOnAction(e->{
-            try {
-                pc.addCondo(buildingText.getText(),Integer.parseInt(unitText.getText()),Integer.parseInt(roomsText.getText()),Integer.parseInt(bathroomsText.getText()),Integer.parseInt(areaText.getText()), Integer.parseInt(rentText.getText()));
-            } catch (Exception exception)
-            {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("Error in adding Condo");
-                alert.setContentText(exception.getMessage());
-                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.setAlwaysOnTop(true);
-                stage.toFront();
-                alert.show();
-                success.set(false);
-            }
-            if(success.get()) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setHeaderText(null);
-                alert.setContentText("Condo  added successfully");
-                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.setAlwaysOnTop(true);
-                stage.toFront();
-                alert.show();
-                stage2.setScene(createScene());
-            }
-            window.setScene(scene0);
-        });
-        pane.add(submit,1,6);
-
-        Button back=new Button("Return to Add Property Menu");
-        back.setOnAction(e->window.setScene(sceneAddProperty));
-        pane.add(back,1,8);
-        sceneAddCondo=new Scene(pane,800,500);
-    }
     void addHouse()
     {
         GridPane pane = new GridPane();
@@ -392,7 +170,14 @@ public class ManageProperty extends Application implements Runnable{
 
         Button submit =new Button("Add House");
         submit.setOnAction(e->{
-            pc.addHouse(houseNum.getText(),streetText.getText(),cityText.getText(), pstlcdText.getText(),Integer.parseInt(streetNumText.getText()),Integer.parseInt(rentText.getText()));
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    pc.addHouse(houseNum.getText(),streetText.getText(),cityText.getText(), pstlcdText.getText(),Integer.parseInt(streetNumText.getText()),Integer.parseInt(rentText.getText()));
+
+                }
+            }).start();
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(null);
             alert.setContentText("House added successfully");
@@ -400,7 +185,7 @@ public class ManageProperty extends Application implements Runnable{
             stage.setAlwaysOnTop(true);
             stage.toFront();
             alert.show();
-            stage2.setScene(createScene());
+            stage2.setScene(createSceneDisplayProperties());
             window.setScene(scene0);
         });
         pane.add(submit,1,6);
@@ -413,6 +198,301 @@ public class ManageProperty extends Application implements Runnable{
         pane.add(returnHome,1,10);
         sceneAddHouse=new Scene(pane,800,500);
     }
+    void addApartmentBuilding(){
+        GridPane pane = new GridPane();
+        pane.setPadding(new Insets(10, 10, 10, 10));
+        pane.setVgap(0.2);
+        pane.setHgap(0.2);
+        Label building = new Label("Building name: ");
+        TextField buildingText = new TextField ();
+        buildingText.setPrefHeight(40);
+        pane.add(building, 0,0);
+        pane.add(buildingText,1,0);
+
+        Label street = new Label("Street name: ");
+        TextField streetText = new TextField ();
+        streetText.setPrefHeight(40);
+        pane.add(street, 0,1);
+        pane.add(streetText,1,1);
+
+        Label city = new Label("city: ");
+        TextField cityText = new TextField ();
+        cityText.setPrefHeight(40);
+        pane.add(city, 0,2);
+        pane.add(cityText,1,2);
+
+        Label pstlcd = new Label("postal code: ");
+        TextField pstlcdText = new TextField ();
+        pstlcdText.setPrefHeight(40);
+        pane.add(pstlcd, 0,3);
+        pane.add(pstlcdText,1,3);
+
+        Button submit =new Button("Add building");
+        submit.setOnAction(e->{
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    pc.addApartmentBuilding(buildingText.getText(),streetText.getText(),cityText.getText(), pstlcdText.getText());
+
+                }
+            }).start();
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Apartment building added successfully");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.setAlwaysOnTop(true);
+            stage.toFront();
+            alert.show();
+            stage2.setScene(createSceneDisplayProperties());
+            window.setScene(scene0);
+        });
+        pane.add(submit,1,6);
+
+        Button back=new Button("Return to Add Property Menu");
+        back.setOnAction(e->window.setScene(sceneAddProperty));
+        pane.add(back,1,8);
+        sceneAddApartmentBuilding=new Scene(pane,800,500);
+
+
+    }
+    void addApartment()
+    {
+        GridPane pane = new GridPane();
+        pane.setPadding(new Insets(10, 10, 10, 10));
+        pane.setVgap(0.2);
+        pane.setHgap(0.2);
+        Label building = new Label("Building name: ");
+        TextField buildingText = new TextField ();
+        buildingText.setPrefHeight(40);
+        pane.add(building, 0,0);
+        pane.add(buildingText,1,0);
+
+
+        Label rooms = new Label("Number of  Rooms: ");
+        TextField roomsText = new TextField ();
+        roomsText.setPrefHeight(40);
+        pane.add(rooms, 0,1);
+        pane.add(roomsText,1,1);
+
+        Label bathrooms = new Label("Number of  bathrooms: ");
+        TextField bathroomsText = new TextField ();
+        bathroomsText.setPrefHeight(40);
+        pane.add(bathrooms, 0,2);
+        pane.add(bathroomsText,1,2);
+
+        Label area = new Label("area: ");
+        TextField areaText = new TextField ();
+        areaText.setPrefHeight(40);
+        pane.add(area, 0,3);
+        pane.add(areaText,1,3);
+
+        Label rent = new Label("Rent: ");
+        TextField rentText = new TextField ();
+        rentText.setPrefHeight(40);
+        pane.add(rent, 0,4);
+        pane.add(rentText,1,4);
+
+        Button submit =new Button("Add Apartment");
+        AtomicBoolean success = new AtomicBoolean(true);
+        submit.setOnAction(e->{
+            final Boolean[] status = {true};
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        pc.addApartment(buildingText.getText(), Integer.parseInt(roomsText.getText()), Integer.parseInt(bathroomsText.getText()), Integer.parseInt(areaText.getText()), Integer.parseInt(rentText.getText()));
+                    }catch (Exception exception)
+                    {
+                        status[0] =false;
+
+                    }
+                }
+            }).start();
+            if(status[0] ==false)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Error in adding apartment");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.setAlwaysOnTop(true);
+                stage.toFront();
+                alert.show();
+                success.set(false);
+            }
+            else
+            {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setHeaderText(null);
+                alert.setContentText("Apartment added successfully");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.setAlwaysOnTop(true);
+                stage.toFront();
+                alert.show();
+            }
+            stage2.setScene(createSceneDisplayProperties());
+            window.setScene(scene0);
+        });
+        pane.add(submit,1,6);
+
+        Button back=new Button("Return to Add Property Menu");
+        back.setOnAction(e->window.setScene(sceneAddProperty));
+        pane.add(back,1,8);
+        sceneAddApartment=new Scene(pane,800,500);
+
+    }
+    void addCondoBuilding()
+    {
+        GridPane pane = new GridPane();
+        pane.setPadding(new Insets(10, 10, 10, 10));
+        pane.setVgap(0.2);
+        pane.setHgap(0.2);
+        Label building = new Label("Building name: ");
+        TextField buildingText = new TextField ();
+        buildingText.setPrefHeight(40);
+        pane.add(building, 0,0);
+        pane.add(buildingText,1,0);
+
+
+        Label streetNum = new Label("Street number: ");
+        TextField streetNumText = new TextField ();
+        streetNumText.setPrefHeight(40);
+        pane.add(streetNum, 0,1);
+        pane.add(streetNumText,1,1);
+
+        Label street = new Label("Street name: ");
+        TextField streetText = new TextField ();
+        streetText.setPrefHeight(40);
+        pane.add(street, 0,2);
+        pane.add(streetText,1,2);
+
+        Label city = new Label("city: ");
+        TextField cityText = new TextField ();
+        cityText.setPrefHeight(40);
+        pane.add(city, 0,3);
+        pane.add(cityText,1,3);
+
+        Label pstlcd = new Label("postal code: ");
+        TextField pstlcdText = new TextField ();
+        pstlcdText.setPrefHeight(40);
+        pane.add(pstlcd, 0,4);
+        pane.add(pstlcdText,1,4);
+
+        Button submit =new Button("Add Condo Building");
+        submit.setOnAction(e->{
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    pc.addCondoBuilding(buildingText.getText(),Integer.parseInt(streetNumText.getText()),streetText.getText(),cityText.getText(), pstlcdText.getText());
+
+                }
+            }).start();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Condo building added successfully");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.setAlwaysOnTop(true);
+            stage.toFront();
+            alert.show();
+            stage2.setScene(createSceneDisplayProperties());
+            window.setScene(scene0);
+        });
+        pane.add(submit,1,6);
+        Button back=new Button("Return to Add Property Menu");
+        back.setOnAction(e->window.setScene(sceneAddProperty));
+        pane.add(back,1,8);
+        sceneAddCondoBuilding=new Scene(pane,800,500);
+
+    }
+
+    void addCondo()
+    {
+        GridPane pane = new GridPane();
+        pane.setPadding(new Insets(10, 10, 10, 10));
+        pane.setVgap(0.2);
+        pane.setHgap(0.2);
+        Label building = new Label("Building name: ");
+        TextField buildingText = new TextField ();
+        buildingText.setPrefHeight(40);
+        pane.add(building, 0,0);
+        pane.add(buildingText,1,0);
+
+        Label unit = new Label("Unit Number: ");
+        TextField unitText = new TextField ();
+        unitText.setPrefHeight(40);
+        pane.add(unit, 0,1);
+        pane.add(unitText,1,1);
+
+        Label rooms = new Label("Number of  Rooms: ");
+        TextField roomsText = new TextField ();
+        roomsText.setPrefHeight(40);
+        pane.add(rooms, 0,2);
+        pane.add(roomsText,1,2);
+
+        Label bathrooms = new Label("Number of  bathrooms: ");
+        TextField bathroomsText = new TextField ();
+        bathroomsText.setPrefHeight(40);
+        pane.add(bathrooms, 0,3);
+        pane.add(bathroomsText,1,3);
+
+        Label area = new Label("area: ");
+        TextField areaText = new TextField ();
+        areaText.setPrefHeight(40);
+        pane.add(area, 0,4);
+        pane.add(areaText,1,4);
+
+        Label rent = new Label("Rent: ");
+        TextField rentText = new TextField ();
+        rentText.setPrefHeight(40);
+        pane.add(rent, 0,5);
+        pane.add(rentText,1,5);
+
+        Button submit =new Button("Add Condo");
+        AtomicBoolean success = new AtomicBoolean(true);
+        submit.setOnAction(e->{
+            final boolean[] status = {true};
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        pc.addCondo(buildingText.getText(),Integer.parseInt(unitText.getText()),Integer.parseInt(roomsText.getText()),Integer.parseInt(bathroomsText.getText()),Integer.parseInt(areaText.getText()), Integer.parseInt(rentText.getText()));
+                    } catch (Exception exception)
+                    {
+                        status[0] =false;
+                    }
+
+                }
+            }).start();
+            if(status[0] ==false)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Error in adding Condo");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.setAlwaysOnTop(true);
+                stage.toFront();
+                alert.show();
+                success.set(false);
+            }
+            else
+            {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setHeaderText(null);
+                alert.setContentText("Condo  added successfully");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.setAlwaysOnTop(true);
+                stage.toFront();
+                alert.show();
+            }
+            stage2.setScene(createSceneDisplayProperties());
+            window.setScene(scene0);
+        });
+        pane.add(submit,1,6);
+
+        Button back=new Button("Return to Add Property Menu");
+        back.setOnAction(e->window.setScene(sceneAddProperty));
+        pane.add(back,1,8);
+        sceneAddCondo=new Scene(pane,800,500);
+    }
+
     private void createSceneAddProperty()
     {
         StackPane pane=new StackPane();
@@ -546,7 +626,6 @@ public class ManageProperty extends Application implements Runnable{
                     unitNum=Integer.parseInt(unitText.getText());
                     buildingName=buildingText.getText();
                     Property property = DatabaseController.getProperty(buildingName);
-                    Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
                     AtomicBoolean success = new AtomicBoolean(true);
                     if(property == null)
                     {
@@ -569,18 +648,30 @@ public class ManageProperty extends Application implements Runnable{
                         }
                         if (condo1.isAvailable())
                         {
-                            try {
-                                lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, buildingName, condo1.getRent(), unitNum);
-                            } catch (Exception ex) {
-                                Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                                alert2.setHeaderText("Error in adding Tenant");
-                                alert2.setContentText(ex.getMessage());
-                                alert2.show();
-                                success.set(false);
-                                Stage stage = (Stage) alert2.getDialogPane().getScene().getWindow();
-                                stage.setAlwaysOnTop(true);
-                                stage.toFront();
-                            }
+
+                                Condo finalCondo = condo1;
+                            final boolean[] flag = {true};
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            Tenant t = new Tenant(nameText.getText(), emailText.getText(), phoneText.getText());
+                                            lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, buildingName, finalCondo.getRent(), unitNum);
+                                        } catch (Exception ex) {
+                                            flag[0] =false;
+                                        }
+                                    }
+                                }).start();
+                                if(flag[0] ==false)
+                                {
+                                    Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                                    alert2.setHeaderText("Error in adding Tenant");
+                                    alert2.show();
+                                    success.set(false);
+                                    Stage stage = (Stage) alert2.getDialogPane().getScene().getWindow();
+                                    stage.setAlwaysOnTop(true);
+                                    stage.toFront();
+                                }
                         }
                         else {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -590,19 +681,31 @@ public class ManageProperty extends Application implements Runnable{
                             stage.setAlwaysOnTop(true);
                             stage.toFront();
                             alert.show();
-                            try {
-                                tc.addTenant(buildingName, unitNum, t);
-                            }  catch (Exception exception)
+                            final boolean[] flag = {true};
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
+
+                                        tc.addTenant(buildingName, unitNum, t);
+                                    }
+                                    catch (Exception ex) {
+                                        flag[0] =false;
+                                    }
+                                }
+                            }).start();
+                            if(flag[0] ==false)
                             {
                                 Alert alert2 = new Alert(Alert.AlertType.ERROR);
                                 alert2.setHeaderText("Error in adding Tenant");
-                                alert2.setContentText(exception.getMessage());
                                 success.set(false);
                                 Stage stage2 = (Stage) alert2.getDialogPane().getScene().getWindow();
                                 stage2.setAlwaysOnTop(true);
                                 stage2.toFront();
                                 alert2.show();
                             }
+
                         }
                     }
                     else if(property instanceof ApartmentBuilding a)
@@ -612,18 +715,32 @@ public class ManageProperty extends Application implements Runnable{
 
                         if (apartment1.isAvailable())
                         {
-                            try {
-                                lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, buildingName, apartment1.getRent(), unitNum);
-                            } catch (Exception ex) {
+                            final boolean[] flag = {true};
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
+
+                                        lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, buildingName, apartment1.getRent(), unitNum);
+                                    }
+                                    catch (Exception ex) {
+                                        flag[0] =false;
+                                    }
+                                }
+                            }).start();
+                            if(flag[0] ==false)
+                            {
                                 Alert alert2 = new Alert(Alert.AlertType.ERROR);
                                 alert2.setHeaderText("Error in adding Tenant");
-                                alert2.setContentText(ex.getMessage());
                                 alert2.show();
                                 success.set(false);
                                 Stage stage = (Stage) alert2.getDialogPane().getScene().getWindow();
                                 stage.setAlwaysOnTop(true);
                                 stage.toFront();
                             }
+
+
                         }
                         else {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -633,13 +750,24 @@ public class ManageProperty extends Application implements Runnable{
                             stage.setAlwaysOnTop(true);
                             stage.toFront();
                             alert.show();
-                            try {
-                                tc.addTenant(buildingName, unitNum, t);
-                            }  catch (Exception exception)
+                            final boolean[] flag = {true};
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
+
+                                        tc.addTenant(buildingName, unitNum, t);
+                                    }
+                                    catch (Exception ex) {
+                                        flag[0] =false;
+                                    }
+                                }
+                            }).start();
+                            if(flag[0] ==false)
                             {
                                 Alert alert2 = new Alert(Alert.AlertType.ERROR);
                                 alert2.setHeaderText("Error in adding Tenant");
-                                alert2.setContentText(exception.getMessage());
                                 Stage stage1 = (Stage) alert.getDialogPane().getScene().getWindow();
                                 stage1.setAlwaysOnTop(true);
                                 stage1.toFront();
@@ -683,7 +811,6 @@ public class ManageProperty extends Application implements Runnable{
                     String buildingName;
                     buildingName=houseNum.getText()+" "+streetNameText.getText();
                     Property property = DatabaseController.getProperty(buildingName);
-                    Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
                     if(property == null)
                     {
                         Alert alert2 = new Alert(Alert.AlertType.ERROR);
@@ -697,7 +824,11 @@ public class ManageProperty extends Application implements Runnable{
                     }
                     else if(property instanceof House h) {
                         if (h.getAvailable()) {
+
+
                             try {
+                                Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
+
                                 lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, h.getBuildingName(), h.getRent(), 0);
                             } catch (Exception ex) {
                                 Alert alert2 = new Alert(Alert.AlertType.ERROR);
@@ -714,6 +845,8 @@ public class ManageProperty extends Application implements Runnable{
                             alert.setHeaderText(null);
                             alert.setContentText("The house you are looking is not available!!\n Adding you to the interested tenant list");
                             try {
+                                Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
+
                                 tc.addTenant(h.getBuildingName(), 0, t);
                             }  catch (Exception exception)
                             {
@@ -762,7 +895,7 @@ public class ManageProperty extends Application implements Runnable{
         {
             Text text=new Text();
             text.setText(t.getInfo());
-            text.setFont(new Font(18));
+            text.setFont(new Font(16));
             pane.add(text,1,i);
             i++;
         }
@@ -837,7 +970,7 @@ public class ManageProperty extends Application implements Runnable{
                 {
                     if (a.isAvailable())
                     {
-                        text.setText("Apartment Building: "+building.getBuildingName()+" " + a.getInfo());
+                        text.setText("Apartment Building: "+building.getBuildingName()+" \n" + a.getInfo());
                     }
                 }
             }
@@ -880,7 +1013,7 @@ public class ManageProperty extends Application implements Runnable{
         {
             Text text=new Text();
             text.setText(lease.getInfo());
-            text.setFont(new Font(18));
+            text.setFont(new Font(16));
             pane.add(text,1,i);
             i++;
         }

@@ -24,12 +24,12 @@ public class Condo {
         this.potentialTenant = new ArrayList<>();
     }
     public String getInfo() {
-        return "Condo {" +
+        return "\nCondo {" +
                 "  unitNumber='" + condoNum + '\''  +
-                ", numBedrooms=" + numBedrooms      +
-                ", numBathrooms=" + numBathrooms    +
-                ", squareFootage=" + squareFootage  +
-                ", rent=" + rent +
+                "\nnumBedrooms=" + numBedrooms      +
+                "\nnumBathrooms=" + numBathrooms    +
+                "\nsquareFootage=" + squareFootage  +
+                "\nrent=" + rent +
                 '}';
     }
     public String notifyTenant()

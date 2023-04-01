@@ -23,11 +23,11 @@ public class Apartment {
         this.potentialTenant = new ArrayList<>();
     }
     public String getInfo() {
-        return "Apartment {" +
+        return "\nApartment {" +
                 "  unitNumber='" + apartmentNum + '\'' +
-                ", numBedrooms=" + numBedrooms       +
-                ", numBathrooms=" + numBathrooms     +
-                ", squareFootage=" + squareFootage   +
+                "\nnumBedrooms=" + numBedrooms       +
+                "\nnumBathrooms=" + numBathrooms     +
+                "\nsquareFootage=" + squareFootage   +
                 '}';
     }
     public String notifyTenant()

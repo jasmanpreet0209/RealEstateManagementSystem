@@ -21,10 +21,10 @@ public class ApartmentBuilding extends Property{
     }
     // Getters and Setters
     public String getInfo() {
-        return "Apartment building (" + numApartments + " apartments) : "
-                + buildingName + " "
-                + getStreetName()   + " "
-                + getCity()         + " "
+        return "\nApartment building (" + numApartments + " apartments) :\nBuilding name: "
+                + buildingName + "\nStreet Name: "
+                + getStreetName()   + "\n City name: "
+                + getCity()         + "\nPostal Code: "
                 + getPostalCode();
     }
     public void addApartment(int numBedrooms, int numBathrooms, int squareFootage,int rent)
