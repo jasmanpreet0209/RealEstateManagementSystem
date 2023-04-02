@@ -178,8 +178,8 @@ public class ManageProperty extends Application implements Runnable{
                     pc.addHouse(houseNum.getText(),streetText.getText(),cityText.getText(), pstlcdText.getText(),Integer.parseInt(streetNumText.getText()),Integer.parseInt(rentText.getText()));
 
                 }
-            }).start();
-
+            }).start()
+            ;
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(null);
             alert.setContentText("House added successfully");
@@ -306,22 +306,23 @@ public class ManageProperty extends Application implements Runnable{
                         pc.addApartment(buildingText.getText(), Integer.parseInt(roomsText.getText()), Integer.parseInt(bathroomsText.getText()), Integer.parseInt(areaText.getText()), Integer.parseInt(rentText.getText()));
                     }catch (Exception exception)
                     {
-                        status[0] =false;
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setHeaderText("Error in adding apartment");
+                                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                                stage.setAlwaysOnTop(true);
+                                stage.toFront();
+                                alert.show();
+                                success.set(false);
+                            }
+                        });
 
                     }
                 }
             }).start();
-            if(status[0] ==false)
-            {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("Error in adding apartment");
-                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.setAlwaysOnTop(true);
-                stage.toFront();
-                alert.show();
-                success.set(false);
-            }
-            else
+            if (success.get())
             {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setHeaderText(null);
@@ -380,21 +381,44 @@ public class ManageProperty extends Application implements Runnable{
         pane.add(pstlcdText,1,4);
 
         Button submit =new Button("Add Condo Building");
+        AtomicBoolean success = new AtomicBoolean(true);
+
         submit.setOnAction(e->{
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    pc.addCondoBuilding(buildingText.getText(),Integer.parseInt(streetNumText.getText()),streetText.getText(),cityText.getText(), pstlcdText.getText());
+                    try
+                    {
+                        pc.addCondoBuilding(buildingText.getText(),Integer.parseInt(streetNumText.getText()),streetText.getText(),cityText.getText(), pstlcdText.getText());
+
+                    }
+                    catch (Exception e)
+                    {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setHeaderText("Error in adding Condo Building");
+                                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                                stage.setAlwaysOnTop(true);
+                                stage.toFront();
+                                alert.show();
+                                success.set(false);
+                            }
+                        });
+                    }
 
                 }
             }).start();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("Condo building added successfully");
-            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-            stage.setAlwaysOnTop(true);
-            stage.toFront();
-            alert.show();
+            if(success.get()) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setHeaderText(null);
+                alert.setContentText("Condo building added successfully");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.setAlwaysOnTop(true);
+                stage.toFront();
+                alert.show();
+            }
             stage2.setScene(createSceneDisplayProperties());
             window.setScene(scene0);
         });
@@ -460,21 +484,24 @@ public class ManageProperty extends Application implements Runnable{
                     } catch (Exception exception)
                     {
                         status[0] =false;
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setHeaderText("Error in adding Condo");
+                                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                                stage.setAlwaysOnTop(true);
+                                stage.toFront();
+                                alert.show();
+                                success.set(false);
+                            }
+                        });
                     }
 
                 }
             }).start();
-            if(status[0] ==false)
-            {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("Error in adding Condo");
-                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.setAlwaysOnTop(true);
-                stage.toFront();
-                alert.show();
-                success.set(false);
-            }
-            else
+
+            if (success.get())
             {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setHeaderText(null);
@@ -661,19 +688,22 @@ public class ManageProperty extends Application implements Runnable{
                                             lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusMinutes(1), t, buildingName, finalCondo.getRent(), unitNum);
                                         } catch (Exception ex) {
                                             flag[0] =false;
+                                            Platform.runLater(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                                                    alert2.setHeaderText("Error in adding Tenant");
+                                                    alert2.show();
+                                                    success.set(false);
+                                                    Stage stage = (Stage) alert2.getDialogPane().getScene().getWindow();
+                                                    stage.setAlwaysOnTop(true);
+                                                    stage.toFront();
+                                                }
+                                            });
                                         }
                                     }
                                 }).start();
-                                if(flag[0] ==false)
-                                {
-                                    Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                                    alert2.setHeaderText("Error in adding Tenant");
-                                    alert2.show();
-                                    success.set(false);
-                                    Stage stage = (Stage) alert2.getDialogPane().getScene().getWindow();
-                                    stage.setAlwaysOnTop(true);
-                                    stage.toFront();
-                                }
+
                         }
                         else {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -694,19 +724,22 @@ public class ManageProperty extends Application implements Runnable{
                                     }
                                     catch (Exception ex) {
                                         flag[0] =false;
+                                        Platform.runLater(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                                                alert2.setHeaderText("Error in adding Tenant");
+                                                alert2.show();
+                                                success.set(false);
+                                                Stage stage = (Stage) alert2.getDialogPane().getScene().getWindow();
+                                                stage.setAlwaysOnTop(true);
+                                                stage.toFront();
+                                            }
+                                        });
                                     }
                                 }
                             }).start();
-                            if(flag[0] ==false)
-                            {
-                                Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                                alert2.setHeaderText("Error in adding Tenant");
-                                success.set(false);
-                                Stage stage2 = (Stage) alert2.getDialogPane().getScene().getWindow();
-                                stage2.setAlwaysOnTop(true);
-                                stage2.toFront();
-                                alert2.show();
-                            }
+
 
                         }
                     }
@@ -763,19 +796,22 @@ public class ManageProperty extends Application implements Runnable{
                                     }
                                     catch (Exception ex) {
                                         flag[0] =false;
+                                        Platform.runLater(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                                                alert2.setHeaderText("Error in adding Tenant");
+                                                alert2.show();
+                                                success.set(false);
+                                                Stage stage = (Stage) alert2.getDialogPane().getScene().getWindow();
+                                                stage.setAlwaysOnTop(true);
+                                                stage.toFront();
+                                            }
+                                        });
                                     }
                                 }
                             }).start();
-                            if(flag[0] ==false)
-                            {
-                                Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                                alert2.setHeaderText("Error in adding Tenant");
-                                Stage stage1 = (Stage) alert.getDialogPane().getScene().getWindow();
-                                stage1.setAlwaysOnTop(true);
-                                stage1.toFront();
-                                alert2.show();
-                                success.set(false);
-                            }
+
                         }
                     }
                     if(success.get()) {
@@ -1006,9 +1042,20 @@ public class ManageProperty extends Application implements Runnable{
     }
     private void createSceneDisplayLease()
     {
+        ColumnConstraints columnConstraints = new ColumnConstraints();
+        columnConstraints.setHgrow(Priority.NEVER);
+        columnConstraints.setPercentWidth(130.00);
+
+        RowConstraints rowConstraints = new RowConstraints();
+        rowConstraints.setVgrow(Priority.NEVER);
+
+        columnConstraints.setPercentWidth(100.0);
+
+        ScrollPane scrollPane=new ScrollPane();
         GridPane pane = new GridPane();
         Label label=new Label("All Leases");
-
+        pane.getRowConstraints().add(rowConstraints);
+        pane.getColumnConstraints().add(columnConstraints);
         pane.getChildren().add(label);
         int i=2;
         for(Lease lease:leases)
@@ -1022,8 +1069,8 @@ public class ManageProperty extends Application implements Runnable{
         Button back=new Button("Return to Main Menu");
         back.setOnAction(e->window.setScene(scene0));
         pane.add(back,1,i+2);
-
-        sceneDisplayLease=new Scene(pane,800,500);
+        scrollPane.setContent(pane);
+        sceneDisplayLease=new Scene(scrollPane,800,500);
     }
     private void createScene0(StackPane stackPane )
     {
