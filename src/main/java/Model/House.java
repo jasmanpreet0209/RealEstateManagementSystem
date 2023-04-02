@@ -22,10 +22,17 @@ public class House extends Property{
     {
         isAvailable=true;
         String message="";
+        boolean flag=false;
         for(Tenant t:potentialTenant)
         {
-            message += "Tenant: "+t.getName() + ": The House you were interested in is Available now" + " " + this.getInfo();
+            message += "Tenant: "+t.getName() + ": The Apartment you were interested in is Available now" + " " + this.getInfo()+"\n\n";
             System.out.println(message);
+            flag=true;
+
+        }
+        for (int i=0;i<potentialTenant.size();i++)
+        {
+            potentialTenant.remove(0);
         }
         return message;
     }
@@ -34,6 +41,7 @@ public class House extends Property{
     public String getInfo() {
         return "\nHouse (Monthly rent " + rent +") : \nStreet Number: " + streetNum +" \nStreet Name: "+ getStreetName() +"\nCity Name:  "+ getCity()
                 +" \nPostal Code: "+ getPostalCode() ;
+
     }
     // Getters and setters
     public int getRent() {

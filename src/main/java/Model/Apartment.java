@@ -34,10 +34,17 @@ public class Apartment {
     {
         isAvailable=true;
         String message="";
+        boolean flag=false;
         for(Tenant t:potentialTenant)
         {
-            message += "Tenant: "+t.getName() + ": The Apartment you were interested in is Available now" + " " + this.getInfo();
+            message += "Tenant: "+t.getName() + ": The Apartment you were interested in is Available now" + " " + this.getInfo()+"\n\n";
             System.out.println(message);
+            flag=true;
+
+        }
+        for (int i=0;i<potentialTenant.size();i++)
+        {
+            potentialTenant.remove(0);
         }
         return message;
     }

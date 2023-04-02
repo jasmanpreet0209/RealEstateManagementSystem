@@ -5,7 +5,9 @@ import Controller.LeaseController;
 import Controller.PropertiesController;
 import Controller.TenantController;
 import Model.*;
+import ObserverPattern.ConcreteSubject;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -656,7 +658,7 @@ public class ManageProperty extends Application implements Runnable{
                                     public void run() {
                                         try {
                                             Tenant t = new Tenant(nameText.getText(), emailText.getText(), phoneText.getText());
-                                            lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, buildingName, finalCondo.getRent(), unitNum);
+                                            lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusMinutes(1), t, buildingName, finalCondo.getRent(), unitNum);
                                         } catch (Exception ex) {
                                             flag[0] =false;
                                         }
@@ -722,7 +724,7 @@ public class ManageProperty extends Application implements Runnable{
                                     try {
                                         Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
 
-                                        lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, buildingName, apartment1.getRent(), unitNum);
+                                        lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusMinutes(1), t, buildingName, apartment1.getRent(), unitNum);
                                     }
                                     catch (Exception ex) {
                                         flag[0] =false;
@@ -829,7 +831,7 @@ public class ManageProperty extends Application implements Runnable{
                             try {
                                 Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
 
-                                lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusYears(1), t, h.getBuildingName(), h.getRent(), 0);
+                                lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusMinutes(1), t, h.getBuildingName(), h.getRent(), 0);
                             } catch (Exception ex) {
                                 Alert alert2 = new Alert(Alert.AlertType.ERROR);
                                 alert2.setHeaderText("Error in adding Tenant");
@@ -1099,6 +1101,44 @@ public class ManageProperty extends Application implements Runnable{
         stage2.show();
 
         primaryStage.show();
+
+//        System.out.println("bcd");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+//                System.out.println("abc");
+
+                    while (true) {
+                        String message = ConcreteSubject.checkLease();
+//                        System.out.println(message);
+                        try {
+                        if (message != null && message.length() > 2) {
+                            String finalMessage = message;
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setTitle("");
+                                    alert.setHeaderText("");
+                                    alert.setContentText(finalMessage);
+                                    alert.showAndWait();
+
+                                }
+                            });
+                        }
+                        Thread.sleep(5000);
+                        }catch (InterruptedException e)
+                        {
+                            System.out.println("Exception occurred");
+                            System.exit(0);
+                        }
+//                        System.out.println("here");
+                        message="";
+                }
+
+            }
+        }).start();
+
     }
 
     @Override

@@ -2,13 +2,16 @@ package ObserverPattern;
 
 import Controller.DatabaseController;
 import Model.*;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 
 public class ConcreteSubject implements Runnable{
-    public void checkLease() {
+    public static String checkLease() {
         ArrayList<Property> properties = DatabaseController.getAllProperties();
         for(Property p:properties)
         {
@@ -22,6 +25,7 @@ public class ConcreteSubject implements Runnable{
                         if (l.getEndDate().isBefore(LocalDateTime.now())) {
                             String message = a.notifyTenant();
                             System.out.println(message);
+                            return message;
                         }
                     }
                 }
@@ -34,9 +38,10 @@ public class ConcreteSubject implements Runnable{
                 {
                     Lease l=c.getLease();
                     if (l!=null) {
-                        if (l.getEndDate().equals(LocalDateTime.now())) {
+                        if (l.getEndDate().isBefore(LocalDateTime.now())) {
                             String message = c.notifyTenant();
                             System.out.println(message);
+                            return message;
                         }
                     }
                 }
@@ -46,18 +51,21 @@ public class ConcreteSubject implements Runnable{
                 House h= (House) p;
                 Lease l=h.getLease();
                 if (l!=null) {
-                    if (l.getEndDate().equals(LocalDateTime.now())) {
+                    if (l.getEndDate().isBefore(LocalDateTime.now())) {
                         String message = h.notifyTenant();
                         System.out.println(message);
+                        return message;
                     }
                 }
             }
         }
+        return "";
 
         }
 
     @Override
     public void run() {
         checkLease();
+
     }
 }
