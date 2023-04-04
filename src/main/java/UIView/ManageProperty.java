@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static Controller.DatabaseController.*;
 
-public class ManageProperty extends Application implements Runnable{
+public class ManageProperty extends Application{
     PropertiesController pc=new PropertiesController();
     TenantController tc=new TenantController();
     LeaseController lc=new LeaseController();
@@ -91,9 +91,8 @@ public class ManageProperty extends Application implements Runnable{
                     i++;
                 }
             }
-            else if (p instanceof House)
+            else if (p instanceof House h)
             {
-                House h= (House) p;
                 Text text=new Text();
                 text.setText(h.getInfo());
                 text.setFont(new Font(16));
@@ -298,7 +297,6 @@ public class ManageProperty extends Application implements Runnable{
         Button submit =new Button("Add Apartment");
         AtomicBoolean success = new AtomicBoolean(true);
         submit.setOnAction(e->{
-            final Boolean[] status = {true};
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -475,7 +473,6 @@ public class ManageProperty extends Application implements Runnable{
         Button submit =new Button("Add Condo");
         AtomicBoolean success = new AtomicBoolean(true);
         submit.setOnAction(e->{
-            final boolean[] status = {true};
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -483,7 +480,6 @@ public class ManageProperty extends Application implements Runnable{
                         pc.addCondo(buildingText.getText(),Integer.parseInt(unitText.getText()),Integer.parseInt(roomsText.getText()),Integer.parseInt(bathroomsText.getText()),Integer.parseInt(areaText.getText()), Integer.parseInt(rentText.getText()));
                     } catch (Exception exception)
                     {
-                        status[0] =false;
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -926,7 +922,17 @@ public class ManageProperty extends Application implements Runnable{
     {
         GridPane pane = new GridPane();
         Label label=new Label("All tenants");
+        ColumnConstraints columnConstraints = new ColumnConstraints();
+        columnConstraints.setHgrow(Priority.NEVER);
+        columnConstraints.setPercentWidth(100.00);
 
+        RowConstraints rowConstraints = new RowConstraints();
+        rowConstraints.setVgrow(Priority.NEVER);
+
+        columnConstraints.setPercentWidth(100.00);
+        pane.getRowConstraints().add(rowConstraints);
+        pane.getColumnConstraints().add(columnConstraints);
+        ScrollPane scrollPane=new ScrollPane();
         pane.getChildren().add(label);
         int i=2;
         for(Tenant t:tenants)
@@ -934,20 +940,32 @@ public class ManageProperty extends Application implements Runnable{
             Text text=new Text();
             text.setText(t.getInfo());
             text.setFont(new Font(16));
-            pane.add(text,1,i);
+            pane.add(text,0,i);
             i++;
         }
-
         Button back=new Button("Return to Main Menu");
         back.setOnAction(e->window.setScene(scene0));
         pane.add(back,1,i+2);
 
-        sceneDisplayTenant=new Scene(pane,800,500);
+        scrollPane.setContent(pane);
+        sceneDisplayTenant=new Scene(scrollPane,800,500);
     }
     private void createSceneDisplayRented()
     {
         GridPane pane = new GridPane();
         Label label=new Label("Rented Units");
+        ColumnConstraints columnConstraints = new ColumnConstraints();
+        columnConstraints.setHgrow(Priority.NEVER);
+        columnConstraints.setPercentWidth(100.00);
+
+        RowConstraints rowConstraints = new RowConstraints();
+        rowConstraints.setVgrow(Priority.NEVER);
+
+        columnConstraints.setPercentWidth(100.0);
+        pane.getRowConstraints().add(rowConstraints);
+        pane.getColumnConstraints().add(columnConstraints);
+        ScrollPane scrollPane=new ScrollPane();
+
         pane.getChildren().add(label);
         int i=2;
         for(Property p : properties)
@@ -990,13 +1008,26 @@ public class ManageProperty extends Application implements Runnable{
         Button back=new Button("Return to Main Menu");
         back.setOnAction(e->window.setScene(scene0));
         pane.add(back,1,i+2);
-        sceneDisplayRented=new Scene(pane,800,500);
+
+        scrollPane.setContent(pane);
+        sceneDisplayRented=new Scene(scrollPane,800,500);
     }
     private void createSceneDisplayVacant()
     {
         GridPane pane = new GridPane();
         Label label=new Label("Vacant Units");
         pane.getChildren().add(label);
+        ColumnConstraints columnConstraints = new ColumnConstraints();
+        columnConstraints.setHgrow(Priority.NEVER);
+        columnConstraints.setPercentWidth(100.00);
+
+        RowConstraints rowConstraints = new RowConstraints();
+        rowConstraints.setVgrow(Priority.NEVER);
+
+        columnConstraints.setPercentWidth(100.0);
+        pane.getRowConstraints().add(rowConstraints);
+        pane.getColumnConstraints().add(columnConstraints);
+        ScrollPane scrollPane=new ScrollPane();
         int i=2;
         for(Property p : properties)
         {
@@ -1038,7 +1069,9 @@ public class ManageProperty extends Application implements Runnable{
         Button back=new Button("Return to Main Menu");
         back.setOnAction(e->window.setScene(scene0));
         pane.add(back,1,i+2);
-        sceneDisplayVacant=new Scene(pane,800,500);
+
+        scrollPane.setContent(pane);
+        sceneDisplayVacant=new Scene(scrollPane,800,500);
     }
     private void createSceneDisplayLease()
     {
@@ -1063,12 +1096,12 @@ public class ManageProperty extends Application implements Runnable{
             Text text=new Text();
             text.setText(lease.getInfo());
             text.setFont(new Font(16));
-            pane.add(text,1,i);
+            pane.add(text,0,i);
             i++;
         }
         Button back=new Button("Return to Main Menu");
         back.setOnAction(e->window.setScene(scene0));
-        pane.add(back,1,i+2);
+        pane.add(back,0,i+2);
         scrollPane.setContent(pane);
         sceneDisplayLease=new Scene(scrollPane,800,500);
     }
@@ -1120,6 +1153,7 @@ public class ManageProperty extends Application implements Runnable{
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
+        DatabaseController.getInstance();
         primaryStage.setTitle("Real Estate Management System");
         StackPane stackPane = new StackPane();
         stackPane.setAlignment(Pos.CENTER);
@@ -1149,15 +1183,11 @@ public class ManageProperty extends Application implements Runnable{
 
         primaryStage.show();
 
-//        System.out.println("bcd");
         new Thread(new Runnable() {
             @Override
             public void run() {
-//                System.out.println("abc");
-
                     while (true) {
                         String message = ConcreteSubject.checkLease();
-//                        System.out.println(message);
                         try {
                         if (message != null && message.length() > 2) {
                             String finalMessage = message;
@@ -1179,7 +1209,6 @@ public class ManageProperty extends Application implements Runnable{
                             System.out.println("Exception occurred");
                             System.exit(0);
                         }
-//                        System.out.println("here");
                         message="";
                 }
 
@@ -1188,8 +1217,7 @@ public class ManageProperty extends Application implements Runnable{
 
     }
 
-    @Override
-    public void run() {
+    public static void main() {
         launch();
     }
 }
