@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 
 public class ConcreteSubject implements Runnable{
-    public static String checkLease() {
+    public static String checkPropertyAvailability() {
         ArrayList<Property> properties = DatabaseController.getAllProperties();
         for(Property p:properties)
         {
@@ -65,7 +65,7 @@ public class ConcreteSubject implements Runnable{
 
     @Override
     public void run() {
-        checkLease();
+        checkPropertyAvailability();
 
     }
 }

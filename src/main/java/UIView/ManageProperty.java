@@ -33,8 +33,8 @@ public class ManageProperty extends Application{
             sceneAddApartmentBuilding,sceneAddCondoBuilding,sceneAddCondo
             ,sceneAddHouse;
     Stage window;
-    public Stage stage2;
-    public Scene createSceneDisplayProperties()
+    private Stage stage2;
+    private Scene createSceneDisplayProperties()
     {
         Scene scene;
         GridPane pane = new GridPane();
@@ -113,7 +113,7 @@ public class ManageProperty extends Application{
         return scene;
 
     }
-    public void getDisplayStage() {
+    private void getDisplayStage() {
         stage2 = new Stage();
         stage2.setTitle("Real Estate Management System");
         StackPane stackPane = new StackPane();
@@ -1135,7 +1135,7 @@ public class ManageProperty extends Application{
 
         new Thread(() -> {
                 while (true) {
-                    String message = ConcreteSubject.checkLease();
+                    String message = ConcreteSubject.checkPropertyAvailability();
                     try {
                     if (message != null && message.length() > 2) {
                         String finalMessage = message;
