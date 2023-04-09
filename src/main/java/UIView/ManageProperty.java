@@ -33,8 +33,8 @@ public class ManageProperty extends Application{
             sceneAddApartmentBuilding,sceneAddCondoBuilding,sceneAddCondo
             ,sceneAddHouse;
     Stage window;
-
-     public static Scene createSceneDisplayProperties()
+    public Stage stage2;
+    public Scene createSceneDisplayProperties()
     {
         Scene scene;
         GridPane pane = new GridPane();
@@ -101,7 +101,11 @@ public class ManageProperty extends Application{
             }
         }
         Button exit=new Button("Exit");
-        exit.setOnAction(e->stage2.close());
+        exit.setOnAction(e->{
+            stage2.close();
+            window.close();
+            System.exit(1);
+        });
         pane.add(exit,1,i+2);
         scrollPane.setContent(pane);
 
@@ -109,13 +113,6 @@ public class ManageProperty extends Application{
         return scene;
 
     }
-
-
-    public static Stage stage2;
-
-
-
-
     public void getDisplayStage() {
         stage2 = new Stage();
         stage2.setTitle("Real Estate Management System");
@@ -171,13 +168,7 @@ public class ManageProperty extends Application{
 
         Button submit =new Button("Add House");
         submit.setOnAction(e->{
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    pc.addHouse(houseNum.getText(),streetText.getText(),cityText.getText(), pstlcdText.getText(),Integer.parseInt(streetNumText.getText()),Integer.parseInt(rentText.getText()));
-
-                }
-            }).start()
+            new Thread(() -> pc.addHouse(houseNum.getText(),streetText.getText(),cityText.getText(), pstlcdText.getText(),Integer.parseInt(streetNumText.getText()),Integer.parseInt(rentText.getText()))).start()
             ;
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(null);
@@ -186,7 +177,7 @@ public class ManageProperty extends Application{
             stage.setAlwaysOnTop(true);
             stage.toFront();
             alert.show();
-            stage2.setScene(createSceneDisplayProperties());
+            Platform.runLater(() -> stage2.setScene(createSceneDisplayProperties()));
             window.setScene(scene0);
         });
         pane.add(submit,1,6);
@@ -230,13 +221,7 @@ public class ManageProperty extends Application{
 
         Button submit =new Button("Add building");
         submit.setOnAction(e->{
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    pc.addApartmentBuilding(buildingText.getText(),streetText.getText(),cityText.getText(), pstlcdText.getText());
-
-                }
-            }).start();
+            new Thread(() -> pc.addApartmentBuilding(buildingText.getText(),streetText.getText(),cityText.getText(), pstlcdText.getText())).start();
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(null);
@@ -245,7 +230,7 @@ public class ManageProperty extends Application{
             stage.setAlwaysOnTop(true);
             stage.toFront();
             alert.show();
-            stage2.setScene(createSceneDisplayProperties());
+            Platform.runLater(() -> stage2.setScene(createSceneDisplayProperties()));
             window.setScene(scene0);
         });
         pane.add(submit,1,6);
@@ -297,27 +282,21 @@ public class ManageProperty extends Application{
         Button submit =new Button("Add Apartment");
         AtomicBoolean success = new AtomicBoolean(true);
         submit.setOnAction(e->{
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        pc.addApartment(buildingText.getText(), Integer.parseInt(roomsText.getText()), Integer.parseInt(bathroomsText.getText()), Integer.parseInt(areaText.getText()), Integer.parseInt(rentText.getText()));
-                    }catch (Exception exception)
-                    {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                Alert alert = new Alert(Alert.AlertType.ERROR);
-                                alert.setHeaderText("Error in adding apartment");
-                                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                                stage.setAlwaysOnTop(true);
-                                stage.toFront();
-                                alert.show();
-                                success.set(false);
-                            }
-                        });
+            new Thread(() -> {
+                try {
+                    pc.addApartment(buildingText.getText(), Integer.parseInt(roomsText.getText()), Integer.parseInt(bathroomsText.getText()), Integer.parseInt(areaText.getText()), Integer.parseInt(rentText.getText()));
+                }catch (Exception exception)
+                {
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setHeaderText("Error in adding apartment");
+                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                        stage.setAlwaysOnTop(true);
+                        stage.toFront();
+                        alert.show();
+                        success.set(false);
+                    });
 
-                    }
                 }
             }).start();
             if (success.get())
@@ -330,7 +309,7 @@ public class ManageProperty extends Application{
                 stage.toFront();
                 alert.show();
             }
-            stage2.setScene(createSceneDisplayProperties());
+            Platform.runLater(() -> stage2.setScene(createSceneDisplayProperties()));
             window.setScene(scene0);
         });
         pane.add(submit,1,6);
@@ -382,31 +361,25 @@ public class ManageProperty extends Application{
         AtomicBoolean success = new AtomicBoolean(true);
 
         submit.setOnAction(e->{
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try
-                    {
-                        pc.addCondoBuilding(buildingText.getText(),Integer.parseInt(streetNumText.getText()),streetText.getText(),cityText.getText(), pstlcdText.getText());
-
-                    }
-                    catch (Exception e)
-                    {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                Alert alert = new Alert(Alert.AlertType.ERROR);
-                                alert.setHeaderText("Error in adding Condo Building");
-                                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                                stage.setAlwaysOnTop(true);
-                                stage.toFront();
-                                alert.show();
-                                success.set(false);
-                            }
-                        });
-                    }
+            new Thread(() -> {
+                try
+                {
+                    pc.addCondoBuilding(buildingText.getText(),Integer.parseInt(streetNumText.getText()),streetText.getText(),cityText.getText(), pstlcdText.getText());
 
                 }
+                catch (Exception e1)
+                {
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setHeaderText("Error in adding Condo Building");
+                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                        stage.setAlwaysOnTop(true);
+                        stage.toFront();
+                        alert.show();
+                        success.set(false);
+                    });
+                }
+
             }).start();
             if(success.get()) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -417,7 +390,7 @@ public class ManageProperty extends Application{
                 stage.toFront();
                 alert.show();
             }
-            stage2.setScene(createSceneDisplayProperties());
+            Platform.runLater(() -> stage2.setScene(createSceneDisplayProperties()));
             window.setScene(scene0);
         });
         pane.add(submit,1,6);
@@ -473,28 +446,22 @@ public class ManageProperty extends Application{
         Button submit =new Button("Add Condo");
         AtomicBoolean success = new AtomicBoolean(true);
         submit.setOnAction(e->{
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        pc.addCondo(buildingText.getText(),Integer.parseInt(unitText.getText()),Integer.parseInt(roomsText.getText()),Integer.parseInt(bathroomsText.getText()),Integer.parseInt(areaText.getText()), Integer.parseInt(rentText.getText()));
-                    } catch (Exception exception)
-                    {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                Alert alert = new Alert(Alert.AlertType.ERROR);
-                                alert.setHeaderText("Error in adding Condo");
-                                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                                stage.setAlwaysOnTop(true);
-                                stage.toFront();
-                                alert.show();
-                                success.set(false);
-                            }
-                        });
-                    }
-
+            new Thread(() -> {
+                try {
+                    pc.addCondo(buildingText.getText(),Integer.parseInt(unitText.getText()),Integer.parseInt(roomsText.getText()),Integer.parseInt(bathroomsText.getText()),Integer.parseInt(areaText.getText()), Integer.parseInt(rentText.getText()));
+                } catch (Exception exception)
+                {
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setHeaderText("Error in adding Condo");
+                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                        stage.setAlwaysOnTop(true);
+                        stage.toFront();
+                        alert.show();
+                        success.set(false);
+                    });
                 }
+
             }).start();
 
             if (success.get())
@@ -507,7 +474,7 @@ public class ManageProperty extends Application{
                 stage.toFront();
                 alert.show();
             }
-            stage2.setScene(createSceneDisplayProperties());
+            Platform.runLater(() -> stage2.setScene(createSceneDisplayProperties()));
             window.setScene(scene0);
         });
         pane.add(submit,1,6);
@@ -676,27 +643,21 @@ public class ManageProperty extends Application{
 
                                 Condo finalCondo = condo1;
                             final boolean[] flag = {true};
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            Tenant t = new Tenant(nameText.getText(), emailText.getText(), phoneText.getText());
-                                            lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusMinutes(1), t, buildingName, finalCondo.getRent(), unitNum);
-                                        } catch (Exception ex) {
-                                            flag[0] =false;
-                                            Platform.runLater(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                                                    alert2.setHeaderText("Error in adding Tenant");
-                                                    alert2.show();
-                                                    success.set(false);
-                                                    Stage stage = (Stage) alert2.getDialogPane().getScene().getWindow();
-                                                    stage.setAlwaysOnTop(true);
-                                                    stage.toFront();
-                                                }
-                                            });
-                                        }
+                                new Thread(() -> {
+                                    try {
+                                        Tenant t = new Tenant(nameText.getText(), emailText.getText(), phoneText.getText());
+                                        lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusMinutes(1), t, buildingName, finalCondo.getRent(), unitNum);
+                                    } catch (Exception ex) {
+                                        flag[0] =false;
+                                        Platform.runLater(() -> {
+                                            Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                                            alert2.setHeaderText("Error in adding Tenant");
+                                            alert2.show();
+                                            success.set(false);
+                                            Stage stage = (Stage) alert2.getDialogPane().getScene().getWindow();
+                                            stage.setAlwaysOnTop(true);
+                                            stage.toFront();
+                                        });
                                     }
                                 }).start();
 
@@ -710,29 +671,23 @@ public class ManageProperty extends Application{
                             stage.toFront();
                             alert.show();
                             final boolean[] flag = {true};
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
+                            new Thread(() -> {
+                                try {
+                                    Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
 
-                                        tc.addTenant(buildingName, unitNum, t);
-                                    }
-                                    catch (Exception ex) {
-                                        flag[0] =false;
-                                        Platform.runLater(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                                                alert2.setHeaderText("Error in adding Tenant");
-                                                alert2.show();
-                                                success.set(false);
-                                                Stage stage = (Stage) alert2.getDialogPane().getScene().getWindow();
-                                                stage.setAlwaysOnTop(true);
-                                                stage.toFront();
-                                            }
-                                        });
-                                    }
+                                    tc.addTenant(buildingName, unitNum, t);
+                                }
+                                catch (Exception ex) {
+                                    flag[0] =false;
+                                    Platform.runLater(() -> {
+                                        Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                                        alert2.setHeaderText("Error in adding Tenant");
+                                        alert2.show();
+                                        success.set(false);
+                                        Stage stage1 = (Stage) alert2.getDialogPane().getScene().getWindow();
+                                        stage1.setAlwaysOnTop(true);
+                                        stage1.toFront();
+                                    });
                                 }
                             }).start();
 
@@ -747,17 +702,14 @@ public class ManageProperty extends Application{
                         if (apartment1.isAvailable())
                         {
                             final boolean[] flag = {true};
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
+                            new Thread(() -> {
+                                try {
+                                    Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
 
-                                        lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusMinutes(1), t, buildingName, apartment1.getRent(), unitNum);
-                                    }
-                                    catch (Exception ex) {
-                                        flag[0] =false;
-                                    }
+                                    lc.addLease(LocalDateTime.now(), LocalDateTime.now().plusMinutes(1), t, buildingName, apartment1.getRent(), unitNum);
+                                }
+                                catch (Exception ex) {
+                                    flag[0] =false;
                                 }
                             }).start();
                             if(flag[0] ==false)
@@ -782,29 +734,23 @@ public class ManageProperty extends Application{
                             stage.toFront();
                             alert.show();
                             final boolean[] flag = {true};
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
+                            new Thread(() -> {
+                                try {
+                                    Tenant t=new Tenant(nameText.getText(),emailText.getText(),phoneText.getText());
 
-                                        tc.addTenant(buildingName, unitNum, t);
-                                    }
-                                    catch (Exception ex) {
-                                        flag[0] =false;
-                                        Platform.runLater(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Alert alert2 = new Alert(Alert.AlertType.ERROR);
-                                                alert2.setHeaderText("Error in adding Tenant");
-                                                alert2.show();
-                                                success.set(false);
-                                                Stage stage = (Stage) alert2.getDialogPane().getScene().getWindow();
-                                                stage.setAlwaysOnTop(true);
-                                                stage.toFront();
-                                            }
-                                        });
-                                    }
+                                    tc.addTenant(buildingName, unitNum, t);
+                                }
+                                catch (Exception ex) {
+                                    flag[0] =false;
+                                    Platform.runLater(() -> {
+                                        Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                                        alert2.setHeaderText("Error in adding Tenant");
+                                        alert2.show();
+                                        success.set(false);
+                                        Stage stage12 = (Stage) alert2.getDialogPane().getScene().getWindow();
+                                        stage12.setAlwaysOnTop(true);
+                                        stage12.toFront();
+                                    });
                                 }
                             }).start();
 
@@ -1139,7 +1085,11 @@ public class ManageProperty extends Application{
         });
 
         Button exit =new Button("Exit");
-        exit.setOnAction(e->window.close());
+        exit.setOnAction(e->{
+            stage2.close();
+            window.close();
+            System.exit(1);
+        });
 
         StackPane.setMargin(addProperty, new Insets(40, 140, 160, 10));
         StackPane.setMargin(addTenant, new Insets(40, 10, 160, 180));
@@ -1152,7 +1102,7 @@ public class ManageProperty extends Application{
         stackPane.getChildren().addAll(addProperty,addTenant,displayTenant,displayLease,displayRentedUnit,displayVacantUnit,exit);
     }
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         DatabaseController.getInstance();
         primaryStage.setTitle("Real Estate Management System");
         StackPane stackPane = new StackPane();
@@ -1183,36 +1133,30 @@ public class ManageProperty extends Application{
 
         primaryStage.show();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                    while (true) {
-                        String message = ConcreteSubject.checkLease();
-                        try {
-                        if (message != null && message.length() > 2) {
-                            String finalMessage = message;
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                    alert.setTitle("");
-                                    alert.setHeaderText("");
-                                    alert.setContentText(finalMessage);
-                                    alert.showAndWait();
+        new Thread(() -> {
+                while (true) {
+                    String message = ConcreteSubject.checkLease();
+                    try {
+                    if (message != null && message.length() > 2) {
+                        String finalMessage = message;
+                        Platform.runLater(() -> {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("");
+                            alert.setHeaderText("");
+                            alert.setContentText(finalMessage);
+                            alert.showAndWait();
 
-                                }
-                            });
-                        }
-                        Thread.sleep(5000);
-                        }catch (InterruptedException e)
-                        {
-                            System.out.println("Exception occurred");
-                            System.exit(0);
-                        }
-                        message="";
-                }
-
+                        });
+                    }
+                    Thread.sleep(5000);
+                    }catch (InterruptedException e)
+                    {
+                        System.out.println("Exception occurred");
+                        System.exit(0);
+                    }
+                    message="";
             }
+
         }).start();
 
     }
