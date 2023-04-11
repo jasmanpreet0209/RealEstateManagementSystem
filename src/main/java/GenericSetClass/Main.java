@@ -127,11 +127,11 @@ public class Main {
                             temp2.add(Integer.parseInt(s.split(" ")[i]));
                         }
                         if (gs.equals(temp2)) {
-                            System.out.println("The two lists are equal");
+                            System.out.println("The two sets are equal");
                         }
                         else
                         {
-                            System.out.println("the lists are not equal");
+                            System.out.println("the sets are not equal");
                         }
                     }
                     case 6->
