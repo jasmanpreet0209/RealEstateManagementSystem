@@ -1,79 +1,10 @@
 package GenericSetClass;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Scanner;
 
-class GenericSet<T>{
-    private java.util.ArrayList<T> list;
-
-    GenericSet()
-    {
-        list= new java.util.ArrayList<>();
-    }
-    public void addElement(T element)
-    {
-        if (list.contains(element))
-        {
-            System.out.println("The element "+element+" already exists. I did not add this to the set!");
-            return;
-        }
-        list.add(element);
-    }
-    public void removeElement(T element)
-    {
-        if (list.contains(element))
-        {
-            System.out.println("Removed element: "+element+" from the set");
-            list.remove(element);
-        }
-        else
-        {
-            System.out.println("The element does not exist");
-        }
-    }
-    public boolean peek(T element)
-    {
-        if (list.contains(element))
-        {
-            return true;
-        }
-        return false;
-    }
-    public int getSize()
-    {
-        return list.size() ;
-    }
-
-    @Override
-    public boolean equals(Object list3) {
-        ArrayList<T> list2=(ArrayList<T>) list3;
-        if (list.size()!=list2.size())
-            return false;
-
-        List<T> templist=list.stream().sorted().toList();
-        List<T> templist2= list2.stream().sorted().toList();
-//        System.out.println(templist2+"\n"+templist);
-        for (int i=0;i<templist.size();i++)
-        {
-            if (templist.get(i).equals(templist2.get(i))==false)
-                return false;
-        }
-        return true;
-
-    }
-    public void display()
-    {
-        for (int i=0;i<list.size();i++)
-        {
-            System.out.print(list.get(i)+" ");
-        }
-        System.out.println();
-    }
-}
 public class Main {
     public static void main(String[] args) {
         Scanner sc=new Scanner(System.in);
-
         System.out.println("Please enter what kind of object you want to create: \n1.Int\n2.String\n3.Double\n4.Char");
         char type=sc.nextLine().toLowerCase().charAt(0);
         int choice=0;
@@ -82,21 +13,22 @@ public class Main {
         {
             GenericSet<Integer> gs=new GenericSet<>();
             do {
-                System.out.println("Please chose from the following:\n1. Add elements\n2. Remove element\n" +
-                        "3. Find if the element exists(Peek)" +
-                        "\n4. Size of the set\n5. Check if two lists are equal\n6. Display elements in the set\n7. Exit");
+                System.out.println("""
+                        Please chose from the following:
+                        1. Add element
+                        2. Remove element
+                        3. Find if the element exists(Peek)
+                        4. Size of the set
+                        5. Check if two lists are equal
+                        6. Display elements in the set
+                        7. Exit""");
                 choice=Integer.parseInt(sc.nextLine());
                 switch (choice)
                 {
                     case 1->{
-                        System.out.println("Please enter the number of input integers you want to enter");
-                        int numInt=Integer.parseInt(sc.nextLine());
-                        for (int i=0;i<numInt;i++)
-                        {
+
                             System.out.println("Enter Integer");
                             gs.addElement(Integer.parseInt(sc.nextLine()));
-                        }
-
                     }
                     case 2->{
                         System.out.println("Please enter the element that you want to remove");
@@ -106,7 +38,7 @@ public class Main {
                     case 3->{
                         System.out.println("Please enter the element that you want to search ");
                         String s=sc.nextLine();
-                        if(gs.peek(Integer.parseInt(s))==true)
+                        if(gs.peek(Integer.parseInt(s)))
                         {
                             System.out.println("The element exists!");
                         }
@@ -121,12 +53,12 @@ public class Main {
                     case 5->{
                         System.out.println("Enter the content of second set");
                         String s=sc.nextLine();
-                        ArrayList<Integer> temp2=new ArrayList<>();
+                        GenericSet<Integer> gs2=new GenericSet<>();
                         for (int i=0;i<s.split(" ").length;i++)
                         {
-                            temp2.add(Integer.parseInt(s.split(" ")[i]));
+                            gs2.addElement(Integer.parseInt(s.split(" ")[i]));
                         }
-                        if (gs.equals(temp2)) {
+                        if (gs.equals(gs2)) {
                             System.out.println("The two sets are equal");
                         }
                         else
@@ -144,25 +76,25 @@ public class Main {
                         System.exit(0);
                     }
                 }
-            }while (choice!=7);
+            }while (true);
         } else if (type=='s'||type=='2') {
             GenericSet<String> gs=new GenericSet<>();
             do {
-                System.out.println("Please chose from the following:\n1. Add elements\n2. Remove element\n" +
-                        "3. Find if the element exists(Peek)" +
-                        "\n4. Size of the set\n5. Check if two lists are equal\n6. Display elements in the set\n7. Exit");
+                System.out.println("""
+                        Please chose from the following:
+                        1. Add elements
+                        2. Remove element
+                        3. Find if the element exists(Peek)
+                        4. Size of the set
+                        5. Check if two lists are equal
+                        6. Display elements in the set
+                        7. Exit""");
                 choice=Integer.parseInt(sc.nextLine());
                 switch (choice)
                 {
                     case 1->{
-                        System.out.println("Please enter the number of input strings you want to enter");
-                        int numStrings=Integer.parseInt(sc.nextLine());
-                        for (int i=0;i<numStrings;i++)
-                        {
                             System.out.println("Enter string");
                             gs.addElement(sc.nextLine());
-                        }
-
                     }
                     case 2->{
                         System.out.println("Please enter the element that you want to remove");
@@ -172,7 +104,7 @@ public class Main {
                     case 3->{
                         System.out.println("Please enter the element that you want to search ");
                         String s=sc.nextLine();
-                        if(gs.peek(s)==true)
+                        if(gs.peek(s))
                         {
                             System.out.println("The element exists!");
                         }
@@ -187,12 +119,12 @@ public class Main {
                     case 5->{
                         System.out.println("Enter the content of second set");
                         String s=sc.nextLine();
-                        ArrayList<String> temp2=new ArrayList<>();
+                        GenericSet<String> gs2=new GenericSet<>();
                         for (int i=0;i<s.split(" ").length;i++)
                         {
-                            temp2.add((s.split(" ")[i]));
+                            gs2.addElement((s.split(" ")[i]));
                         }
-                        if (gs.equals(temp2)) {
+                        if (gs.equals(gs2)) {
                             System.out.println("The two lists are equal");
                         }
                         else
@@ -210,35 +142,36 @@ public class Main {
                         System.exit(0);
                     }
                 }
-            }while (choice!=7);
+            }while (true);
         }
         else if (type=='c'||type=='4') {
-            GenericSet<String> gs=new GenericSet<>();
+            GenericSet<Character> gs=new GenericSet<>();
             do {
-                System.out.println("Please chose from the following:\n1. Add elements\n2. Remove element\n" +
-                        "3. Find if the element exists(Peek)" +
-                        "\n4. Size of the set\n5. Check if two lists are equal\n6. Display elements in the set\n7. Exit");
+                System.out.println("""
+                        Please chose from the following:
+                        1. Add elements
+                        2. Remove element
+                        3. Find if the element exists(Peek)
+                        4. Size of the set
+                        5. Check if two lists are equal
+                        6. Display elements in the set
+                        7. Exit""");
                 choice=Integer.parseInt(sc.nextLine());
                 switch (choice)
                 {
                     case 1->{
-                        System.out.println("Please enter the number of input chars you want to enter");
-                        int numChar=Integer.parseInt(sc.nextLine());
-                        for (int i=0;i<numChar;i++)
-                        {
                             System.out.println("Enter Character");
-                            gs.addElement(sc.nextLine());
-                        }
+                            gs.addElement(sc.nextLine().charAt(0));
                     }
                     case 2->{
                         System.out.println("Please enter the element that you want to remove");
-                        String s=sc.nextLine();
+                        Character s=sc.nextLine().charAt(0);
                         gs.removeElement(s);
                     }
                     case 3->{
                         System.out.println("Please enter the element that you want to search ");
-                        String s=sc.nextLine();
-                        if(gs.peek(s)==true)
+                        Character s=sc.nextLine().charAt(0);
+                        if(gs.peek(s))
                         {
                             System.out.println("The element exists!");
                         }
@@ -253,12 +186,12 @@ public class Main {
                     case 5->{
                         System.out.println("Enter the content of second set");
                         String s=sc.nextLine();
-                        ArrayList<String> temp2=new ArrayList<>();
-                        for (int i=0;i<s.split(" ").length;i++)
+                        GenericSet<Character> gs2=new GenericSet<>();
+                        for (String s1 : s.split(" "))
                         {
-                            temp2.add((s.split(" ")[i]));
+                            gs2.addElement(s1.charAt(0));
                         }
-                        if (gs.equals(temp2)) {
+                        if (gs.equals(gs2)) {
                             System.out.println("The two lists are equal");
                         }
                         else
@@ -276,14 +209,20 @@ public class Main {
                         System.exit(0);
                     }
                 }
-            }while (choice!=7);
+            }while (true);
         }
         else if (type=='d'||type=='3') {
             GenericSet<Double> gs=new GenericSet<>();
             do {
-                System.out.println("Please chose from the following:\n1. Add elements\n2. Remove element\n" +
-                        "3. Find if the element exists(Peek)" +
-                        "\n4. Size of the set\n5. Check if two lists are equal\n6. Display elements in the set\n7. Exit");
+                System.out.println("""
+                        Please chose from the following:
+                        1. Add elements
+                        2. Remove element
+                        3. Find if the element exists(Peek)
+                        4. Size of the set
+                        5. Check if two lists are equal
+                        6. Display elements in the set
+                        7. Exit""");
                 choice=Integer.parseInt(sc.nextLine());
                 switch (choice)
                 {
@@ -304,7 +243,7 @@ public class Main {
                     case 3->{
                         System.out.println("Please enter the element that you want to search ");
                         String s=sc.nextLine();
-                        if(gs.peek(Double.parseDouble(s))==true)
+                        if(gs.peek(Double.parseDouble(s)))
                         {
                             System.out.println("The element exists!");
                         }
@@ -319,12 +258,12 @@ public class Main {
                     case 5->{
                         System.out.println("Enter the content of second set");
                         String s=sc.nextLine();
-                        ArrayList<Double> temp2=new ArrayList<>();
+                        GenericSet<Double> gs2=new GenericSet<>();
                         for (int i=0;i<s.split(" ").length;i++)
                         {
-                            temp2.add(Double.parseDouble(s.split(" ")[i]));
+                            gs2.addElement(Double.parseDouble(s.split(" ")[i]));
                         }
-                        if (gs.equals(temp2)) {
+                        if (gs.equals(gs2)) {
                             System.out.println("The two lists are equal");
                         }
                         else
@@ -342,7 +281,7 @@ public class Main {
                         System.exit(0);
                     }
                 }
-            }while (choice!=7);
+            }while (true);
         }
         else
         {
@@ -350,8 +289,5 @@ public class Main {
             System.exit(0);
 
         }
-
-
-
     }
 }
