@@ -78,7 +78,7 @@ public class Main {
         char type=sc.nextLine().toLowerCase().charAt(0);
         int choice=0;
 
-        if(type=='i')
+        if(type=='i'||type=='1')
         {
             GenericSet<Integer> gs=new GenericSet<>();
             do {
@@ -89,13 +89,14 @@ public class Main {
                 switch (choice)
                 {
                     case 1->{
-                        System.out.println("Please input the elements you want to enter");
-                        String s=sc.nextLine();
-                        for (int i=0;i<s.split(" ").length;i++)
+                        System.out.println("Please enter the number of input integers you want to enter");
+                        int numInt=Integer.parseInt(sc.nextLine());
+                        for (int i=0;i<numInt;i++)
                         {
-
-                            gs.addElement(Integer.parseInt(s.split(" ")[i]));
+                            System.out.println("Enter Integer");
+                            gs.addElement(Integer.parseInt(sc.nextLine()));
                         }
+
                     }
                     case 2->{
                         System.out.println("Please enter the element that you want to remove");
@@ -118,7 +119,7 @@ public class Main {
                         System.out.println("Size of the set is "+gs.getSize());
                     }
                     case 5->{
-                        System.out.println("Enter the content of second list");
+                        System.out.println("Enter the content of second set");
                         String s=sc.nextLine();
                         ArrayList<Integer> temp2=new ArrayList<>();
                         for (int i=0;i<s.split(" ").length;i++)
@@ -144,7 +145,7 @@ public class Main {
                     }
                 }
             }while (choice!=7);
-        } else if (type=='s'|| type=='c') {
+        } else if (type=='s'||type=='2') {
             GenericSet<String> gs=new GenericSet<>();
             do {
                 System.out.println("Please chose from the following:\n1. Add elements\n2. Remove element\n" +
@@ -154,13 +155,14 @@ public class Main {
                 switch (choice)
                 {
                     case 1->{
-                        System.out.println("Please input the elements you want to enter");
-                        String s=sc.nextLine();
-                        for (int i=0;i<s.split(" ").length;i++)
+                        System.out.println("Please enter the number of input strings you want to enter");
+                        int numStrings=Integer.parseInt(sc.nextLine());
+                        for (int i=0;i<numStrings;i++)
                         {
-
-                            gs.addElement(s.split(" ")[i]);
+                            System.out.println("Enter string");
+                            gs.addElement(sc.nextLine());
                         }
+
                     }
                     case 2->{
                         System.out.println("Please enter the element that you want to remove");
@@ -183,7 +185,7 @@ public class Main {
                         System.out.println("Size of the set is "+gs.getSize());
                     }
                     case 5->{
-                        System.out.println("Enter the content of second list");
+                        System.out.println("Enter the content of second set");
                         String s=sc.nextLine();
                         ArrayList<String> temp2=new ArrayList<>();
                         for (int i=0;i<s.split(" ").length;i++)
@@ -210,7 +212,73 @@ public class Main {
                 }
             }while (choice!=7);
         }
-        else if (type=='d') {
+        else if (type=='c'||type=='4') {
+            GenericSet<String> gs=new GenericSet<>();
+            do {
+                System.out.println("Please chose from the following:\n1. Add elements\n2. Remove element\n" +
+                        "3. Find if the element exists(Peek)" +
+                        "\n4. Size of the set\n5. Check if two lists are equal\n6. Display elements in the set\n7. Exit");
+                choice=Integer.parseInt(sc.nextLine());
+                switch (choice)
+                {
+                    case 1->{
+                        System.out.println("Please enter the number of input chars you want to enter");
+                        int numChar=Integer.parseInt(sc.nextLine());
+                        for (int i=0;i<numChar;i++)
+                        {
+                            System.out.println("Enter Character");
+                            gs.addElement(sc.nextLine());
+                        }
+                    }
+                    case 2->{
+                        System.out.println("Please enter the element that you want to remove");
+                        String s=sc.nextLine();
+                        gs.removeElement(s);
+                    }
+                    case 3->{
+                        System.out.println("Please enter the element that you want to search ");
+                        String s=sc.nextLine();
+                        if(gs.peek(s)==true)
+                        {
+                            System.out.println("The element exists!");
+                        }
+                        else
+                        {
+                            System.out.println("The element does not exist");
+                        }
+                    }
+                    case 4->{
+                        System.out.println("Size of the set is "+gs.getSize());
+                    }
+                    case 5->{
+                        System.out.println("Enter the content of second set");
+                        String s=sc.nextLine();
+                        ArrayList<String> temp2=new ArrayList<>();
+                        for (int i=0;i<s.split(" ").length;i++)
+                        {
+                            temp2.add((s.split(" ")[i]));
+                        }
+                        if (gs.equals(temp2)) {
+                            System.out.println("The two lists are equal");
+                        }
+                        else
+                        {
+                            System.out.println("the lists are not equal");
+                        }
+                    }
+                    case 6->
+                    {
+                        System.out.println("Displaying elements in the set");
+                        gs.display();
+                    }
+                    case 7->{
+                        System.out.println("Exitting the program! Bye!");
+                        System.exit(0);
+                    }
+                }
+            }while (choice!=7);
+        }
+        else if (type=='d'||type=='3') {
             GenericSet<Double> gs=new GenericSet<>();
             do {
                 System.out.println("Please chose from the following:\n1. Add elements\n2. Remove element\n" +
@@ -220,12 +288,12 @@ public class Main {
                 switch (choice)
                 {
                     case 1->{
-                        System.out.println("Please input the elements you want to enter");
-                        String s=sc.nextLine();
-                        for (int i=0;i<s.split(" ").length;i++)
+                        System.out.println("Please enter the number of input doubles you want to enter");
+                        int numInt=Integer.parseInt(sc.nextLine());
+                        for (int i=0;i<numInt;i++)
                         {
-
-                            gs.addElement(Double.parseDouble(s.split(" ")[i]));
+                            System.out.println("Enter Double");
+                            gs.addElement(Double.parseDouble(sc.nextLine()));
                         }
                     }
                     case 2->{
@@ -249,7 +317,7 @@ public class Main {
                         System.out.println("Size of the set is "+gs.getSize());
                     }
                     case 5->{
-                        System.out.println("Enter the content of second list");
+                        System.out.println("Enter the content of second set");
                         String s=sc.nextLine();
                         ArrayList<Double> temp2=new ArrayList<>();
                         for (int i=0;i<s.split(" ").length;i++)
